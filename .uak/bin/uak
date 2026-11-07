@@ -1,0 +1,278 @@
+#!/usr/bin/env bash
+# Bash 3.2+, Git and POSIX tools; no jq and no Python.
+# Why: works on Git Bash, macOS and Linux with no services.
+set -u
+# Inherited from git (an alias, a hook): uak's temp clones would act on the caller's repository instead. Why: the MCP
+# server, started through a git alias in a task worktree, made the main repository bare (core.bare=true).
+unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE GIT_PREFIX GIT_COMMON_DIR GIT_OBJECT_DIRECTORY GIT_ALTERNATE_OBJECT_DIRECTORIES
+set -o pipefail
+LC_ALL=C
+export LC_ALL
+# Git Bash (Windows) rewrites arguments such as refs/x:.uak/TASKS.md into Windows path lists.
+# Why (Reap buildathon): `git show refs/uak/config:.uak/TASKS.md` returned nothing, so claims said "not in TASKS.md".
+MSYS2_ARG_CONV_EXCL="refs/;origin/;${UAK_REMOTE:-origin}/;HEAD;FETCH_HEAD;:"
+export MSYS2_ARG_CONV_EXCL
+# The engine's own folder, without a subshell when $0 says it (Windows pays 20-50 ms per process). Every library
+# comes from here, so a uak always runs with its own version's libraries.
+case $0 in /*|[A-Za-z]:[\\/]*) UAK_BIN=${0%[\\/]*};; */*) UAK_BIN=$PWD/${0%/*};; *) UAK_BIN=$PWD;; esac
+[ -f "$UAK_BIN/lib/core.sh" ] || UAK_BIN=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+# The merge gate always runs the main checkout's engine. Why (UAK-012): from a task worktree, `uak merge` ran the
+# branch's own engine, so a branch could rewrite the gate it must pass (the kit's own shims run the checkout's kit/).
+case "${1:-}" in --json) hack_cmd=${2:-};; *) hack_cmd=${1:-};; esac
+if [ "$hack_cmd" = merge ] && [ -z "${UAK_MERGE_ENGINE:-}" ]; then
+  # Case patterns as (pat): bash 3.2 ends a command substitution at a bare pat) (UAK-013, macOS: a syntax error).
+  hack_main=$(CDPATH= cd -- "$UAK_BIN" 2>/dev/null || exit 0; bin=$(pwd -P)
+    top=$(git rev-parse --show-toplevel 2>/dev/null) && top=$(CDPATH= cd -- "$top" && pwd -P) || exit 0
+    gd=$(git rev-parse --absolute-git-dir 2>/dev/null) && gd=$(CDPATH= cd -- "$gd" && pwd -P) || exit 0
+    common=$(git rev-parse --git-common-dir 2>/dev/null) && common=$(CDPATH= cd -- "$common" && pwd -P) || exit 0
+    case $bin in ("$top"/*) ;; (*) exit 0;; esac
+    [ "$gd" != "$common" ] && case $common in (*/.git) printf '%s' "${common%/.git}/${bin#"$top"/}/uak";; esac)
+  if [ -n "$hack_main" ] && [ -f "$hack_main" ]; then
+    printf "uak merge: the gate runs the main checkout's engine (%s), never the branch's own.\n" "$hack_main" >&2
+    UAK_MERGE_ENGINE=1 exec bash "$hack_main" "$@"
+  fi
+fi
+unset UAK_MERGE_ENGINE hack_cmd hack_main
+. "$UAK_BIN/lib/net.sh" 2>/dev/null && ssh_mux
+# Per-worktree identity: .uak-env (written by .uak/bin/wt, git-ignored) only fills empty variables.
+# Why: every terminal or agent in the worktree inherits its identity without manual exports.
+hack_env_file="$(git rev-parse --show-toplevel 2>/dev/null)/.uak-env"
+UAK_ENV_SHELL_AGENT=  # set below only when .uak-env replaced the shell's UAK_AGENT; never inherited
+if [ -f "$hack_env_file" ]; then
+  while IFS='=' read -r hack_key hack_value || [ -n "$hack_key" ]; do
+    hack_value=${hack_value%$'\r'}  # a .uak-env saved with CRLF (Windows editors) kept the identity out
+    case "$hack_key" in
+      UAK_AGENT|UAK_HUMAN|UAK_AGENT_HUMAN|UAK_SESSION|UAK_TASK)
+        case "$hack_value" in ''|*[!A-Za-z0-9_.-]*) continue;; esac
+        # The worktree names its agent's human, but that grants no human authority (allow, plan, handover of
+        # others' tasks, retire, register-reviewer): only an explicit UAK_HUMAN in the shell does. Why: every agent
+        # in a task worktree inherited UAK_HUMAN from .uak-env and could pass the human-only gates.
+        case "$hack_key" in UAK_HUMAN|UAK_AGENT_HUMAN) [ -n "${UAK_AGENT_HUMAN:-}" ] || export "UAK_AGENT_HUMAN=$hack_value"; continue;; esac
+        hack_current=$(eval "printf '%s' \"\${$hack_key:-}\"")
+        # Identity and task of a worktree win over an inherited shell export (UpiixSol: a lead's exported
+        # UAK_AGENT made a subagent's claim land under the lead's name). UAK_ENV_OVERRIDE=1 keeps the export.
+        if [ -z "$hack_current" ] || { [ "$hack_current" != "$hack_value" ] && [ "${UAK_ENV_OVERRIDE:-}" != 1 ] &&
+             case "$hack_key" in UAK_AGENT|UAK_TASK|UAK_SESSION) true;; *) false;; esac; }; then
+          [ -z "$hack_current" ] || printf 'uak: using %s=%s from .uak-env (the shell had %s)\n' "$hack_key" "$hack_value" "$hack_current" >&2
+          # Kept for a refusal that this swap explains (UAK-020: a reviewer in the author's worktree became the author).
+          [ "$hack_key" != UAK_AGENT ] || [ -z "$hack_current" ] || UAK_ENV_SHELL_AGENT=$hack_current
+          export "$hack_key=$hack_value"
+        fi;;
+    esac
+  done < "$hack_env_file"
+fi
+LEASE=${UAK_LEASE_SECONDS:-1800}
+REMOTE=${UAK_REMOTE:-origin}
+BASE=${UAK_BASE:-main}
+AGENT=${UAK_AGENT:-}
+HUMAN=${UAK_HUMAN:-}
+ROOT= TX= TXROOT= NOW= HANDOVER_ENV_WT=
+# `uak --json CMD …` (or UAK_JSON=1): the same command, its result as one JSON object (lib/json.sh). A flag before the
+# command, so it never collides with a command's own --json (pace, tokens).
+if [ "${1:-}" = --json ] || [ "${UAK_JSON:-}" = 1 ]; then
+  [ "${1:-}" != --json ] || shift
+  . "$UAK_BIN/lib/json.sh"; json_run "$@"; exit "$?"
+fi
+CMD=${1:-help}
+[ "$#" -eq 0 ] || shift
+# The names agents guessed for existing commands. Why (MLB hackathon): tasks, task, show, backlog and
+# status --verbose/--available were errors, each followed by a retry.
+case "$CMD" in
+  tasks|backlog) CMD=status;;
+  task|show) CMD=status; [ "$#" -eq 0 ] || case "$1" in -*) ;; *) set -- --task "$@";; esac;;
+esac
+if [ "$CMD" = status ] || [ "$CMD" = next ]; then
+  for a in "$@"; do shift; case "$a" in --verbose|-v) set -- "$@" --full;; --available|--all) ;; *) set -- "$@" "$a";; esac; done
+fi
+. "$UAK_BIN/lib/core.sh"
+trap cleanup EXIT
+trap 'exit 130' INT TERM
+usage() {
+  say "uak — multi-agent coordination on the remote claims branch"
+  reg_usage
+  say "UAK_AGENT / UAK_HUMAN · UAK_REMOTE=origin · UAK_BASE=main · lease=1800s"
+  say "Why: the remote serializes claims; every session keeps an exact next step."
+}
+case "$CMD" in help|-h|--help) usage; exit 0;; esac
+# `uak CMD --help` prints that command's usage line. Why (MLB hackathon): `uak status --help` was an error.
+for a in "$@"; do case "$a" in -h|--help)
+  usage | grep -E "^($CMD)( |\$)" || usage; exit 0;; esac; done
+case "$CMD" in version|--version) cat "$UAK_BIN/../VERSION" 2>/dev/null || say unknown; exit 0;; esac
+# Call counts give the black box a denominator (error rate per command). Local file, flushed by bb.
+bb_common=$(git rev-parse --git-common-dir 2>/dev/null) || bb_common=
+case "${UAK_BLACKBOX:-}" in off|0|no|false) ;; *)
+  [ -z "$bb_common" ] || printf '%s\n' "${UAK_CALLER:+$UAK_CALLER-}$CMD" >> "$bb_common/uak-blackbox.calls" 2>/dev/null;;
+esac
+# Dispatch from the registry (lib/commands.tsv): a script of its own, or a command of this engine.
+reg_find "$CMD" || UAK_CODE=unknown-command die "Unknown command: $CMD (uak help lists them)"
+[ "$REG_RUN" != exec ] || exec bash "$UAK_BIN/$CMD" "$@"
+ROOT=$(git rev-parse --show-toplevel 2>/dev/null) || {
+  case "$CMD" in lint|init-smoke) ;; *) gitfail "Run inside a Git repository with a remote.";; esac
+  ROOT=$(pwd -P)
+}
+ROOT=$(cd "$ROOT" && pwd -P) || gitfail "Cannot open the repository."
+BACKLOG="$ROOT/.uak/TASKS.md"
+OWNERS="$ROOT/.uak/OWNERS.md"
+# One file per command family (docs/ARCHITECTURE.md: where to change what).
+for uak_lib in uak-coordination lib/config.sh lib/backlog.sh lib/tx.sh lib/claim.sh lib/done.sh lib/plan.sh lib/status.sh \
+    lib/wait.sh lib/lint.sh lib/review-merge.sh lib/security.sh lib/smoke-init.sh lib/messages.sh lib/memory.sh lib/tests.sh lib/github.sh; do
+  . "$UAK_BIN/$uak_lib" || gitfail "Missing $UAK_BIN/$uak_lib: reinstall the kit (install.sh --update)."
+done
+PLAN_FILE= PLAN_AMEND=no ID= BRANCH= WORKTREE= NEXT_TEXT= REQUEST_NEXT= TOKEN= NEW_STATE= LOG_TEXT= PR_URL= EVIDENCE=
+MERGE_COMMIT= REVIEWER= CANCEL_REASON=
+REVIEW_LEARN=no WAIT_FOR=message WAIT_TIMEOUT=${UAK_WAIT_TIMEOUT:-540} WAIT_EVERY=${UAK_WAIT_EVERY:-15}
+EXPIRED=no SHOW_SUMMARY=no LINT_SECRETS=no QUIET=no SESSION_ONLY=no ALLOW_INFLIGHT=no ALLOW_IDS= ALLOW_DONE= REVIEW_NOTE= FULL=no REVIEW_START=no REVIEW_STARTED=no
+NO_UI_TEXT= NO_RED_TEXT= ALLOW_TESTS=no RETIRE_NAMES= DONE_TO= FOLLOWUP_TITLE= REVIEW_STOP=no REVIEW_DECLINE=no NEW_ID= REVIEW_HINT= DONE_HINT=
+REVIEW_SHA= REVIEW_VERDICT= REGISTER_REVIEWER= SMOKE_COMMAND= SECRET_PATH= SECRET_RULE= SECRET_REASON=
+DECISION_OPTION= DECISION_REVERSIBLE=no DECISION_AUTHORIZED=no DECISION_CLASS=routine
+DONE_TEXT= DECISION_TEXT= WHY_TEXT= FAILS_TEXT= COMMANDS_TEXT=
+case "$CMD" in
+  # `uak status HACK-005` was the 2nd most common uak error at Reap (8 times): accept the ID positionally.
+  status) if [ "$#" -gt 0 ] && valid_id "$(norm_id "$1")"; then ID=$(norm_id "$1"); shift; fi;;
+  digest|lint|tick|init-smoke) ;;
+  # next works without an identity: it shows the best task and how to claim it with a name.
+  # Why (Reap buildathon): "No identity" from `uak next` in the main checkout was the top error (24).
+  next) [ -n "$AGENT" ] || AGENT=$(git config --get uak.agent 2>/dev/null || true); [ -n "$AGENT" ] || AGENT=$HUMAN
+        [ -z "$AGENT" ] || identity;;
+  allow)
+    [ "$#" -gt 0 ] || die "Usage: allow ID... --reason TEXT, or allow --in-flight --reason TEXT (UAK_HUMAN)."
+    while [ "$#" -gt 0 ]; do
+      case "$1" in --in-flight) ALLOW_INFLIGHT=yes;; --tests) ALLOW_TESTS=yes;; --*) break;; *) valid_id "$(norm_id "$1")" || bad_id "$1"; ALLOW_IDS="$ALLOW_IDS $(norm_id "$1")";; esac
+      shift
+    done
+    [ "$ALLOW_INFLIGHT" = yes ] || [ -n "$ALLOW_IDS" ] || die "allow needs an ID or --in-flight."
+    ID=; identity;;
+  checkpoint)
+    [ "$#" -gt 0 ] || die "Missing ID or --session."
+    if [ "$1" = --session ]; then SESSION_ONLY=yes; shift
+    else ID=$(norm_id "$1"); shift; valid_id "$ID" || bad_id "$ID"; fi
+    identity;;
+  register-reviewer)
+    [ "$#" -gt 0 ] || die "Missing NAME."; REGISTER_REVIEWER=$1; ID=$1; shift; identity;;
+  msg)
+    [ "$#" -gt 1 ] || die "Usage: msg TO TEXT [--kind KIND] [--task ID]."
+    # A flag is not a recipient: `uak msg --kind request …` sent to "agent:--kind" (audit, Oct 2026).
+    case "$1" in -*) die "Usage: msg TO TEXT [--kind KIND] [--task ID]: TO comes first (a task ID, NAME, related:ID, impact:ID, all or human).";; esac
+    MSG_TO=$1; shift; MSG_TASK=${UAK_TASK:-}; identity;;
+  inbox) identity;;
+  wait)
+    if [ "$#" -gt 0 ] && valid_id "$(norm_id "$1")"; then ID=$(norm_id "$1"); shift; fi
+    identity;;
+  learn) [ "$#" -gt 0 ] || die "Usage: learn \"what bites · where · what to do\" [--path P,Q] [--task ID] · learn --forget N"; identity;;
+  recall)
+    if [ "$#" -gt 0 ] && valid_id "$(norm_id "$1")"; then ID=$(norm_id "$1"); shift
+    elif [ "$#" -gt 0 ]; then case "$1" in --*) ;; *) MEM_PATHS=$1; shift;; esac; fi;;
+  plan)
+    [ "$#" -gt 0 ] && [ -f "$1" ] || die "Usage: plan FILE [--amend] (## ID sections in TASKS.md format)."
+    PLAN_FILE=$(cd "$(dirname "$1")" && pwd -P)/$(basename "$1"); shift
+    [ -n "$HUMAN" ] || die "plan publishes backlog: needs UAK_HUMAN (a human authorizes it)."
+    identity;;
+  away) identity;;
+  pr-sync)
+    if [ "$#" -gt 0 ] && valid_id "$(norm_id "$1")"; then ID=$(norm_id "$1"); shift; fi
+    [ -n "$AGENT" ] || AGENT=scheduler; identity;;
+  retire)
+    [ "$#" -gt 0 ] || die "Usage: retire NAME... (an identity that no longer runs; its human or the agent itself)."
+    while [ "$#" -gt 0 ]; do case "$1" in --*) break;; *[!A-Za-z0-9_.-]*) die "Invalid identity: $1";; *) RETIRE_NAMES="$RETIRE_NAMES $1";; esac; shift; done
+    identity;;
+  *) [ "$#" -gt 0 ] || die "Missing ID. Usage: $(usage | grep -E "^$CMD( |\$)" | head -n 1)"
+     ID=$(norm_id "$1"); valid_id "$ID" || bad_id "$1"; shift; identity;;
+esac
+while [ "$#" -gt 0 ]; do
+  opt=$1; shift
+    case "$opt" in
+    --secrets) [ "$CMD" = lint ] || bad_opt; LINT_SECRETS=yes;;
+    --expired) [ "$CMD" = release ] || bad_opt; EXPIRED=yes;;
+    --summary) [ "$CMD" = status ] || bad_opt; SHOW_SUMMARY=yes;;
+    --full) case "$CMD" in status|next|digest|inbox) FULL=yes;; *) bad_opt;; esac;;
+    --start) [ "$CMD" = review ] || bad_opt; REVIEW_START=yes;;
+    --stop) [ "$CMD" = review ] || bad_opt; REVIEW_STOP=yes;;
+    --decline) [ "$CMD" = review ] || bad_opt; REVIEW_DECLINE=yes;;
+    --learn) [ "$CMD" = review ] || bad_opt; REVIEW_LEARN=yes;;
+    --amend) [ "$CMD" = plan ] || bad_opt; PLAN_AMEND=yes;;
+    --similar) [ "$CMD" = recall ] || bad_opt; MEM_SIMILAR=yes;;
+    --ack|--all|--peek|--human)
+      [ "$CMD" = inbox ] || bad_opt
+      case "$opt" in --ack) MSG_ACK=yes;; --all) MSG_MODE=all;; --peek) MSG_MODE=peek;; --human) MSG_MODE=human;; esac;;
+    --kind)
+      [ "$CMD" = msg ] && [ "$#" -gt 0 ] || bad_opt
+      MSG_KIND=$1; shift; msg_valid_kind "$MSG_KIND" || die "--kind: info|request|contract|blocker|reply|review|approve|reject|integrated|human";;
+    --task|--branch|--worktree|--next|--read-summary|--state|--done|--decision|--why|--fails|--commands|--pr|--evidence|--integrated|--reviewer|--cancel|--sha|--verdict|--note|--command|--option|--reversible|--authorized|--class|--path|--rule|--reason|--to|--title|--for|--timeout|--forget|--search|--no-ui|--no-red)
+      [ "$#" -gt 0 ] || die "Missing value for $opt."
+      value=$1; shift
+      case "$opt" in
+        --task)
+          value=$(norm_id "$value"); valid_id "$value" || bad_id "$value"
+          case "$CMD" in status|learn) ID=$value;; msg) MSG_TASK=$value;; inbox) MSG_MODE="task:$value";; *) bad_opt;; esac;;
+        --branch) [ "$CMD" = claim ] || bad_opt; BRANCH=$value;;
+        --worktree) [ "$CMD" = claim ] || bad_opt; WORKTREE=$value;;
+        --next) case "$CMD" in claim|checkpoint) NEXT_TEXT=$value;; *) bad_opt;; esac;;
+        --read-summary) case "$CMD" in release|handover) ;; *) bad_opt;; esac; TOKEN=$value;;
+        --state) [ "$CMD" = log ] || bad_opt; NEW_STATE=$value; case "$value" in CLAIMED|BLOCKED) ;; *) die "Invalid state.";; esac;;
+        --done) [ "$CMD" = checkpoint ] || bad_opt; DONE_TEXT=$value;;
+        --decision) [ "$CMD" = checkpoint ] || bad_opt; DECISION_TEXT=$value;;
+        --why) case "$CMD" in checkpoint|decision) ;; *) bad_opt;; esac; WHY_TEXT=$value;;
+        --fails) [ "$CMD" = checkpoint ] || bad_opt; FAILS_TEXT=$value;;
+        --commands) [ "$CMD" = checkpoint ] || bad_opt; COMMANDS_TEXT=$value;;
+        --pr) [ "$CMD" = done ] || bad_opt; PR_URL=$value;;
+        --evidence) [ "$CMD" = done ] || bad_opt; EVIDENCE=$value;;
+        --no-ui) [ "$CMD" = done ] || bad_opt; NO_UI_TEXT=$value;;
+        --no-red) [ "$CMD" = done ] || bad_opt; NO_RED_TEXT=$value;;
+        --integrated) case "$CMD" in done|integrate) MERGE_COMMIT=$value;; *) bad_opt;; esac;;
+        --reviewer) [ "$CMD" = done ] || bad_opt; REVIEWER=$value;;
+        --sha) [ "$CMD" = review ] || bad_opt; REVIEW_SHA=$value;;
+        --verdict) [ "$CMD" = review ] || bad_opt; REVIEW_VERDICT=$value;;
+        --note) case "$CMD" in review|done) REVIEW_NOTE=$value;; *) bad_opt;; esac;;
+        --for) [ "$CMD" = wait ] || bad_opt; case "$value" in approve|integrated|message) WAIT_FOR=$value;; *) die "--for approve|integrated|message";; esac;;
+        --timeout) [ "$CMD" = wait ] || bad_opt; case "$value" in ''|*[!0-9]*) die "--timeout takes seconds";; esac; WAIT_TIMEOUT=$value;;
+        --to) case "$CMD" in done|handover) ;; *) bad_opt;; esac; case "$value" in *[!A-Za-z0-9_.-]*) die "--to takes an agent name.";; esac; DONE_TO=$value;;
+        --title) [ "$CMD" = followup ] || bad_opt; FOLLOWUP_TITLE=$value;;
+        --command) [ "$CMD" = init-smoke ] || bad_opt; SMOKE_COMMAND=$value;;
+        --option) [ "$CMD" = decision ] || bad_opt; DECISION_OPTION=$value;;
+        --reversible) [ "$CMD" = decision ] || bad_opt; DECISION_REVERSIBLE=$value;;
+        --authorized) [ "$CMD" = decision ] || bad_opt; DECISION_AUTHORIZED=$value;;
+        --class) [ "$CMD" = decision ] || bad_opt; DECISION_CLASS=$value;;
+        # all = * (everyone): typed in PowerShell, a bare * reaches Git Bash as the folder's file names.
+        --path) case "$CMD" in secret-exception) SECRET_PATH=$value;; learn|recall) MEM_PATHS=$value; [ "$MEM_PATHS" != all ] || MEM_PATHS='*';; *) bad_opt;; esac;;
+        --search) [ "$CMD" = recall ] || bad_opt; MEM_SEARCH=$value;;
+        --forget) [ "$CMD" = learn ] || bad_opt; case "$value" in ''|*[!0-9]*) die "--forget takes a lesson number";; esac; MEM_FORGET=$value;;
+        --rule) [ "$CMD" = secret-exception ] || bad_opt; SECRET_RULE=$value;;
+        --reason) case "$CMD" in secret-exception) SECRET_REASON=$value;; allow|integrate) WHY_TEXT=$value;; *) bad_opt;; esac;;
+        --cancel) [ "$CMD" = release ] || bad_opt; CANCEL_REASON=$value;;
+      esac
+      ;;
+    *) case "$CMD" in
+         log) LOG_TEXT="$LOG_TEXT${LOG_TEXT:+ }$opt";;
+         msg) MSG_TEXT="$MSG_TEXT${MSG_TEXT:+ }$opt";;
+         learn) MEM_TEXT="$MEM_TEXT${MEM_TEXT:+ }$opt";;
+         # One call registers the whole team (Reap: 25 register-reviewer calls, 5 refused as self-grants).
+         register-reviewer) case "$opt" in *[!A-Za-z0-9_.-]*) die "Invalid reviewer identity: $opt";; esac
+               REGISTER_REVIEWER="$REGISTER_REVIEWER $opt";;
+         # Unquoted evidence was the most common uak error at UpiixSol (3 times): accept the words.
+         done) [ -n "$EVIDENCE" ] || die "Unexpected argument: $opt. Usage: done ID --pr URL --evidence \"TEXT\""
+               EVIDENCE="$EVIDENCE $opt";;
+         checkpoint) die "checkpoint takes flags, not free text: checkpoint ID --done T --decision T --why T --fails T --commands T --next T (use - for none).";;
+         *) die "Unexpected argument: $opt (quote multi-word values: --flag \"two words\").";;
+       esac;;
+  esac
+done
+[ "$SHOW_SUMMARY" = no ] || [ -n "$ID" ] || die "--summary needs --task ID."
+if [ -n "$AGENT" ] || [ -n "$HUMAN" ]; then identity; fi
+clock_now; init_temp
+[ "$CMD" != claim ] || claim_args_check
+case "$REG_RUN" in local:*) "${REG_RUN#local:}"; exit "$?";; esac
+if [ "$CMD" = checkpoint ]; then
+  [ -n "$DONE_TEXT" ] && [ -n "$DECISION_TEXT" ] && [ -n "$WHY_TEXT" ] &&
+    [ -n "$FAILS_TEXT" ] && [ -n "$COMMANDS_TEXT" ] && [ -n "$NEXT_TEXT" ] ||
+    die "checkpoint needs all six fields; missing:$([ -n "$DONE_TEXT" ] || printf ' --done')$([ -n "$DECISION_TEXT" ] || printf ' --decision')$([ -n "$WHY_TEXT" ] || printf ' --why')$([ -n "$FAILS_TEXT" ] || printf ' --fails')$([ -n "$COMMANDS_TEXT" ] || printf ' --commands')$([ -n "$NEXT_TEXT" ] || printf ' --next') (use - for none)."
+fi
+[ "$CMD" != done ] || done_args_check
+[ "$CMD" != log ] || [ -n "$LOG_TEXT" ] || die "log needs an entry."
+[ "$CMD" != handover ] || [ -n "$DONE_TO" ] || die "Usage: handover ID --to NAME (the claim, branch and worktree pass to NAME as they are)."
+[ "$CMD" != followup ] || [ -n "$FOLLOWUP_TITLE" ] || die "Usage: followup ID --title TEXT (a new task with ID's Paths, after ID)."
+[ "$CMD" != msg ] || [ -n "$MSG_TEXT" ] || die "msg needs a text."
+[ "$CMD" != msg ] || [ -z "$MSG_TASK" ] || valid_id "$MSG_TASK" || MSG_TASK=
+[ "$CMD" != lint ] || git -C "$ROOT" config --get "remote.$REMOTE.url" >/dev/null 2>&1 || { lint_local; exit "$?"; }
+# Losing the remote is an explicit read-only mode; no offline writes.
+remote_setup
+case "$REG_RUN" in tx) transaction;; *) "$REG_RUN"; exit "$?";; esac

@@ -1,0 +1,73 @@
+# Sprint mode · hackathons and fast AI prototypes
+
+Goal: win the rubric with a demo people remember. Speed beats polish, and the frontend IS the product. `AGENTS.md` still applies; this file lists only what changes.
+
+## Clock (T = official deadline)
+| When | What | Who |
+|---|---|---|
+| T0 | The human chose `sprint` at install. `/uak-setup`: PROJECT.md (rubric, times) and `uak clock START DEADLINE ZONE --write` (every time below, scaled to the event length), `uak doctor` PASS on every machine, including "gh can create PRs". | human + agent |
+| T0 | Product name and brand fixed in `IDEA.md`. Renaming after T-50% needs a human `uak decision`. | human |
+| first claim (`clock`; 20 min in a 4 h event) | `/uak-plan` wave 1: contracts and mocks, walking skeleton, spikes. `uak graph --min-wave1 <agents>` passes. | planner |
+| T0+1h | `/uak-design-lock`: 3 visual directions with screenshots; the human picks one; `web/DESIGN.md` and tokens frozen. | design agent + human |
+| T0+2h | End-to-end walking skeleton up to the wow moment, on labeled mocks, **deployed**: `uak deploy --write` (one Render service from a Blueprint, or Vercel for Next.js), connected once; every merge to main redeploys. Judges open a URL, not a laptop. | team + human (the host account) |
+| T-50% | First plan-B video of the whole flow. Wave 2 via `uak plan` (no PR). | demo |
+| T-8h | A HUMAN owns submission: forms, platforms, videos, team roster. Never an agent low on tokens. | human |
+| freeze (`clock`: 15% of the event, 30 min to 6 h) | `Freeze-Epoch`: only `Freeze-Allowed: yes` or `uak allow` tasks. `uak next` says FREEZE; agents review, rehearse, then stop. | all + human |
+| T-2h | Timed rehearsal from a clean clone, final plan-B video. | demo |
+| T-1h | Submission sent and receipt saved. | human |
+
+## Plan
+1. Every P0 maps to a rubric criterion (`Rubric: C1`). If it scores no points, it is not P0.
+2. Tasks take 60 min or less, with disjoint `Paths` per feature (`app/routers/<f>.py`, `web/src/features/<f>/`).
+3. Wave 1 is wide: one task with no hard dependency per agent. Consumers use `Uses contract:` plus mocks.
+4. At most 2 agents per human. More agents produce more messages than code.
+5. Wave 2 onward: `UAK_HUMAN=<human> uak plan file.md` publishes tasks instantly, with no PR.
+6. A contract with no task behind it is a hole. When a contract says "each module exposes X" (a stage registry, a plugin hook), the backlog has a task that implements X for every consumer, P0 if the wow runs through it. Why (Hacktoberfest): the pipeline looked up `run_stage` in 8 service modules, no task wrote one, and every run replayed the same recorded project.
+7. Start the team with `uak up <agents> --tmux`. Humans watch `uak board --watch 10` instead of asking agents for status.
+
+## Speed
+0. Orchestrate by cost (`.uak/docs/ORCHESTRATION.md`): Haiku scouts read, the Sonnet lead builds, and Opus is consulted only at plan lock, a repeated failure and done. The guard caps parallel subagents (4) and Opus subagents (2 per session). `uak pace` scales those with your 5-hour window, and fixed hard limits stop any runaway: 6 parallel, 3 Opus, 40 spawns per session, 8 per machine, 6 per minute, and 6 agents per `uak up`.
+1. Mock first; switch to the real thing after its spike. Every mock shows `demo_data: true` in the UI.
+2. Merge as soon as there is an `approve` and the gates are green (`Auto-Merge: yes`). The human gets a `digest`, not pings.
+3. Stuck for 20 min, or the loop is stuck → `uak decision ID --option "TEXT" --why "TEXT" --reversible yes --authorized yes --class routine` (the reversible fallback), and move on.
+4. Mechanical fixes (lint, types, a failing test with a clear error) go to `uak loop --verify <cmd> --agent <cli> --max 5`.
+5. No free tasks: review PRs → demo-path tests → polish → rehearse.
+
+## Test-first, fast (skill `test-first`)
+1. A feature or bug task lists `Tests:` (2 to 4 behavior names on the demo path). Write them with the stub, `uak red ID` (it must fail on an assertion), then implement. Design lock, docs and pure styling tasks say `Test-First: no (why)`.
+2. Tests only grow: `done` refuses a changed assertion, a skip or a deleted test. A wrong test → `uak msg human`.
+3. Fakes for the model, payments and external APIs (the recorded `demo_data` responses are the Fake), a frozen clock; one integration test on the real DB engine for the demo path.
+
+## A stunning frontend (what judges see)
+1. The wow moment happens within 90 s of the demo and is fully visible at 1280×720 (projector) without scrolling. Legal or "not a diagnosis" notices stay inside the viewport.
+2. There is one visual direction in `web/DESIGN.md`, and every color comes from CSS tokens. A global redesign after the lock needs a human decision.
+3. Every screen on the demo path has empty, loading, error and labeled sample-data states.
+4. Before `uak done` on a UI task: `bash .uak/bin/design-lint` passes, screenshots at 1280×720 and 390×844 go in `.uak-shots/<ID>/`, and the `design-critic` subagent writes its verdict there. `done` refuses a task in `UI-Paths` without `VERDICT: SHIP` for its commit.
+5. Skills:
+   - `frontend-design` for the design lock (`/uak-design-lock`);
+   - `product-ui` for every app screen, with your screen's recipe row in `web/DESIGN.md` and its locked screen in `web/public/design-lock/screens/`;
+   - `landing-story` for the landing the jury opens first: it tells the idea in 5 seconds, with real screens of the product;
+   - `redesign-existing-projects` during the freeze;
+   - `webapp-testing` to verify.
+6. Animations respect `prefers-reduced-motion`. UI checks run with reduced motion, so a slow GPU never fakes a failure.
+7. On the demo path: AA contrast, visible focus, fully keyboard-operable.
+8. Every number on screen has a source (tooltip or footnote). Judges ask "where does that number come from?".
+
+## AI products
+- Pin model IDs in one config file and check with a spike that they exist.
+- Keep a recorded response per model call (`demo_data: true`) so the demo works offline and without keys. Add a `DEMO_MODE` switch.
+- A fallback to the recording is a fallback, not the product. With `DEMO_MODE` off, a new input must produce its own output, or the run must say plainly that it is showing the recording. A judge who types their own idea and gets yours sees a fake.
+- Get the keys in the first hour. A task that only a human with keys can finish (recording real fixtures) is P0 with a named human, not a backlog item.
+- The LLM picks from given options and cites given IDs. Validate every model output against a schema before use.
+- Use `mcp-builder` when the project exposes tools to agents.
+
+## Defaults (`PROJECT.md`)
+`Mode: sprint` · `Autonomy: yes` · `Auto-Merge: yes` · `Review-Mode: claims` · `Plan-Channel: claims` · `Lease-Seconds: 2700` · `Review-Lease-Seconds: 14400` · `Freeze-Epoch` required (`uak lint` and `uak doctor` fail without it).
+
+## Submission checklist
+- [ ] Product README in English: real screenshots, setup (`uv sync` / `npm ci`), `.env.example` variables, and how to run the demo with no keys.
+- [ ] Videos within the event limits, with links open to judges.
+- [ ] The demo is deployed (`uak deploy` since T0+2h, on a plan that does not sleep), or reproducible from a clean clone in 5 min or less.
+- [ ] Data and library licenses declared (non-commercial ones explicit).
+- [ ] Submitted on EVERY platform the event requires, with a receipt.
+- [ ] `/uak-retro` within 48 h, then `uak garden`: lessons improve this file, and rules nobody needed leave it.
