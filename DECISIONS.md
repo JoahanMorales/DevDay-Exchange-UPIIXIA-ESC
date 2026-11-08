@@ -8,3 +8,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794122826 | HACK-001 | route={path,element} glob; react-router-dom added | Why: per acceptance
 - 1794122893 | HACK-003 | vectors.json committed (ECDSA random); envelope plaintext = 125B signed IOU; envelope_id=sha256(signed IOU) | Why: cross-language reuse by HACK-011/013/014
 - 1794123033 | HACK-002 | smoke-project missing: project-level, not in Paths | Why: spike only
+- 1794123097 | HACK-001 | --no-ui: placeholder only; dropped template files | Why: outside Paths; no DESIGN.md
