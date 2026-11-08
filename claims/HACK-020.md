@@ -15,4 +15,4 @@ Task-Base: 04453b3727de3d20d0b7234d15d9cc40513e3ac8
 Next: Wait for review PR #21; wiring of debts.py is a request to victor-1
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/21
 Evidence: -
-Thread-Read: 94
+Thread-Read: 99
