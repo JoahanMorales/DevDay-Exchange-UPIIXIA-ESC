@@ -15,4 +15,4 @@ Task-Base: f33dbae8bf55b38a072660f877506495ae14f001
 Next: wait for review
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/12
 Evidence: -
-Thread-Read: 50
+Thread-Read: 57
