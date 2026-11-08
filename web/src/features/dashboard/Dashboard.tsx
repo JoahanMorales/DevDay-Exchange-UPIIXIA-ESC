@@ -107,8 +107,10 @@ export function Dashboard({
           <span className="num shrink-0 text-lg">{`${paid.length} de ${debts.length}`}</span>
         </div>
       </div>
-      <div className="mb-6 grid grid-cols-3 gap-3">
-        <Stat label="Pagarés" value={debts.length} />
+      <div className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-3">
+        <div className="hidden md:block">
+          <Stat label="Pagarés" value={debts.length} />
+        </div>
         <Stat label="Por cobrar" value={formatMXN(totalCents - paidCents)} tone="warn" />
         <Stat label="Cobrado por CoDi" value={formatMXN(paidCents)} tone="ok" />
       </div>
