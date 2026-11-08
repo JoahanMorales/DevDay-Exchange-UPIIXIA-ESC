@@ -15,4 +15,4 @@ Task-Base: 04453b3727de3d20d0b7234d15d9cc40513e3ac8
 Next: web/src/features/assistant: page + ask.test.ts, build, design-lint, shots, critic, then done
 PR: -
 Evidence: -
-Thread-Read: 0
+Thread-Read: 90
