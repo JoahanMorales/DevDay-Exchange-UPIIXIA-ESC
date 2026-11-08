@@ -1,7 +1,7 @@
 # STATE
 
 Phase: execution
-Updated: 1794122363
+Updated: 1794122476
 AVAILABLE: (31; last 12) ... HACK-020 HACK-021 HACK-022 HACK-023 HACK-024 HACK-025 HACK-026 HACK-027 HACK-028 HACK-029 HACK-030 HACK-031 
 CLAIMED: -
 BLOCKED: -
@@ -14,6 +14,7 @@ Claims (first 24; status --task ID shows detail):
 Blockers: BLOCKED tasks; use status --task ID --summary.
 Current decisions (last 5):
 - 1794076748 | deadline backlog/proposed/1794074104 | ALLOW_P0 | Only P0 with active autonomy; a timeout grants no permissions.
+- 1794122476 | plan | victor/victor | tasks added: HACK-032 HACK-033 | Why: backlog without PR (Plan-Channel: claims)
 
 Global next step: available P0; else review PRs, tests, demo, rehearsal.
 Why: bounded snapshot to resume without rereading history.
