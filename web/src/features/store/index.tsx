@@ -156,21 +156,23 @@ function StorePage() {
           </button>
         ))}
       </div>
-      <Button size="lg" className="sticky bottom-24 mt-4 w-full shadow-card md:static" disabled={cents === 0 || !db} onClick={charge}>
+      <Button size="lg" className="mt-4 w-full shadow-card" disabled={cents === 0 || !db} onClick={charge}>
         <Waveform size={28} weight="bold" /> Cobrar sin red
       </Button>
+      <p className="mt-3 text-center text-sm text-ink-2">El cliente escanea el reto con su celular. Sin red.</p>
       {err && <p role="alert" className="mt-3 font-bold text-bad">{err}</p>}
       <Button variant="ghost" className="mt-2 w-full" onClick={() => setShowCounter((s) => !s)} disabled={!me}>
         <Storefront size={20} /> QR del mostrador
       </Button>
       {showCounter && me && <QrLoop frames={[JSON.stringify({ merchant_id: me.subject_id, name: MERCHANT_NAME, credential: me.credential })]} label="QR del mostrador" />}
+      <div className="h-28 md:hidden" aria-hidden />
     </>}>
       <PageHeader title="Cobrar sin red" context={MERCHANT_NAME} />
       <Surface className="flex flex-col justify-center md:min-h-[46vh]">
         <p className="text-ink-2">Monto a cobrar</p>
         <div aria-live="polite" aria-label={formatMXN(cents)}><Amount cents={cents} size="lg" /></div>
       </Surface>
-      {me?.demo_data && <DemoBadge />}
+      <DemoBadge />
     </PageLayout>
   );
 }

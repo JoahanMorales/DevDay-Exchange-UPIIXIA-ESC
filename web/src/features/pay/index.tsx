@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { CheckCircle, PenNib } from "@phosphor-icons/react";
+import { CellSignalSlash, CheckCircle, PenNib } from "@phosphor-icons/react";
 import { Amount, Button, DemoBadge, PageHeader, PageLayout, SectionHeader, Surface, formatMXN } from "../../lib/ui";
 import { CHALLENGE_LEN, decodeChallenge, signIou, type ChallengeFields } from "../../lib/protocol";
 import { getEnrollment, getMerchant, getOrCreateKey, nextCounter, openCoreDb, type Db, type Enrollment, type MerchantEntry } from "../../lib/storage";
@@ -84,9 +84,18 @@ function PayPage() {
 
   if (!me) {
     return (
-      <PageLayout recipe="flow" aside={<Button size="lg" className="w-full" onClick={activate} disabled={!db}>Activar este celular</Button>}>
-        <PageHeader title="Pagar sin red" context="Primero activa tu llave en este celular (con red)" />
-        {msg && <p role="alert" className="font-bold text-bad">{msg}</p>}
+      <PageLayout recipe="flow" aside={<>
+        <Button size="lg" className="w-full" onClick={activate} disabled={!db}>Activar este celular</Button>
+        <p className="mt-3 text-center text-sm text-ink-2">Una sola vez, con red. Tu llave nunca sale del celular.</p>
+        {msg && <p role="alert" className="mt-3 font-bold text-bad">{msg}</p>}
+      </>}>
+        <PageHeader title="Pagar sin red" context="Escanea el reto de la tienda y firma un pagaré" />
+        <Surface className="flex flex-col justify-center gap-3 md:min-h-[46vh]">
+          <p className="flex items-center gap-2 text-ink-2"><CellSignalSlash size={22} weight="bold" /> Funciona en modo avión</p>
+          <p className="display text-2xl font-extrabold md:text-3xl">Activa tu llave para pagar sin red</p>
+          <p className="text-ink-2">Después, cada pago es: escanear el reto → confirmar el monto → mostrar tu pagaré.</p>
+        </Surface>
+        <DemoBadge />
       </PageLayout>
     );
   }
