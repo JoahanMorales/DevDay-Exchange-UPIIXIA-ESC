@@ -20,3 +20,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794125470 | deadline decision/HACK-008-1794124432/1794125332 | BLOCKED_OTHER_TASK | Option: Direction 1 Cempasúchil; Why: Victor picked it by looking at the gallery (AskUserQuestion: Sí, bloquéala); no money, accounts, publishing or scope expansion.
 - 1794125667 | HACK-014 | no UI in this task; demo_data fallback when backend down | Why: routes /pagar,/tienda own the screens
 - 1794125714 | HACK-012 | debts service owns state machine; webhook handler via debts.install() | Why: webhooks.reset clears handlers
+- 1794126041 | HACK-021 | openEvents injected (Fake in tests, EventSource adapter in page); demo SSE when no merchant_id | Why: Testable without backend; HACK-012 contract wired via /api/deudas?merchant_id=
