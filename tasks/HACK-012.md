@@ -9,13 +9,13 @@ Priority: P0
 Paths: app/routers/sync.py, app/routers/debts.py, app/services/debts.py, app/tests/test_sync.py, app/tests/test_debts.py
 Depends: HACK-010, HACK-011
 Verify: `uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py`
-Lease-Until: 1794140567
-Updated: 1794126167
+Lease-Until: 1794140658
+Updated: 1794126258
 Task-Base: f9105fc493c91cdee519adc1fc369447585ec791
 Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/15; run .uak/bin/smoke
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/15
-Evidence: uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py exit 0 (6 passed); full app/tests 23 passed; all 5 acceptance criteria covered by the 6 named tests · red at f9105fc: E   AssertionError: {"detail":"Not Found"}
-Events: 6
+Evidence: uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py exit 0 (9 passed); credential checks expired/bad_credential/cap_exceeded each tested · red at f9105fc: E   AssertionError: {"detail":"Not Found"}
+Events: 7
 Checkpoints: 1
 Sessions: 3
 Last-Checkpoint: 1794125714
@@ -23,4 +23,4 @@ Progress: 1 commit(s) since the claim · last: 9da068f HACK-012: sync dedupe, do
 Progress-Head: 9da068f/4294967295
 Progress-Changed: 1794126167
 Away: 1794125474
-Task-Tip: 9da068f2776bf7d2b522a97fb81e345e69e3e2e1
+Task-Tip: d1c47147f037bc7084d224952a8b7df1eb27b444
