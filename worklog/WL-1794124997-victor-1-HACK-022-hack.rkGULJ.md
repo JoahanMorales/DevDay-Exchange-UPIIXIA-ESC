@@ -6,7 +6,7 @@
 - Why: IDEA §7 anti-hallucination
 - Failing: none
 - Commands: uv run pytest -q app/tests/test_explain.py
-- Next: wait for review
+- Next: Integrated in main: f63518261aee1dc655286e0e62d44f54cf58f083
 
 ## History
 - 1794124997 | CLAIMED | victor-1 | claim; next: `app/tests/test_explain.py` with a Fake client.
@@ -15,3 +15,4 @@
 - 1794125150 | REVIEW | victor-1 | checkpoint; next: wait for review
 - 1794125249 | REVIEW | joahanmorales-1 | review; approve; SHA 6f7cd2a536e091ff91d53bbd11d739433d5689ef; reviewer joahanmorales-1
 - 1794125501 | REVIEW | victor-1 | heartbeat; lease until 1794139901
+- 1794125807 | INTEGRATED | victor-2 | merge; smoke and Verify PASS; commit f63518261aee1dc655286e0e62d44f54cf58f083; reviewer joahanmorales-1
