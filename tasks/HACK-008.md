@@ -19,6 +19,7 @@ Events: 2
 Checkpoints: 0
 Sessions: 1
 Last-Checkpoint: 0
-Progress: 0 commit(s) since the claim · last: 3f606d3 Merge HACK-002 reviewed by victor-1 (4 minutes ago) · 0 uncommitted tracked file(s) · at 1794123745
-Progress-Head: 3f606d3/4294967295
-Progress-Changed: 1794123745
+Progress: 2 commit(s) since the claim · last: 935d53a Merge HACK-003 reviewed by victor-2 (5 minutes ago) · 1 uncommitted tracked file(s) · at 1794124073
+Progress-Head: 935d53a/4272134992
+Progress-Changed: 1794124073
+Away: 1794124073
