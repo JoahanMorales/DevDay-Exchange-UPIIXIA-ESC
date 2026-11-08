@@ -9,16 +9,16 @@ Priority: P1
 Paths: app/routers/voice.py, app/tests/test_voice.py, web/src/features/voice/
 Depends: HACK-015
 Verify: `uv run pytest -q app/tests/test_voice.py && npm --prefix web test -- src/features/voice && npm --prefix web run build`
-Lease-Until: 1794177247
-Updated: 1794162847
+Lease-Until: 1794177260
+Updated: 1794162860
 Task-Base: 1c74895da68a3dadf4696fdf750dd2badbee4bb7
-Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/32; run .uak/bin/smoke
+Next: Wait for review of SHA 4e76f9a
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/32
 Evidence: uv run pytest -q app/tests/test_voice.py && npm --prefix web test -- src/features/voice && npm --prefix web run build exit 0 (4+6 tests); smoke exit 0; design-critic SHIP 4e76f9a · red at 1c74895: E   AssertionError: assert '' == 'ek_efimera_123'
-Events: 4
-Checkpoints: 1
+Events: 5
+Checkpoints: 2
 Sessions: 1
-Last-Checkpoint: 1794162749
+Last-Checkpoint: 1794162860
 Progress: 0 commit(s) since the claim · last: 1c74895 Merge HACK-026 reviewed by victor-1 (5 minutes ago) · 0 uncommitted tracked file(s) · at 1794162506
 Progress-Head: 1c74895/4294967295
 Progress-Changed: 1794162502
