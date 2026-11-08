@@ -9,8 +9,8 @@ Priority: P0
 Paths: docs/security.md
 Depends: HACK-012, HACK-015
 Verify: `test -s docs/security.md && bash .uak/bin/smoke`
-Lease-Until: 1794164007
-Updated: 1794161307
+Lease-Until: 1794164018
+Updated: 1794161318
 Task-Base: c4ad850499d4dec3ba3aa60be6b954ef0b29ba75
 Next: `/uak-secure`.
 PR: -
