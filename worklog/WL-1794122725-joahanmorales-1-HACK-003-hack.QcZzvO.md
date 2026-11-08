@@ -6,7 +6,7 @@
 - Why: cross-language reuse by HACK-011/013/014
 - Failing: none
 - Commands: uv run --no-project --with pydantic --with pytest --with cryptography python -m pytest -q app/tests/test_contract.py
-- Next: Wait for review of PR #1; then uak merge HACK-003
+- Next: Integrated in main: 935d53aa68de2b1fcce844b2b8f8e20c83d2d25d
 
 ## History
 - 1794122725 | CLAIMED | joahanmorales-1 | claim; next: `app/schemas/protocol.py` with the IOU byte layout, then `gen_vectors.py`.
@@ -14,3 +14,4 @@
 - 1794122893 | REVIEW | joahanmorales-1 | checkpoint; next: Wait for review of PR #1; then uak merge HACK-003
 - 1794123081 | REVIEW | victor-2 | review; approve; SHA af26c5def93aea877a65d9c7e7d2ce87f582164e; reviewer victor-2
 - 1794123711 | REVIEW | joahanmorales-1 | heartbeat; lease until 1794138111
+- 1794123767 | INTEGRATED | joahanmorales-1 | merge; smoke and Verify PASS; commit 935d53aa68de2b1fcce844b2b8f8e20c83d2d25d; reviewer victor-2
