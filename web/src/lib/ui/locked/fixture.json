@@ -1,0 +1,50 @@
+{
+  "demo_data": true,
+  "_source": "IDEA.md §4 demo script; read by web/src/lib/ui/locked (synthetic personas, no real data)",
+  "merchant": { "name": "Tienda Lupita", "place": "San Lucas, Coyoacán" },
+  "valid": {
+    "amount_cents": 2500,
+    "payer": "Mario",
+    "phone_tail": "4321",
+    "counter": 17,
+    "channel": "sonido"
+  },
+  "band": {
+    "amount_cents": 1800,
+    "payer": "Doña Carmen",
+    "cap_left_cents": 8200,
+    "channel": "pulsera"
+  },
+  "rejected": [
+    { "attack": "Grabación en bocina", "reason": "Reto vencido o ya usado" },
+    { "attack": "Voz generada con IA", "reason": "Audio sin firma válida" },
+    { "attack": "Pagaré desde 2 km", "reason": "Fuera de 50 m" },
+    { "attack": "Pagaré #17 reenviado", "reason": "Contador repetido" }
+  ],
+  "debts": [
+    {
+      "payer": "Mario",
+      "phone_tail": "4321",
+      "amount_cents": 2500,
+      "counter": 17,
+      "state": "cobrado",
+      "trace": "MBAN01002611080017"
+    },
+    {
+      "payer": "Doña Carmen",
+      "phone_tail": "pulsera",
+      "amount_cents": 1800,
+      "counter": 3,
+      "state": "pendiente",
+      "trace": null
+    },
+    {
+      "payer": "Luis",
+      "phone_tail": "8890",
+      "amount_cents": 4250,
+      "counter": 5,
+      "state": "enviado",
+      "trace": null
+    }
+  ]
+}
