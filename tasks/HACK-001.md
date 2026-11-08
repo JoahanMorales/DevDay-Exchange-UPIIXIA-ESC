@@ -12,10 +12,10 @@ Verify: `uv run pytest -q app/tests/test_health.py && npm --prefix web run build
 Lease-Until: 1794137696
 Updated: 1794123296
 Task-Base: bf793f9ad893ea58f5200994f61a768a4b616850
-Next: Wait for review of SHA fd5ad1b
+Next: Humano: Shared resource/CI needs a human: .uak/bin/.smoke-project.provenance
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/3
 Evidence: Verify exit 0; smoke PRODUCT_PASS exit 0; all acceptance criteria met · no visible change: only an unstyled placeholder route list; no web/DESIGN.md yet, the design lock replaces it · red at bf793f9: E   AssertionError: assert {'status': 'stub'} == {'status': 'ok'} · no visible change: only an unstyled placeholder route list; no web/DESIGN.md yet, the design lock replaces it · red at bf793f9: E   AssertionError: assert {'status': 'stub'} == {'status': 'ok'}
-Events: 8
+Events: 9
 Checkpoints: 2
 Sessions: 2
 Last-Checkpoint: 1794123097

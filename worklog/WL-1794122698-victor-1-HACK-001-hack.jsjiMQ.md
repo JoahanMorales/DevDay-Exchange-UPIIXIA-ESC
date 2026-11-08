@@ -6,7 +6,7 @@
 - Why: outside Paths; no DESIGN.md
 - Failing: scope: smoke-project files need human Paths amend
 - Commands: Verify cmd; bash .uak/bin/smoke
-- Next: Wait for review of SHA fd5ad1b
+- Next: Humano: Shared resource/CI needs a human: .uak/bin/.smoke-project.provenance
 
 ## History
 - 1794122698 | CLAIMED | victor-1 | claim; next: follow `.uak/stacks/fastapi-react/STACK.md` §Backend setup, then §Frontend setup.
@@ -17,3 +17,4 @@
 - 1794123097 | REVIEW | victor-1 | checkpoint; next: Wait for review of SHA fd5ad1b
 - 1794123147 | REVIEW | victor-2 | review; approve; SHA fd5ad1b5c9ab3cb02b4d656f777b0bc091b4b7a9; reviewer victor-2
 - 1794123296 | REVIEW | victor-1 | heartbeat; lease until 1794137696
+- 1794123303 | REVIEW | victor-1 | merge rechazado; Shared resource/CI needs a human: .uak/bin/.smoke-project.provenance

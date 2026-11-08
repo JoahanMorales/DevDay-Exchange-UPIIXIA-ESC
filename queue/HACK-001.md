@@ -1,5 +1,5 @@
 ID: HACK-001
-State: MERGING
+State: HUMAN
 Owner: victor-1
-Queued: 1794123298
-Reason: Waiting for queue
+Updated: 1794123303
+Reason: Shared resource/CI needs a human: .uak/bin/.smoke-project.provenance

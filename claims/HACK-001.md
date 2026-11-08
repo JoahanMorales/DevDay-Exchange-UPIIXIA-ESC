@@ -12,7 +12,7 @@ Verify: `uv run pytest -q app/tests/test_health.py && npm --prefix web run build
 Lease-Until: 1794137696
 Updated: 1794123296
 Task-Base: bf793f9ad893ea58f5200994f61a768a4b616850
-Next: Wait for review of SHA fd5ad1b
+Next: Humano: Shared resource/CI needs a human: .uak/bin/.smoke-project.provenance
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/3
 Evidence: -
 Thread-Read: 11
