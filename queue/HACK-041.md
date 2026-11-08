@@ -1,5 +1,5 @@
 ID: HACK-041
-State: WAITING
+State: MERGING
 Owner: joahanmorales-1
 Queued: 1794168884
 Reason: Waiting for queue
