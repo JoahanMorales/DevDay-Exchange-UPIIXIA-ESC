@@ -1,6 +1,6 @@
 # HACK-026
 ID: HACK-026
-State: CLAIMED
+State: REVIEW
 Owner: victor-2
 Branch: feat/hack-026
 Worktree: /Users/victor/Documents/Proyectos/DevDay-Exchange-UPIIXIA-ESC-wt/hack-026
@@ -9,10 +9,10 @@ Priority: P0
 Paths: web/src/features/landing/
 Depends: HACK-008, HACK-015
 Verify: `npm --prefix web test -- src/features/landing && npm --prefix web run build && bash .uak/bin/design-lint`
-Lease-Until: 1794164362
-Updated: 1794161662
+Lease-Until: 1794176325
+Updated: 1794161925
 Task-Base: c4ad850499d4dec3ba3aa60be6b954ef0b29ba75
-Next: design-critic on .uak-shots/HACK-026, then /uak-ship
-PR: -
+Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/31; run .uak/bin/smoke
+PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/31
 Evidence: -
 Thread-Read: 0
