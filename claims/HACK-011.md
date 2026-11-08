@@ -15,4 +15,4 @@ Task-Base: effb5ace5314411fd07ef005d0b688e7619ae6c0
 Next: Wait for review of SHA b1f46fc
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/8
 Evidence: -
-Thread-Read: 0
+Thread-Read: 28

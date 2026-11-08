@@ -15,4 +15,4 @@ Task-Base: d11f2b3f7f0cb81e73574d28319ebad2d6e9d77b
 Next: Wait for review of SHA 7f482fc
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/6
 Evidence: -
-Thread-Read: 0
+Thread-Read: 28
