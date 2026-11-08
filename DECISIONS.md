@@ -42,3 +42,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794159987 | allow | victor | freeze exception: HACK-024 | Why: Victor movio el freeze a 12:30: meter todo lo que alcance
 - 1794159989 | allow | victor | freeze exception: HACK-025 | Why: Victor movio el freeze a 12:30: meter todo lo que alcance
 - 1794159991 | allow | victor | freeze exception: HACK-026 | Why: Victor movio el freeze a 12:30: meter todo lo que alcance
+- 1794159993 | allow | victor | freeze exception: HACK-027 | Why: Victor movio el freeze a 12:30: meter todo lo que alcance
