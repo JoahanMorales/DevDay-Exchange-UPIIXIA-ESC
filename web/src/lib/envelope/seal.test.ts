@@ -3,6 +3,8 @@ import { describe, expect, it } from 'vitest';
 import vectors from '../contract/vectors.json';
 import { openEnvelope, sealEnvelope } from './seal';
 
+// Node's Buffer is not in the app's tsc types (types: [vite/client]); declare only what this test uses.
+declare const Buffer: { from(u: Uint8Array): { includes(x: unknown): boolean } };
 const v = vectors as any;
 const hex = (s: string) => Uint8Array.from(s.match(/../g)!.map((h) => parseInt(h, 16)));
 const signedIou = () => hex(v.envelope.plaintext_hex);

@@ -4,7 +4,7 @@ import { api } from "../../lib/api";
 import type { Envelope, SyncRequest, SyncResponse } from "../../lib/contract";
 import { openCoreDb, type Db } from "../../lib/storage";
 import { useOnline } from "../../lib/ui";
-import { Relay, type UploadState } from "./Relay";
+import { Relay, type UploadState } from "./RelayView";
 import { Scanner } from "./Scanner";
 import { addToQueue, DEFAULT_RELAY, forwardCopy, loadQueue, saveQueue, uploadQueue } from "./relay";
 
