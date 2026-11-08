@@ -97,6 +97,26 @@ body {
   line-height: 1.5;
 }
 
+@layer base {
+  /* One visible focus ring for every control (AA, keyboard): ink on paper, offset so it never hides the edge. */
+  :focus-visible {
+    outline: 3px solid var(--text);
+    outline-offset: 3px;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p,
+  li {
+    text-wrap: pretty;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 /* Amounts and counters: condensed Archivo with tabular figures. */
 .num {
   font-family: var(--font-display);
@@ -111,6 +131,9 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   *,
   *::before,
   *::after {

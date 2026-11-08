@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
-import { Check, Clock, X } from "@phosphor-icons/react";
+import { Check, Clock, Tray, X } from "@phosphor-icons/react";
 import { formatAmountDigits } from "./format";
 
 type Size = "sm" | "md";
@@ -21,14 +21,15 @@ export function Button({
   };
   const variants = {
     primary:
-      "bg-accent text-accent-ink disabled:bg-muted disabled:text-muted-ink",
-    secondary: "bg-ink text-surface disabled:bg-muted disabled:text-muted-ink",
+      "bg-accent text-accent-ink hover:brightness-95 disabled:bg-muted disabled:text-muted-ink disabled:hover:brightness-100",
+    secondary:
+      "bg-ink text-surface hover:bg-ink/85 disabled:bg-muted disabled:text-muted-ink",
     ghost:
-      "bg-transparent text-ink border border-line hover:bg-surface disabled:text-muted-ink",
+      "bg-transparent text-ink border border-line hover:bg-muted disabled:text-muted-ink disabled:hover:bg-transparent",
   };
   return (
     <button
-      className={`inline-flex items-center justify-center gap-2 rounded-md font-bold transition-transform active:scale-[0.98] disabled:cursor-not-allowed ${sizes[size]} ${variants[variant]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-md font-bold transition duration-200 active:scale-[0.98] disabled:cursor-not-allowed ${sizes[size]} ${variants[variant]} ${className}`}
       {...props}
     />
   );
@@ -222,7 +223,7 @@ export function ListRow({
   trailing?: ReactNode;
 }) {
   return (
-    <li className="flex items-center gap-3 border-t border-line px-4 py-3.5 first:border-t-0 md:px-5">
+    <li className="flex items-center gap-3 border-t border-line px-4 py-3.5 transition-colors duration-200 first:border-t-0 hover:bg-bg md:px-5">
       <StateIcon tone={tone} />
       <div className="min-w-0 flex-1">
         <div className="text-base font-bold">{title}</div>
@@ -248,4 +249,56 @@ export function DemoBadge({
   children?: ReactNode;
 }) {
   return <p className="mt-6 text-base text-ink-2">{children}</p>;
+}
+
+/** A placeholder shaped like the content it stands for. Pulses; reduced-motion users get it still. */
+export function Skeleton({ className = "" }: { className?: string }) {
+  return <div aria-hidden className={`animate-pulse rounded-md bg-muted ${className}`} />;
+}
+
+/** Loading state of a list: `rows` placeholder rows inside the same List surface the data will use. */
+export function SkeletonRows({ rows = 3, label = "Cargando" }: { rows?: number; label?: string }) {
+  return (
+    <div role="status" aria-busy="true">
+      <span className="sr-only">{label}</span>
+      <ul className="overflow-hidden rounded-lg border border-line bg-surface" aria-hidden>
+        {Array.from({ length: rows }, (_, i) => (
+          <li key={i} className="flex items-center gap-3 border-t border-line px-4 py-3.5 first:border-t-0 md:px-5">
+            <Skeleton className="size-8 shrink-0 rounded-full" />
+            <div className="min-w-0 flex-1 space-y-2">
+              <Skeleton className="h-4 w-2/5" />
+              <Skeleton className="h-3 w-3/5" />
+            </div>
+            <Skeleton className="h-5 w-16 shrink-0" />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/** Nothing here yet: one sentence of what will show up and, when there is one, the one action that fills it. */
+export function EmptyState({
+  title,
+  children,
+  action,
+  icon,
+}: {
+  title: string;
+  children?: ReactNode;
+  action?: ReactNode;
+  icon?: ReactNode;
+}) {
+  return (
+    <Surface>
+      <div className="flex flex-col items-start gap-3">
+        <span className="text-ink-2" aria-hidden>
+          {icon ?? <Tray size={40} weight="duotone" />}
+        </span>
+        <p className="text-lg font-bold">{title}</p>
+        {children && <p className="max-w-prose text-base text-ink-2">{children}</p>}
+        {action}
+      </div>
+    </Surface>
+  );
 }
