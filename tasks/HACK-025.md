@@ -19,3 +19,7 @@ Events: 1
 Checkpoints: 0
 Sessions: 1
 Last-Checkpoint: 0
+Progress: 0 commit(s) since the claim · last: c4ad850 Merge HACK-028 reviewed by victor-2 (34 seconds ago) · 0 uncommitted tracked file(s) · at 1794161315
+Progress-Head: c4ad850/4294967295
+Progress-Changed: 1794161315
+Away: 1794161315
