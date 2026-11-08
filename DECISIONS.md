@@ -16,3 +16,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794124409 | HACK-008 | One direction; fixture in lib/ui/locked; locked routes /design-lock/:screen | Why: Short event; public/ JSON cannot be imported by Vite
 - 1794124882 | HACK-010 | in-memory WebhookEvent store; handlers via register_payment_handler(tx, tracking_key, payload) | Why: no DB layer yet; HACK-012 owns debts
 - 1794124982 | HACK-008 | Direction Cempasúchil (Victor) | Why: Human pick by looking
+- 1794125150 | HACK-022 | model writes placeholders, digits rejected, template fills numbers | Why: IDEA §7 anti-hallucination
