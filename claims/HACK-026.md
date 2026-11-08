@@ -9,8 +9,8 @@ Priority: P0
 Paths: web/src/features/landing/
 Depends: HACK-008, HACK-015
 Verify: `npm --prefix web test -- src/features/landing && npm --prefix web run build && bash .uak/bin/design-lint`
-Lease-Until: 1794164017
-Updated: 1794161317
+Lease-Until: 1794164028
+Updated: 1794161328
 Task-Base: c4ad850499d4dec3ba3aa60be6b954ef0b29ba75
 Next: load skill `landing-story`.
 PR: -

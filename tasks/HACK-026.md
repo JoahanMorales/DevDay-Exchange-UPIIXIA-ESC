@@ -9,17 +9,17 @@ Priority: P0
 Paths: web/src/features/landing/
 Depends: HACK-008, HACK-015
 Verify: `npm --prefix web test -- src/features/landing && npm --prefix web run build && bash .uak/bin/design-lint`
-Lease-Until: 1794164017
-Updated: 1794161317
+Lease-Until: 1794164028
+Updated: 1794161328
 Task-Base: c4ad850499d4dec3ba3aa60be6b954ef0b29ba75
 Next: load skill `landing-story`.
 PR: -
 Evidence: -
-Events: 1
+Events: 2
 Checkpoints: 0
 Sessions: 1
 Last-Checkpoint: 0
-Progress: 0 commit(s) since the claim · last: c4ad850 Merge HACK-028 reviewed by victor-2 (43 seconds ago) · 0 uncommitted tracked file(s) · at 1794161324
+Progress: 0 commit(s) since the claim · last: c4ad850 Merge HACK-028 reviewed by victor-2 (47 seconds ago) · 0 uncommitted tracked file(s) · at 1794161328
 Progress-Head: c4ad850/4294967295
 Progress-Changed: 1794161324
 Away: 1794161324
