@@ -9,10 +9,10 @@ Priority: P0
 Paths: web/src/features/landing/
 Depends: HACK-008, HACK-015
 Verify: `npm --prefix web test -- src/features/landing && npm --prefix web run build && bash .uak/bin/design-lint`
-Lease-Until: 1794176325
-Updated: 1794161925
+Lease-Until: 1794176336
+Updated: 1794161936
 Task-Base: c4ad850499d4dec3ba3aa60be6b954ef0b29ba75
-Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/31; run .uak/bin/smoke
+Next: Wait for review of SHA d0b32f2, then uak merge
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/31
 Evidence: -
 Thread-Read: 0
