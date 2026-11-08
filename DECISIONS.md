@@ -62,3 +62,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794163539 | HACK-036 | poller thread per COBRO_ENVIADO debt started from debts.sync; PAID without trackingKey uses pey:txId | Why: pey webhook never arrives
 - 1794165858 | plan | JoahanMorales/joahanmorales-1 | tasks added: HACK-037 HACK-038 HACK-039 HACK-040 | Why: backlog without PR (Plan-Channel: claims)
 - 1794166959 | plan | JoahanMorales/joahanmorales-1 | tasks added: HACK-041 | Why: backlog without PR (Plan-Channel: claims)
+- 1794167134 | plan --amend | JoahanMorales/joahanmorales-1 | amended: HACK-040 Paths: web/src/features/landing/, web/src/features/store/, web/src/features/pay/ → web/src/features/store/, web/src/features/pay/; | Why: scope or criteria fixed before review

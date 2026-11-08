@@ -18,3 +18,18 @@ Append-only; the last section of an ID replaces its section in the backlog. Why:
 - **Verify:** `test -s README.md && test -s docs/demo/checklist.md`
 - **Next step:** `/uak-demo`.
 
+## HACK-040 · UI wave 4: Cobrar and Pagar polish
+
+- **Type:** feature
+- **Priority:** P1
+- **Estimate:** 30 min
+- **Rubric / Spec:** C1 · skills `product-ui` §5 (3-second judge test)
+- **Depends on:** HACK-037, HACK-038
+- **Uses contract:** None
+- **Related:** HACK-041
+- **Paths:** web/src/features/store/, web/src/features/pay/
+- **Freeze-Allowed:** yes
+- **Acceptance:** `/tienda` and `/pagar` fill the viewport with intent (no dead space under the keypad), keep one primary action, and every state (loading, error, offline) reads in plain Spanish., Behavior and existing tests unchanged. (The landing moved to HACK-041.)
+- **Test-First:** no (layout and copy over existing behavior; existing tests must keep passing)
+- **Verify:** `npm --prefix web test -- src/features && npm --prefix web run build && bash .uak/bin/design-lint`
+- **Next step:** dead space under the keypad on /tienda first.

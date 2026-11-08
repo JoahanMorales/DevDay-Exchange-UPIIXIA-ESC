@@ -1,8 +1,8 @@
 # STATE
 
 Phase: feature freeze; authorized fixes, rehearsal and submission only
-Updated: 1794166959
-AVAILABLE: HACK-018 HACK-035 HACK-039 HACK-040 
+Updated: 1794167134
+AVAILABLE: HACK-018 HACK-035 HACK-039 HACK-040 HACK-041 
 CLAIMED: HACK-024 
 BLOCKED: -
 REVIEW: HACK-023 HACK-037 HACK-038 
@@ -17,11 +17,11 @@ HACK-038 | REVIEW | joahanmorales-1 | until 1794180708
 
 Blockers: BLOCKED tasks; use status --task ID --summary.
 Current decisions (last 5):
-- 1794163346 | HACK-036 | follow-up of HACK-012 by victor-2: URGENTE: conectar el sondeo de respaldo: tras enviar el push CoDi, sondear GET /transaction/{id} en segundo plano (cada
 - 1794163348 | allow | victor | freeze exception: HACK-036 | Why: bug del demo: pago real no se refleja
 - 1794163539 | HACK-036 | poller thread per COBRO_ENVIADO debt started from debts.sync; PAID without trackingKey uses pey:txId | Why: pey webhook never arrives
 - 1794165858 | plan | JoahanMorales/joahanmorales-1 | tasks added: HACK-037 HACK-038 HACK-039 HACK-040 | Why: backlog without PR (Plan-Channel: claims)
 - 1794166959 | plan | JoahanMorales/joahanmorales-1 | tasks added: HACK-041 | Why: backlog without PR (Plan-Channel: claims)
+- 1794167134 | plan --amend | JoahanMorales/joahanmorales-1 | amended: HACK-040 Paths: web/src/features/landing/, web/src/features/store/, web/src/features/pay/ → web/src/feature
 
 Global next step: available P0; else review PRs, tests, demo, rehearsal.
 Why: bounded snapshot to resume without rereading history.
