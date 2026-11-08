@@ -6,7 +6,7 @@
 - Why: spike only
 - Failing: smoke PRODUCT_UNVERIFIED
 - Commands: Verify exit 0
-- Next: Humano: Smoke red or product unverified: PRODUCT_UNVERIFIED: missing .uak/bin/smoke-project; exit 2. (log: /Users/victor/Documents/Proyectos/DevDay-Exchange-UPIIXIA-ESC/.git/worktrees/hack-002/uak-out/gate-HACK-002-smoke-1794123326.log)
+- Next: Integrated in main: 3f606d316bd6227ad329d019be00076fb25197e8
 
 ## History
 - 1794122704 | CLAIMED | victor-2 | claim; next: write `spikes/pey/test_probe.py` with a Fake `httpx.MockTransport`.
@@ -18,3 +18,4 @@
 - 1794123320 | REVIEW | victor-2 | heartbeat; lease until 1794137720
 - 1794123326 | REVIEW | victor-2 | merge rechazado; Smoke red or product unverified: PRODUCT_UNVERIFIED: missing .uak/bin/smoke-project; exit 2. (log: /Users/victor/Documents/Proyectos/DevDay-Exchange-UPIIXIA-ESC/.git/worktrees/hack-002/uak-out/gate-HACK-002-smoke-1794123326.log)
 - 1794123490 | REVIEW | victor-2 | heartbeat; lease until 1794137890
+- 1794123511 | INTEGRATED | victor-2 | merge; smoke and Verify PASS; commit 3f606d316bd6227ad329d019be00076fb25197e8; reviewer victor-1
