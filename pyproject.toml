@@ -1,0 +1,29 @@
+[project]
+name = "app"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "cryptography>=50.0.2",
+    "fastapi>=0.162.2",
+    "httpx>=0.28.1",
+    "openai>=3.46.0",
+    "pydantic-settings>=2.16.2",
+    "python-ulid>=4.1.0",
+    "sse-starlette>=3.7.0",
+    "standardwebhooks>=1.1.0",
+    "tzdata>=2026.6",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx2>=2.16.0",
+    "playwright>=1.64.1",
+    "pytest>=9.2.0",
+    "ruff>=0.17.4",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["app/tests"]
+pythonpath = ["."]
+addopts = "-q --tb=short"

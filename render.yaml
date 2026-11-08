@@ -1,0 +1,29 @@
+# Built by uak deploy · Render Blueprint: dashboard → New → Blueprint → this repo; fill the sync: false values.
+services:
+  - type: web
+    name: hack-001
+    runtime: docker
+    plan: starter   # a free instance sleeps after 15 min idle: the first request of a live demo then waits ~1 min
+    autoDeploy: true   # every push to main redeploys
+    healthCheckPath: /api/health
+    envVars:
+      - key: PEY_API_KEY
+        sync: false
+      - key: PEY_WEBHOOK_SECRET
+        sync: false
+      - key: PEY_BASE_URL
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL_TEXTO
+        sync: false
+      - key: OPENAI_MODEL_VOZ
+        sync: false
+      - key: SERVER_SIGNING_KEY
+        sync: false
+      - key: DEMO_MODE
+        sync: false
+      - key: DEMO_REAL_AMOUNT
+        sync: false
+      - key: DATABASE_PATH
+        sync: false
