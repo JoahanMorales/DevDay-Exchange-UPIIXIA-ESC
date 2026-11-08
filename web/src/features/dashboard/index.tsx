@@ -3,7 +3,7 @@ import type { FeatureRoute } from "../../App";
 import { api } from "../../lib/api";
 import type { Debt, DebtList, ExplainResponse } from "../../lib/contract";
 import { Dashboard, type EventStream } from "./Dashboard";
-import { demoDebts, demoExplanation } from "./demo";
+import { demoDebts, demoExplanation, demoPayerNames } from "./demo";
 
 // Sandbox charges a test amount (Pey $0.01) while the pagaré keeps the real one.
 const DEMO_CHARGE_CENTS = Number(import.meta.env.VITE_DEMO_CHARGE_CENTS ?? 1);
@@ -41,6 +41,7 @@ function TableroPage() {
       demoChargeCents={DEMO_CHARGE_CENTS}
       openEvents={demo ? fakeEvents : openEvents}
       demoData={demo}
+      payerNames={demo ? demoPayerNames : {}}
     />
   );
 }
@@ -48,7 +49,7 @@ function TableroPage() {
 // demo_data: with no backend, each pending debt turns paid a few seconds later.
 function fakeEvents(id: string): EventStream {
   const s: EventStream = { onmessage: null, close: () => clearTimeout(t) };
-  const delay = 2000 + demoDebts.findIndex((d) => d.id === id) * 1200;
+  const delay = Number(new URLSearchParams(location.search).get("demo_delay_ms") ?? 2000) + demoDebts.findIndex((d) => d.id === id) * 1200;
   const t = setTimeout(() => {
     s.onmessage?.({
       data: JSON.stringify({

@@ -24,3 +24,9 @@ export const demoExplanation: ExplainResponse = {
   cifras: { aceptados: 3, duplicadas: 0 },
   fuente: "plantilla",
 };
+
+export const demoPayerNames: Record<string, string> = {
+  DEMOPAYER00000000000ANA001: "Ana",
+  DEMOPAYER00000000000LUI002: "Luis",
+  DEMOPAYER00000000000ROS003: "Rosa",
+};

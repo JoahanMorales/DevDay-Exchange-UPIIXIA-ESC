@@ -3,6 +3,7 @@ import type { Debt, DebtEvent, DebtStatus, ExplainResponse } from "../../lib/con
 import {
   Button,
   DemoBadge,
+  Legend,
   List,
   ListRow,
   PageHeader,
@@ -47,6 +48,7 @@ export function Dashboard({
   demoChargeCents,
   openEvents,
   reputation = {},
+  payerNames = {},
   demoData = false,
 }: {
   debts: Debt[];
@@ -55,6 +57,7 @@ export function Dashboard({
   demoChargeCents: number;
   openEvents: (debtId: string) => EventStream;
   reputation?: Record<string, number>;
+  payerNames?: Record<string, string>;
   demoData?: boolean;
 }) {
   const [debts, setDebts] = useState(initial);
@@ -88,38 +91,63 @@ export function Dashboard({
   return (
     <PageLayout recipe="list">
       <PageHeader title="Tablero de cobros" context="Pagarés sincronizados · en vivo" />
-      <p
-        className={`display mb-5 text-2xl font-extrabold ${allPaid ? "text-ok" : "text-warn"}`}
-        aria-live="polite"
-      >
-        {allPaid ? `${paid.length} cobrados por CoDi` : `${pending} pagarés pendientes`}
-      </p>
+      <div className="mb-6" aria-live="polite">
+        <p
+          className={`display text-[44px] leading-none font-black md:text-[72px] ${allPaid ? "text-ok" : "text-warn"}`}
+        >
+          {allPaid ? `${paid.length} cobrados por CoDi` : `${pending} pagarés pendientes`}
+        </p>
+        <div className="mt-3 flex items-center gap-3">
+          <div className="h-3 flex-1 overflow-hidden rounded-full bg-line" aria-hidden>
+            <div
+              className="h-full rounded-full bg-ok"
+              style={{ width: `${debts.length ? (paid.length / debts.length) * 100 : 0}%` }}
+            />
+          </div>
+          <span className="num shrink-0 text-lg">{`${paid.length} de ${debts.length}`}</span>
+        </div>
+      </div>
       <div className="mb-6 grid grid-cols-3 gap-3">
         <Stat label="Pagarés" value={debts.length} />
         <Stat label="Por cobrar" value={formatMXN(totalCents - paidCents)} tone="warn" />
         <Stat label="Cobrado por CoDi" value={formatMXN(paidCents)} tone="ok" />
       </div>
 
-      <SectionHeader>Pagarés</SectionHeader>
+      <SectionHeader
+        action={
+          <Legend
+            items={[
+              { tone: "warn", label: "Cobro enviado" },
+              { tone: "ok", label: "Cobrado por CoDi" },
+              { tone: "bad", label: "Vencido o rechazado" },
+            ]}
+          />
+        }
+      >
+        Pagarés
+      </SectionHeader>
       <List>
         {debts.map((d) => {
           const s = statusCopy[d.status];
           const rep = reputation[d.iou.payer_id];
           const testAmount = demoChargeCents > 0 && d.iou.amount_cents !== demoChargeCents;
-          const detail = [
-            s.label,
-            d.tracking_key ? `clave de rastreo ${d.tracking_key}` : null,
-            rep !== undefined ? `reputación ${rep.toFixed(2)}` : null,
-          ]
-            .filter(Boolean)
-            .join(" · ");
+          const detail = (
+            <>
+              {[s.label, rep !== undefined ? `reputación ${rep.toFixed(2)}` : null]
+                .filter(Boolean)
+                .join(" · ")}
+              {d.tracking_key && (
+                <span className="block truncate">{`Clave de rastreo ${d.tracking_key}`}</span>
+              )}
+            </>
+          );
           return (
               <ListRow
                 key={d.id}
                 tone={s.tone}
                 title={
                   <span data-testid={`debt-${d.id}`} data-tone={s.tone}>
-                    {`…${d.iou.payer_id.slice(-6)} · #${d.iou.counter}`}
+                    {`${payerNames[d.iou.payer_id] ?? `…${d.iou.payer_id.slice(-6)}`} · #${d.iou.counter}`}
                   </span>
                 }
                 detail={detail}
@@ -127,9 +155,7 @@ export function Dashboard({
                   <>
                     <span className="num block text-xl">{formatMXN(d.iou.amount_cents)}</span>
                     {testAmount && (
-                      <span className="text-sm text-ink-2">
-                        {`monto de prueba ${formatMXN(demoChargeCents)}`}
-                      </span>
+                      <span className="block text-xs text-ink-2">{`monto de prueba ${formatMXN(demoChargeCents)}`}</span>
                     )}
                   </>
                 }
@@ -157,7 +183,11 @@ export function Dashboard({
           Fondo de garantía activado (simulado, demo_data): la tienda no pierde lo vendido.
         </p>
       )}
-      {demoData && <DemoBadge>demo_data · datos de demostración hasta conectar /api/deudas</DemoBadge>}
+      <DemoBadge>
+        {demoData
+          ? "demo_data · datos de demostración, personas ficticias"
+          : "Montos reales del pagaré · el sandbox cobra un monto de prueba"}
+      </DemoBadge>
     </PageLayout>
   );
 }
