@@ -9,16 +9,16 @@ Priority: P0
 Paths: web/DESIGN.md, web/src/index.css, web/src/lib/ui/, web/src/App.tsx, web/public/design-lock/
 Depends: HACK-001
 Verify: `test -s web/DESIGN.md && ls web/public/design-lock/screens/*-1280.png && bash .uak/bin/uak lint`
-Lease-Until: 1794126445
-Updated: 1794123745
+Lease-Until: 1794127109
+Updated: 1794124409
 Task-Base: 3f606d316bd6227ad329d019be00076fb25197e8
-Next: `/uak-design-lock`.
+Next: design-critic, uak decision, PR, uak done
 PR: -
 Evidence: -
-Events: 2
-Checkpoints: 0
+Events: 3
+Checkpoints: 1
 Sessions: 1
-Last-Checkpoint: 0
+Last-Checkpoint: 1794124409
 Progress: 2 commit(s) since the claim · last: 935d53a Merge HACK-003 reviewed by victor-2 (5 minutes ago) · 1 uncommitted tracked file(s) · at 1794124073
 Progress-Head: 935d53a/4272134992
 Progress-Changed: 1794124073

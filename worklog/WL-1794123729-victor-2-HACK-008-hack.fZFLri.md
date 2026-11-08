@@ -1,13 +1,14 @@
 # worklog/WL-1794123729-victor-2-HACK-008-hack.fZFLri.md · HACK-008
 
 ## Live summary
-- Done: Claim created; implementation pending
-- Decision: Own branch and worktree
-- Why: Parallel work without touching the main checkout
-- Failing: No validation run yet
-- Commands: `test -s web/DESIGN.md && ls web/public/design-lock/screens/*-1280.png && bash .uak/bin/uak lint`
-- Next: `/uak-design-lock`.
+- Done: Direction Cempasúchil picked by Victor; DESIGN.md, tokens, kit lib/ui, shell App.tsx, 3 locked screens + shots; Verify green
+- Decision: One direction; fixture in lib/ui/locked; locked routes /design-lock/:screen
+- Why: Short event; public/ JSON cannot be imported by Vite
+- Failing: none
+- Commands: test -s web/DESIGN.md && ls web/public/design-lock/screens/*-1280.png && bash .uak/bin/uak lint
+- Next: design-critic, uak decision, PR, uak done
 
 ## History
 - 1794123729 | CLAIMED | victor-2 | claim; next: `/uak-design-lock`.
 - 1794123745 | CLAIMED | victor-2 | heartbeat; lease until 1794126445
+- 1794124409 | CLAIMED | victor-2 | checkpoint; next: design-critic, uak decision, PR, uak done
