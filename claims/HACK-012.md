@@ -15,4 +15,4 @@ Task-Base: f9105fc493c91cdee519adc1fc369447585ec791
 Next: wait HACK-012 --for approve
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/15
 Evidence: -
-Thread-Read: 64
+Thread-Read: 68
