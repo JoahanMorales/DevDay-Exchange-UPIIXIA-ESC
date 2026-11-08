@@ -9,10 +9,10 @@ Priority: P0
 Paths: web/src/features/store/, web/src/features/pay/, web/src/lib/transport/qr/
 Depends: HACK-013, HACK-014
 Verify: `npm --prefix web test -- src/features/store src/features/pay src/lib/transport/qr && npm --prefix web run build`
-Lease-Until: 1794140909
-Updated: 1794126509
+Lease-Until: 1794141346
+Updated: 1794126946
 Task-Base: 50f9136f4a2c59d9c8e79fe5342ddfd99249e78c
-Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/17; run .uak/bin/smoke
+Next: design-critic on 94b33f1 (shots retaken) -> uak done HACK-015 --pr https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/17 --note 'credential verified offline'
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/17
 Evidence: -
 Thread-Read: 79

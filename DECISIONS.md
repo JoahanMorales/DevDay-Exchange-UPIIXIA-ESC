@@ -25,3 +25,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794126303 | HACK-012 | credential window from payer.created_at+CREDENTIAL_TTL_S; cap per UTC day of IOU ts | Why: credential not in envelope; server rebuilds it from the payer row
 - 1794126412 | HACK-015 | payer sends 125-byte IOU + credential JSON in one QR payload (packPayment) | Why: store needs payer pubkey/cap offline
 - 1794126586 | HACK-016 | Inject GgwaveCodec/SoundIo; default AUDIBLE_FAST until spike decides | Why: Fakes in tests; spike results pending
+- 1794126946 | HACK-015 | forged/expired credential -> firma_invalida, AttackLog bad_sig, no vibration | Why: reject #77 joahanmorales-1
