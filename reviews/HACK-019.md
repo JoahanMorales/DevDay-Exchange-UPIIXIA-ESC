@@ -1,9 +1,8 @@
 ID: HACK-019
-SHA: 608311b0a1902d76c83d8a171d53f4ae6053c1a8
-Reviewer: victor-2
+SHA: cbfb7f168d22465eac4d5d5e0310460d2f673ac7
+Reviewer: victor-1
 Owner: joahanmorales-1
-Verdict: reject
-Reviewed: 1794160232
-Eligible-Via: role:victor-2
+Verdict: approve
+Reviewed: 1794161024
+Eligible-Via: role:victor-1
 Command: uak review
-Rejected-By: victor-2
