@@ -30,3 +30,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794128325 | HACK-020 | daily_cap_cents stays base; effective = base×factor; list version = sum(rep_version) | Why: monotonic version for clients
 - 1794128923 | HACK-032 | tools return marker names only; merchant forced from request; no tool call -> template | Why: anti-hallucination, no cross-shop leak
 - 1794156268 | HACK-024 | agent writes steps only | Why: acceptance: humans run portal/Render
+- 1794157988 | deadline freeze/event/1794157920 | FREEZE_DEMO_FIXES_ONLY | New claims only with Freeze-Allowed: yes; respect authorization.
