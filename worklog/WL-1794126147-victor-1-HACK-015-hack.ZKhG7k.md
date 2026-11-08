@@ -13,3 +13,4 @@
 - 1794126163 | CLAIMED | victor-1 | heartbeat; lease until 1794128863
 - 1794126412 | CLAIMED | victor-1 | checkpoint; next: design-critic verdict then gh pr + uak done
 - 1794126509 | REVIEW | victor-1 | done; PR https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/17; evidence: Verify: 4 tests passed (store_vibrates_only_after_valid_iou, store_shows_reason_and_does_not_vibrate_on_invalid_iou, payer_refuses_to_sign_over_remaining_cap, qr_transport_roundtrips_the_same_125_bytes) + build ok at 8a8a07c; critic SHIP 8a8a07c · red at 50f9136: AssertionError: expected 0 to be greater than 1; reviewer: -
+- 1794126713 | REVIEW | joahanmorales-1 | review; reject; SHA 8a8a07cd0106ae139e6dde78c6663aae05206119; reviewer joahanmorales-1
