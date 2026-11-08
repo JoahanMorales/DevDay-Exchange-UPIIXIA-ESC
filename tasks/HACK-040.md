@@ -9,14 +9,17 @@ Priority: P1
 Paths: web/src/features/store/, web/src/features/pay/
 Depends: HACK-037, HACK-038
 Verify: `npm --prefix web test -- src/features && npm --prefix web run build && bash .uak/bin/design-lint`
-Lease-Until: 1794183582
-Updated: 1794169182
+Lease-Until: 1794184122
+Updated: 1794169722
 Task-Base: b6c66a8e5bff2b53a756ec1c9ff8a7ff0c53159d
 Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/38; run .uak/bin/smoke
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/38
 Evidence: npm test 36 passed; npm run build exit 0; design-lint PASS; oxlint clean; browser: no overlap keys/CTA at 360, 390, 1280; design-critic VERDICT SHIP a1056a8
-Events: 3
+Events: 4
 Checkpoints: 0
 Sessions: 2
 Last-Checkpoint: 0
 Task-Tip: a1056a87030c6a10347feaf4fc916bf1faa6befa
+Progress: 2 commit(s) since the claim · last: a1056a8 fix(ui): charge button in normal flow (no overlap with keypad), QR button spaced below the fold (HACK-040) (10 m · 0 uncommitted tracked file(s) · at 1794169722
+Progress-Head: a1056a8/4294967295
+Progress-Changed: 1794169722
