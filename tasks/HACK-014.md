@@ -15,9 +15,9 @@ Task-Base: f9105fc493c91cdee519adc1fc369447585ec791
 Next: wait for review of PR #14
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/14
 Evidence: npm --prefix web test -- src/features/core src/lib/storage && npm --prefix web run build exit 0; 6 passed: key non-extractable, key+counter across reload, payer enroll + demo_data fallback, server key + merchant QR cache, newest revocation list · no visible change: features/core holds only enroll.ts logic, no component or route; no visible change · red at f9105fc: AssertionError: expected '' not to be '' // Object.is equality
-Events: 4
+Events: 5
 Checkpoints: 1
-Sessions: 1
+Sessions: 2
 Last-Checkpoint: 1794125667
 Progress: 0 commit(s) since the claim · last: f9105fc Merge HACK-007 reviewed by victor-1 (86 seconds ago) · 0 uncommitted tracked file(s) · at 1794125499
 Progress-Head: f9105fc/4294967295
