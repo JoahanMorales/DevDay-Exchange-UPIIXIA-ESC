@@ -52,6 +52,7 @@ export function createScene(T: Three, RoundedBoxGeometry: RoundedBox, host: HTML
     return m;
   };
 
+  const labels: { s: THREE_NS.Sprite; bx: number; by: number }[] = [];
   function label(text: string, color: string, height = 0.42): THREE_NS.Sprite {
     const c = document.createElement("canvas");
     const ctx = c.getContext("2d")!;
@@ -70,6 +71,7 @@ export function createScene(T: Three, RoundedBoxGeometry: RoundedBox, host: HTML
     disposables.push(tex, mat);
     const s = new T.Sprite(mat);
     s.scale.set((height * w) / 96, height, 1);
+    labels.push({ s, bx: (height * w) / 96, by: height });
     return s;
   }
 
@@ -116,7 +118,7 @@ export function createScene(T: Three, RoundedBoxGeometry: RoundedBox, host: HTML
   }
 
   const mario = phone(-5.4, 0, "Mario");
-  const shop = phone(-2.2, 0, "Tienda de Lupita");
+  const shop = phone(-2.2, 0, "Tienda");
   const n1 = phone(1.1, 0.2, "Vecino");
   const n2 = phone(3.9, -0.2, "Vecina");
 
@@ -316,10 +318,14 @@ export function createScene(T: Three, RoundedBoxGeometry: RoundedBox, host: HTML
         if (p < 0.2) cube.position.set(n2.base.x, 0.9, 0.1);
       } else if (p < 0.86) {
         show(coinWrap);
-        arc(P(tower.position.x, 2.2, -0.2), P(shop.base.x, 0.6, 0.4), down, 1.8, coinWrap);
+        arc(P(tower.position.x, 2.2, -0.2), P(shop.base.x + 1.3 * spread, 0.5, 0.6), down, 1.8, coinWrap);
         coin.rotation.set(Math.PI / 2, 0, down * 14);
       }
       if (p >= 0.86) {
+        // The payoff stays on screen: the coin rests beside the shop with its test-amount tag until the loop ends.
+        show(coinWrap);
+        coinWrap.position.set(shop.base.x + 1.3 * spread, 0.5 + Math.sin(t * 3) * 0.04, 0.6);
+        coin.rotation.set(Math.PI / 2, 0, t * 2);
         setScreen(shop, pal.ok);
         show(paidTag);
         const v = seg(p, 0.86, 1);
@@ -342,6 +348,8 @@ export function createScene(T: Three, RoundedBoxGeometry: RoundedBox, host: HTML
 
   function layout(narrow: boolean) {
     spread = narrow ? 0.6 : 1;
+    const k = narrow ? 1.7 : 1; // labels need to stay readable on a phone
+    labels.forEach(({ s, bx, by }) => s.scale.set(bx * k, by * k, 1));
     [mario, shop, n1, n2].forEach((ph) => ph.base.set(ph.x0 * spread, 0, ph.base.z));
     tower.position.x = 7 * spread;
     table.scale.x = narrow ? 0.62 : 1;
