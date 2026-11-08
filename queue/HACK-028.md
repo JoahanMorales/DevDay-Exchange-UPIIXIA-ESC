@@ -1,7 +1,5 @@
-# Integration queue
-Task: HACK-028
-State: PENDING
+ID: HACK-028
+State: WAITING
 Owner: victor-1
-Task-Tip: 81969085995e58621308ac5d9422f407ce34ba38
-PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/29
-Updated: 1794160916
+Queued: 1794161243
+Reason: Waiting for queue
