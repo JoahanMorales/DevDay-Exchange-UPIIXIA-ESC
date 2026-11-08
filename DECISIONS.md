@@ -57,3 +57,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794162480 | allow | victor | freeze exception: HACK-023 | Why: Victor: terminar P1 restantes
 - 1794162749 | HACK-023 | WebRTC GA /v1/realtime/calls with ephemeral client_secret; /voz without nav label (bar full) | Why: key never leaves server; IDEA §7 propose-only
 - 1794162860 | HACK-023 | nav clip left as shared-Shell follow-up | Why: outside Paths
+- 1794163346 | HACK-036 | follow-up of HACK-012 by victor-2: URGENTE: conectar el sondeo de respaldo: tras enviar el push CoDi, sondear GET /transaction/{id} en segundo plano (cada 5 s, hasta 6 min) y marcar PAGADA con debts.poll; y POST /api/deudas/{id}/verificar para forzarlo. El webhook de pey no llega. | Why: same Paths, no scope change

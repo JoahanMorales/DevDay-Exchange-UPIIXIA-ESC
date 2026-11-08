@@ -56,3 +56,15 @@ Append-only; added to .uak/TASKS.md from main. Why: adding tasks never waits for
 - **Acceptance:**
   - Sync uses reputation: revocation_list from reputation.py (monotonic version, caps base x factor) and recompute_all after sync
 - **Verify:** `uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py`
+
+## HACK-036 · URGENTE: conectar el sondeo de respaldo: tras enviar el push CoDi, sondear GET /transaction/{id} en segundo plano (cada 5 s, hasta 6 min) y marcar PAGADA con debts.poll; y POST /api/deudas/{id}/verificar para forzarlo. El webhook de pey no llega. (follow-up of HACK-012)
+
+- **Type:** follow-up
+- **Priority:** P1
+- **Depends on:** HACK-012
+- **Follow-up of:** HACK-012
+- **Paths:** app/routers/sync.py, app/routers/debts.py, app/services/debts.py, app/tests/test_sync.py, app/tests/test_debts.py
+- **Freeze-Allowed:** no
+- **Acceptance:**
+  - URGENTE: conectar el sondeo de respaldo: tras enviar el push CoDi, sondear GET /transaction/{id} en segundo plano (cada 5 s, hasta 6 min) y marcar PAGADA con debts.poll; y POST /api/deudas/{id}/verificar para forzarlo. El webhook de pey no llega.
+- **Verify:** `uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py`

@@ -1,7 +1,7 @@
 # STATE
 
 Phase: feature freeze; authorized fixes, rehearsal and submission only
-Updated: 1794163206
+Updated: 1794163346
 AVAILABLE: HACK-018 HACK-035 
 CLAIMED: HACK-024 
 BLOCKED: -
@@ -15,11 +15,11 @@ HACK-024 | CLAIMED | fer-1 | until 1794158968 (EXPIRED: release --expired --read
 
 Blockers: BLOCKED tasks; use status --task ID --summary.
 Current decisions (last 5):
-- 1794161936 | HACK-026 | Hero uses phone crop via picture | Why: critic P1 legibility
 - 1794162478 | allow | victor | freeze exception: HACK-018 | Why: Victor: terminar P1 restantes
 - 1794162480 | allow | victor | freeze exception: HACK-023 | Why: Victor: terminar P1 restantes
 - 1794162749 | HACK-023 | WebRTC GA /v1/realtime/calls with ephemeral client_secret; /voz without nav label (bar full) | Why: key never leaves server; IDEA §7 propose-only
 - 1794162860 | HACK-023 | nav clip left as shared-Shell follow-up | Why: outside Paths
+- 1794163346 | HACK-036 | follow-up of HACK-012 by victor-2: URGENTE: conectar el sondeo de respaldo: tras enviar el push CoDi, sondear GET /transaction/{id} en segundo plano (cada
 
 Global next step: available P0; else review PRs, tests, demo, rehearsal.
 Why: bounded snapshot to resume without rereading history.
