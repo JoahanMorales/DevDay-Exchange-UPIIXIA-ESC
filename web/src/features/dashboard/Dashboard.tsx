@@ -119,7 +119,7 @@ export function Dashboard({
                 tone={s.tone}
                 title={
                   <span data-testid={`debt-${d.id}`} data-tone={s.tone}>
-                    {`Pagador …${d.iou.payer_id.slice(-6)} · #${d.iou.counter}`}
+                    {`…${d.iou.payer_id.slice(-6)} · #${d.iou.counter}`}
                   </span>
                 }
                 detail={detail}
