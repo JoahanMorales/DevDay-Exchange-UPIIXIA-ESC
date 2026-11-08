@@ -1,6 +1,6 @@
 # HACK-040
 ID: HACK-040
-State: REVIEW
+State: INTEGRATED
 Owner: joahanmorales-1
 Branch: feat/hack-040
 Worktree: /home/joahan/Proyectos/DevDay-Exchange-UPIIXIA-ESC-wt/hack-040
@@ -9,17 +9,20 @@ Priority: P1
 Paths: web/src/features/store/, web/src/features/pay/
 Depends: HACK-037, HACK-038
 Verify: `npm --prefix web test -- src/features && npm --prefix web run build && bash .uak/bin/design-lint`
-Lease-Until: 1794184122
-Updated: 1794169722
+Lease-Until: 0
+Updated: 1794169780
 Task-Base: b6c66a8e5bff2b53a756ec1c9ff8a7ff0c53159d
-Next: Humano: Verify / acceptance red:      Errors  3 errors (log: /home/joahan/Proyectos/DevDay-Exchange-UPIIXIA-ESC/.git/worktrees/hack-040/uak-out/gate-HACK-040-verify-1794169728.log)
+Next: Integrated in main: 1e0ffe3ea5e90135c7840e853667d9bdeebdd54b; claim next P0
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/38
 Evidence: npm test 36 passed; npm run build exit 0; design-lint PASS; oxlint clean; browser: no overlap keys/CTA at 360, 390, 1280; design-critic VERDICT SHIP a1056a8
-Events: 5
+Events: 6
 Checkpoints: 0
-Sessions: 2
+Sessions: 3
 Last-Checkpoint: 0
 Task-Tip: a1056a87030c6a10347feaf4fc916bf1faa6befa
 Progress: 2 commit(s) since the claim · last: a1056a8 fix(ui): charge button in normal flow (no overlap with keypad), QR button spaced below the fold (HACK-040) (10 m · 0 uncommitted tracked file(s) · at 1794169722
 Progress-Head: a1056a8/4294967295
 Progress-Changed: 1794169722
+Integration-Proof: ancestry
+Merge-Commit: 1e0ffe3ea5e90135c7840e853667d9bdeebdd54b
+Reviewer: joahanmorales-2
