@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spike Web NFC</title>
+<style>
+  body { font: 16px/1.4 system-ui, sans-serif; margin: 16px; max-width: 560px; }
+  button { font-size: 18px; padding: 12px 16px; margin: 4px 8px 4px 0; }
+  pre { background: #f2f2f2; padding: 8px; white-space: pre-wrap; word-break: break-all; }
+  .err { color: #b00020; font-weight: 600; }
+</style>
+</head>
+<body>
+<h1>Spike Web NFC (HACK-005)</h1>
+<p>Android Chrome + HTTPS. Acerca el tag al teléfono después de pulsar cada botón.</p>
+<p id="support"></p>
+<button id="write">1 · Escribir ~200 bytes</button>
+<button id="scan">2 · Leer</button>
+<pre id="log"></pre>
+<script>
+  const log = (m) => { document.getElementById('log').textContent += m + '\n'; };
+  const supported = 'NDEFReader' in window;
+  const support = document.getElementById('support');
+  if (!supported) {
+    support.className = 'err';
+    support.textContent = 'Este navegador no tiene NDEFReader (Web NFC). Usa Chrome en Android, por HTTPS, con NFC encendido.';
+    document.getElementById('write').disabled = true;
+    document.getElementById('scan').disabled = true;
+  } else {
+    support.textContent = 'NDEFReader disponible.';
+  }
+
+  // ~200-byte payload shaped like a signed IOU (fake data, no real phones).
+  function payload() {
+    const base = 'SINSENAL1|' + Date.now() + '|';
+    return base + 'x'.repeat(200 - base.length);
+  }
+
+  let written = null;
+
+  document.getElementById('write').onclick = async () => {
+    try {
+      const data = payload();
+      const t0 = performance.now();
+      await new NDEFReader().write({ records: [{ recordType: 'text', data }] });
+      written = data;
+      log(`WRITE ok · ${new TextEncoder().encode(data).length} bytes · ${Math.round(performance.now() - t0)} ms (incl. tap)`);
+    } catch (e) {
+      log('WRITE error: ' + e.name + ': ' + e.message);
+    }
+  };
+
+  document.getElementById('scan').onclick = async () => {
+    try {
+      const reader = new NDEFReader();
+      const ctrl = new AbortController();
+      const t0 = performance.now();
+      reader.onreadingerror = () => log('READ error: could not read the tag (try again)');
+      reader.onreading = ({ serialNumber, message }) => {
+        const ms = Math.round(performance.now() - t0);
+        log(`READ ok · serialNumber=${serialNumber || '(empty)'} · ${message.records.length} record(s) · ${ms} ms (incl. tap)`);
+        for (const r of message.records) {
+          const text = r.recordType === 'text' ? new TextDecoder(r.encoding || 'utf-8').decode(r.data) : `(${r.recordType})`;
+          log(`  ${r.recordType} · ${r.data ? r.data.byteLength : 0} bytes · matches write: ${written ? text === written : 'n/a'}`);
+        }
+        ctrl.abort();
+      };
+      await reader.scan({ signal: ctrl.signal });
+      log('SCAN started: tap the tag');
+    } catch (e) {
+      log('SCAN error: ' + e.name + ': ' + e.message);
+    }
+  };
+</script>
+</body>
+</html>
