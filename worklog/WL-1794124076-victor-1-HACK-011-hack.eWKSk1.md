@@ -6,7 +6,7 @@
 - Why: credentials must verify across restarts
 - Failing: none
 - Commands: uv run pytest -q app/tests/test_registry.py app/tests/test_crypto.py
-- Next: Wait for review of SHA b1f46fc
+- Next: Integrated in main: 6c635265a4894de88498e7175acb3a20fb3d77ff
 
 ## History
 - 1794124076 | CLAIMED | victor-1 | claim; next: `app/tests/test_crypto.py` against `vectors.json`.
@@ -16,3 +16,4 @@
 - 1794124730 | REVIEW | joahanmorales-1 | review; approve; SHA b1f46fc8ac93d34507c768e92368f15f09d97452; reviewer joahanmorales-1
 - 1794124739 | REVIEW | victor-1 | heartbeat; lease until 1794139139
 - 1794125021 | REVIEW | victor-1 | heartbeat; lease until 1794139421
+- 1794125393 | INTEGRATED | victor-2 | merge; smoke and Verify PASS; commit 6c635265a4894de88498e7175acb3a20fb3d77ff; reviewer joahanmorales-1
