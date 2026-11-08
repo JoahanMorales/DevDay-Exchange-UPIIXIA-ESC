@@ -29,3 +29,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794128031 | HACK-019 | TTL inclusive; hops unsigned (server dedupes by id); queue cleared after one successful sync; headline uses display text-3xl (design-lint caps 6 sizes) | Why: design-critic P1s
 - 1794128325 | HACK-020 | daily_cap_cents stays base; effective = base×factor; list version = sum(rep_version) | Why: monotonic version for clients
 - 1794128923 | HACK-032 | tools return marker names only; merchant forced from request; no tool call -> template | Why: anti-hallucination, no cross-shop leak
+- 1794156268 | HACK-024 | agent writes steps only | Why: acceptance: humans run portal/Render
