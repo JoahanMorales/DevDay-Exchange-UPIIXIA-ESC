@@ -12,10 +12,10 @@ Verify: `npm --prefix web test -- src/features/landing && npm --prefix web run b
 Lease-Until: 1794183282
 Updated: 1794168882
 Task-Base: 318890425958aa69b94ebc1a15d723a33d222719
-Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/36; run .uak/bin/smoke
+Next: Humano: Shared resource/CI needs a human: web/package-lock.json
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/36
 Evidence: npm test -- src/features/landing/scene exit 0 (2); npm run build exit 0; design-lint PASS; oxlint clean; browser: scene renders 4 beats, pause holds, reduced-motion shows still frame, no console errors; design-critic VERDICT SHIP b3c72e7 · red at 3188904: exit 1 (no assertion line recognized: the reviewer reads the log)
-Events: 4
+Events: 5
 Checkpoints: 0
 Sessions: 2
 Last-Checkpoint: 0

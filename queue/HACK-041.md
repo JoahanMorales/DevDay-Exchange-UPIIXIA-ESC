@@ -1,5 +1,5 @@
 ID: HACK-041
-State: MERGING
+State: HUMAN
 Owner: joahanmorales-1
-Queued: 1794168884
-Reason: Waiting for queue
+Updated: 1794168889
+Reason: Shared resource/CI needs a human: web/package-lock.json

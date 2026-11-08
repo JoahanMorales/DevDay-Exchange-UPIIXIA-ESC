@@ -12,7 +12,7 @@ Verify: `npm --prefix web test -- src/features/landing && npm --prefix web run b
 Lease-Until: 1794183282
 Updated: 1794168882
 Task-Base: 318890425958aa69b94ebc1a15d723a33d222719
-Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/36; run .uak/bin/smoke
+Next: Humano: Shared resource/CI needs a human: web/package-lock.json
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/36
 Evidence: -
 Thread-Read: 0
