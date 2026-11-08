@@ -26,7 +26,7 @@ function RouteList() {
             </Link>
           </li>
         ))}
-        {features.length === 0 && <li className="text-neutral-500">No routes yet.</li>}
+        {features.length === 0 && <li className="opacity-60">No routes yet.</li>}
       </ul>
     </main>
   );
