@@ -131,3 +131,18 @@ Append-only; added to .uak/TASKS.md from main. Why: adding tasks never waits for
 - **Test-First:** no (layout and copy over existing behavior; existing tests must keep passing)
 - **Verify:** `npm --prefix web test -- src/features && npm --prefix web run build && bash .uak/bin/design-lint`
 - **Next step:** landing hierarchy at 390 px first.
+## HACK-041 · Landing wow: a Three.js scene that tells the idea in 14 seconds
+
+- **Type:** feature
+- **Priority:** P0
+- **Estimate:** 50 min
+- **Rubric / Spec:** C1, C2, C5 · skills `landing-story`, `frontend-design`, `product-ui` §5 (3-second judge test)
+- **Depends on:** None
+- **Uses contract:** None
+- **Related:** HACK-040
+- **Paths:** web/package.json, web/package-lock.json, web/src/features/landing/
+- **Freeze-Allowed:** yes
+- **Acceptance:** A new landing section right under the hero, "La idea en 14 segundos": a WebGL scene (`three`, loaded with a dynamic import so the hero and text paint first) with four beats, each with a live caption and the matching step highlighted: 1 Sin señal: Mario firma un pagaré y la tienda vibra; 2 Nadie puede falsificarlo: a replayed ticket is rejected; 3 Viaja de celular en celular; 4 Con señal se cobra por CoDi ($0.01 test amount shown as "monto de prueba")., Colors read from the CSS tokens at runtime (no hex in feature code); pauses when the tab is hidden or the section is off screen; pause/replay control reachable by keyboard; `prefers-reduced-motion` and no-WebGL both show a still frame with the same captions; frame time stays smooth on a phone (device pixel ratio capped at 2); the scene is disposed on unmount., The existing hero, the real attack-log capture and the sourced figures stay as they are.
+- **Tests:** timeline_covers_the_whole_loop_in_four_beats, reduced_motion_shows_the_last_beat
+- **Verify:** `npm --prefix web test -- src/features/landing && npm --prefix web run build && bash .uak/bin/design-lint`
+- **Next step:** `web/src/features/landing/scene/timeline.test.ts` for the pure beat timeline, then the scene.
