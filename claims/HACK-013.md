@@ -1,6 +1,6 @@
 # HACK-013
 ID: HACK-013
-State: CLAIMED
+State: REVIEW
 Owner: joahanmorales-1
 Branch: feat/hack-013
 Worktree: /home/joahan/Proyectos/DevDay-Exchange-UPIIXIA-ESC-wt/hack-013
@@ -9,10 +9,10 @@ Priority: P0
 Paths: web/src/lib/protocol/
 Depends: HACK-001, HACK-003
 Verify: `npm --prefix web test -- src/lib/protocol`
-Lease-Until: 1794126520
-Updated: 1794123820
+Lease-Until: 1794138334
+Updated: 1794123934
 Task-Base: 935d53aa68de2b1fcce844b2b8f8e20c83d2d25d
-Next: `web/src/lib/protocol/codec.test.ts` against the vector.
-PR: -
+Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/7; run .uak/bin/smoke
+PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/7
 Evidence: -
 Thread-Read: 0
