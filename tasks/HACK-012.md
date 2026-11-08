@@ -9,17 +9,17 @@ Priority: P0
 Paths: app/routers/sync.py, app/routers/debts.py, app/services/debts.py, app/tests/test_sync.py, app/tests/test_debts.py
 Depends: HACK-010, HACK-011
 Verify: `uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py`
-Lease-Until: 1794128170
-Updated: 1794125470
+Lease-Until: 1794128198
+Updated: 1794125498
 Task-Base: f9105fc493c91cdee519adc1fc369447585ec791
 Next: `app/tests/test_debts.py` with `FakePey` from HACK-010.
 PR: -
 Evidence: -
-Events: 1
+Events: 2
 Checkpoints: 0
 Sessions: 1
 Last-Checkpoint: 0
-Progress: 0 commit(s) since the claim · last: f9105fc Merge HACK-007 reviewed by victor-1 (60 seconds ago) · 0 uncommitted tracked file(s) · at 1794125474
+Progress: 0 commit(s) since the claim · last: f9105fc Merge HACK-007 reviewed by victor-1 (84 seconds ago) · 0 uncommitted tracked file(s) · at 1794125498
 Progress-Head: f9105fc/4294967295
 Progress-Changed: 1794125474
 Away: 1794125474
