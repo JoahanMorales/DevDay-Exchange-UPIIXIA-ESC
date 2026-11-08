@@ -21,6 +21,14 @@ async function logAttack(db: Db, a: AttackLog) {
   await db.put("kv", [a, ...all].slice(0, 50), "attacks");
 }
 
+// Never show a raw status line or English text to the shopkeeper: say what happened and what to do.
+function friendly(e: unknown): string {
+  const m = e instanceof Error ? e.message : "";
+  if (!m || /^5\d\d|failed to fetch|networkerror|load failed/i.test(m)) return "el servidor no respondió, intenta de nuevo con red.";
+  if (/^4\d\d/.test(m)) return "los datos no son válidos o ya existen.";
+  return "ocurrió un problema, intenta de nuevo.";
+}
+
 function StorePage() {
   const [db, setDb] = useState<Db>();
   const [me, setMe] = useState<Enrollment>();
@@ -53,7 +61,7 @@ function StorePage() {
       const signed = await makeChallenge(privateKey, ch);
       setStage({ kind: "challenge", frames: encodeFrames(signed), ch });
     } catch (e) {
-      setErr(`No se pudo crear el reto: ${(e as Error).message}`);
+      setErr(`No se pudo crear el reto: ${friendly(e)}`);
     }
   }
 
@@ -151,7 +159,7 @@ function StorePage() {
       <div className="grid grid-cols-3 gap-2.5">
         {KEYS.map((k) => (
           <button key={k} onClick={() => press(k)} aria-label={k === "del" ? "Borrar" : k}
-            className="num grid h-16 place-items-center rounded-md border border-line bg-surface text-xl active:bg-muted md:h-14">
+            className="num grid h-12 place-items-center rounded-md border border-line bg-surface text-xl active:bg-muted md:h-14">
             {k === "del" ? <Backspace size={30} /> : k}
           </button>
         ))}
@@ -161,18 +169,19 @@ function StorePage() {
       </Button>
       <p className="mt-3 text-center text-sm text-ink-2">El cliente escanea el reto con su celular. Sin red.</p>
       {err && <p role="alert" className="mt-3 font-bold text-bad">{err}</p>}
-      <Button variant="ghost" className="mt-2 w-full" onClick={() => setShowCounter((s) => !s)} disabled={!me}>
+      <Button variant="ghost" className="mt-8 w-full md:mt-2" onClick={() => setShowCounter((s) => !s)} disabled={!me}>
         <Storefront size={20} /> QR del mostrador
       </Button>
       {showCounter && me && <QrLoop frames={[JSON.stringify({ merchant_id: me.subject_id, name: MERCHANT_NAME, credential: me.credential })]} label="QR del mostrador" />}
-      <div className="h-28 md:hidden" aria-hidden />
+      <div className="md:hidden"><DemoBadge /></div>
+      <div className="h-24 md:hidden" aria-hidden />
     </>}>
       <PageHeader title="Cobrar sin red" context={MERCHANT_NAME} />
       <Surface className="flex flex-col justify-center md:min-h-[46vh]">
         <p className="text-ink-2">Monto a cobrar</p>
         <div aria-live="polite" aria-label={formatMXN(cents)}><Amount cents={cents} size="lg" /></div>
       </Surface>
-      <DemoBadge />
+      <div className="hidden md:block"><DemoBadge /></div>
     </PageLayout>
   );
 }
