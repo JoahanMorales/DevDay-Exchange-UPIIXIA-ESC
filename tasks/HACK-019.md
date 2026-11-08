@@ -9,14 +9,14 @@ Priority: P1
 Paths: web/src/features/relay/, web/src/lib/envelope/
 Depends: HACK-013, HACK-014
 Verify: `npm --prefix web test -- src/features/relay src/lib/envelope && npm --prefix web run build`
-Lease-Until: 1794142421
-Updated: 1794128021
+Lease-Until: 1794142431
+Updated: 1794128031
 Task-Base: 04453b3727de3d20d0b7234d15d9cc40513e3ac8
-Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/20; run .uak/bin/smoke
+Next: Wait for review of PR #20; then uak merge HACK-019
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/20
 Evidence: npm --prefix web test -- src/features/relay src/lib/envelope exit 0 (4 tests); npm run build exit 0; design-lint PASS; design-critic VERDICT SHIP 608311b · red at 04453b3: exit 1 (no assertion line recognized: the reviewer reads the log)
-Events: 2
-Checkpoints: 0
+Events: 3
+Checkpoints: 1
 Sessions: 1
-Last-Checkpoint: 0
+Last-Checkpoint: 1794128031
 Task-Tip: 608311b0a1902d76c83d8a171d53f4ae6053c1a8

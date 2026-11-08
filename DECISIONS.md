@@ -26,3 +26,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794126412 | HACK-015 | payer sends 125-byte IOU + credential JSON in one QR payload (packPayment) | Why: store needs payer pubkey/cap offline
 - 1794126586 | HACK-016 | Inject GgwaveCodec/SoundIo; default AUDIBLE_FAST until spike decides | Why: Fakes in tests; spike results pending
 - 1794126946 | HACK-015 | forged/expired credential -> firma_invalida, AttackLog bad_sig, no vibration | Why: reject #77 joahanmorales-1
+- 1794128031 | HACK-019 | TTL inclusive; hops unsigned (server dedupes by id); queue cleared after one successful sync; headline uses display text-3xl (design-lint caps 6 sizes) | Why: design-critic P1s
