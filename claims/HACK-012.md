@@ -1,6 +1,6 @@
 # HACK-012
 ID: HACK-012
-State: CLAIMED
+State: REVIEW
 Owner: victor-1
 Branch: feat/hack-012
 Worktree: /Users/victor/Documents/Proyectos/DevDay-Exchange-UPIIXIA-ESC-wt/hack-012
@@ -9,10 +9,10 @@ Priority: P0
 Paths: app/routers/sync.py, app/routers/debts.py, app/services/debts.py, app/tests/test_sync.py, app/tests/test_debts.py
 Depends: HACK-010, HACK-011
 Verify: `uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py`
-Lease-Until: 1794128414
-Updated: 1794125714
+Lease-Until: 1794140124
+Updated: 1794125724
 Task-Base: f9105fc493c91cdee519adc1fc369447585ec791
-Next: await review
-PR: -
+Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/15; run .uak/bin/smoke
+PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/15
 Evidence: -
 Thread-Read: 57
