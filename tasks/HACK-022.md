@@ -9,17 +9,17 @@ Priority: P0
 Paths: app/services/explain.py, app/routers/explain.py, app/tests/test_explain.py
 Depends: HACK-001
 Verify: `uv run pytest -q app/tests/test_explain.py`
-Lease-Until: 1794139550
-Updated: 1794125150
+Lease-Until: 1794139901
+Updated: 1794125501
 Task-Base: f33dbae8bf55b38a072660f877506495ae14f001
 Next: wait for review
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/12
 Evidence: uv run pytest -q app/tests/test_explain.py exit 0 (4 passed); Responses API json_schema, model from env, digit filter, template fallback, Fake client · red at f33dbae: E   AssertionError: assert 'plantilla' == 'openai'
-Events: 5
+Events: 6
 Checkpoints: 1
-Sessions: 2
+Sessions: 3
 Last-Checkpoint: 1794125150
-Progress: 0 commit(s) since the claim · last: f33dbae Merge HACK-013 reviewed by victor-1 (6 minutes ago) · 0 uncommitted tracked file(s) · at 1794125010
-Progress-Head: f33dbae/4294967295
-Progress-Changed: 1794125010
+Progress: 1 commit(s) since the claim · last: 6f7cd2a feat(explain): plain-Spanish sync summary, numbers only from records (HACK-022) (7 minutes ago) · 0 uncommitted tracked file(s) · at 1794125501
+Progress-Head: 6f7cd2a/4294967295
+Progress-Changed: 1794125501
 Task-Tip: 6f7cd2a536e091ff91d53bbd11d739433d5689ef
