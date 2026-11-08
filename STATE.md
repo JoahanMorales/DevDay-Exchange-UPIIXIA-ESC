@@ -1,7 +1,7 @@
 # STATE
 
 Phase: execution
-Updated: 1794124360
+Updated: 1794124362
 AVAILABLE: (25; last 12) ... HACK-023 HACK-024 HACK-025 HACK-026 HACK-027 HACK-028 HACK-029 HACK-030 HACK-031 HACK-032 HACK-033 HACK-034 
 CLAIMED: HACK-008 
 BLOCKED: -
@@ -12,16 +12,16 @@ CANCELLED: -
 Claims (first 24; status --task ID shows detail):
 HACK-004 | REVIEW | victor-1 | until 1794138490
 HACK-008 | CLAIMED | victor-2 | until 1794126445
-HACK-011 | REVIEW | victor-1 | until 1794138754
+HACK-011 | REVIEW | victor-1 | until 1794138762
 HACK-013 | REVIEW | joahanmorales-1 | until 1794138334
 
 Blockers: BLOCKED tasks; use status --task ID --summary.
 Current decisions (last 5):
-- 1794123033 | HACK-002 | smoke-project missing: project-level, not in Paths | Why: spike only
 - 1794123097 | HACK-001 | --no-ui: placeholder only; dropped template files | Why: outside Paths; no DESIGN.md
 - 1794123622 | HACK-005 | doc band = PENDIENTE, no invented results | Why: device results are Fer's
 - 1794123886 | HACK-004 | seeded payload per trial 1-10 so receiver matches without copying; ASCII payload | Why: embind std::string; two phones can't share clipboard
 - 1794124111 | HACK-034 | follow-up of HACK-001 by victor-1: CI: install web deps (npm --prefix web ci) before Product smoke in .github/workflows/uak.yml; main CI fails with tsc: n
+- 1794124362 | HACK-011 | SERVER_SIGNING_KEY is a private JWK JSON; no ephemeral fallback | Why: credentials must verify across restarts
 
 Global next step: available P0; else review PRs, tests, demo, rehearsal.
 Why: bounded snapshot to resume without rereading history.
