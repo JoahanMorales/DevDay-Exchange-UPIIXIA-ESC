@@ -12,10 +12,10 @@ Verify: `uv run pytest -q app/tests/test_health.py && npm --prefix web run build
 Lease-Until: 1794174811
 Updated: 1794160411
 Task-Base: 04453b3727de3d20d0b7234d15d9cc40513e3ac8
-Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/24; run .uak/bin/smoke
+Next: Humano: Shared resource/CI needs a human: .github/workflows/uak.yml
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/24
 Evidence: clean worktree: npm build -> 'tsc: not found'; after npm --prefix web ci, bash .uak/bin/smoke-project exit 0 (pytest + build) · no visible change: diff only touches .github/workflows/uak.yml (no UI files) · no red: CI config; reproduced tsc not found on a clean worktree, fixed by npm ci
-Events: 4
+Events: 5
 Checkpoints: 0
 Sessions: 2
 Last-Checkpoint: 0

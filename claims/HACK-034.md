@@ -12,7 +12,7 @@ Verify: `uv run pytest -q app/tests/test_health.py && npm --prefix web run build
 Lease-Until: 1794174811
 Updated: 1794160411
 Task-Base: 04453b3727de3d20d0b7234d15d9cc40513e3ac8
-Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/24; run .uak/bin/smoke
+Next: Humano: Shared resource/CI needs a human: .github/workflows/uak.yml
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/24
 Evidence: -
 Thread-Read: 137
