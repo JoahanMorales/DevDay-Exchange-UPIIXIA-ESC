@@ -80,12 +80,17 @@ export function Relay({
       <div className="mb-6 rounded-lg bg-surface px-6 py-5 shadow-card">
         <div className="text-base text-ink-2">pagarés cifrados para entregar</div>
         <div className={`display text-3xl font-black leading-none ${n ? "text-warn" : "text-ink"}`}>{n}</div>
-        <p className="mt-2 text-lg font-bold" aria-live="polite">
-          {n === 0 ? "No llevas pagarés" : `Llevas ${n} ${n === 1 ? "pagaré cifrado" : "pagarés cifrados"} para entregar`}
-        </p>
-        <p className="mt-1 text-base text-ink-2">{`Saltos del más lejano: ${maxHops}`}</p>
+        {n > 0 && (
+          <>
+            <p className="mt-2 text-lg font-bold" aria-live="polite">
+              {`Llevas ${n} ${n === 1 ? "pagaré cifrado" : "pagarés cifrados"} para entregar`}
+            </p>
+            <p className="mt-1 text-base text-ink-2">{`Saltos del más lejano: ${maxHops}`}</p>
+          </>
+        )}
       </div>
 
+      {n > 0 && (
       <div className="mb-6 flex flex-wrap gap-3">
         <Button size="lg" onClick={() => setShowQr((v) => !v)} disabled={n === 0} aria-pressed={showQr}>
           {showQr ? "Ocultar QR" : "Entregar por QR"}
@@ -94,6 +99,7 @@ export function Relay({
           {upload.kind === "loading" ? "Subiendo…" : "Subir al servidor"}
         </Button>
       </div>
+      )}
       {!online && n > 0 && (
         <p className="mb-4 text-base text-ink-2">Sin red: entrégalos a otro celular; el primero que tenga señal los sube.</p>
       )}

@@ -89,6 +89,18 @@ export function Dashboard({
   const allPaid = debts.length > 0 && pending === 0;
   const [disaster, setDisaster] = useState(false);
 
+  if (debts.length === 0) {
+    return (
+      <PageLayout recipe="list">
+        <PageHeader title="Tablero de cobros" context="Pagarés sincronizados · en vivo" />
+        <EmptyState title="Aún no hay pagarés para cobrar">
+          Cuando una tienda sincronice pagarés, aparecen aquí con su estado y la clave de rastreo del cobro por CoDi.
+        </EmptyState>
+        <DemoBadge />
+      </PageLayout>
+    );
+  }
+
   return (
     <PageLayout recipe="list">
       <PageHeader title="Tablero de cobros" context="Pagarés sincronizados · en vivo" />
@@ -129,11 +141,6 @@ export function Dashboard({
       >
         Pagarés
       </SectionHeader>
-      {debts.length === 0 ? (
-        <EmptyState title="Aún no hay pagarés para cobrar">
-          Cuando una tienda sincronice pagarés, aparecen aquí con su estado y la clave de rastreo del cobro por CoDi.
-        </EmptyState>
-      ) : (
       <List>
         {debts.map((d) => {
           const s = statusCopy[d.status];
@@ -171,7 +178,6 @@ export function Dashboard({
           );
         })}
       </List>
-      )}
 
       {explanation && (
         <div className="mt-6">
