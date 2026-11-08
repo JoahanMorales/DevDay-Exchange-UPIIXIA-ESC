@@ -9,8 +9,8 @@ Priority: P0
 Paths: web/src/lib/ui/kit.tsx, web/src/lib/ui/index.ts, web/src/index.css
 Depends: None
 Verify: `npm --prefix web run build && bash .uak/bin/design-lint`
-Lease-Until: 1794180708
-Updated: 1794166308
+Lease-Until: 1794182970
+Updated: 1794168570
 Task-Base: 318890425958aa69b94ebc1a15d723a33d222719
 Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/35; run .uak/bin/smoke
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/35
