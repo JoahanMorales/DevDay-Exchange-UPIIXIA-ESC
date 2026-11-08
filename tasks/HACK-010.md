@@ -15,9 +15,9 @@ Task-Base: f33dbae8bf55b38a072660f877506495ae14f001
 Next: wait for review of 45f03e6
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/11
 Evidence: uv run pytest -q app/tests/test_pey.py app/tests/test_webhooks.py exit 0 (6 passed); push amount/phone/metadata, bad sig 401, raw body, dup id, polling, demo same verifier · red at f33dbae: E   AssertionError: assert {} == {'transaction...111111111111'}
-Events: 4
+Events: 5
 Checkpoints: 1
-Sessions: 1
+Sessions: 2
 Last-Checkpoint: 1794124882
 Progress: 0 commit(s) since the claim · last: f33dbae Merge HACK-013 reviewed by victor-1 (72 seconds ago) · 0 uncommitted tracked file(s) · at 1794124733
 Progress-Head: f33dbae/4294967295
