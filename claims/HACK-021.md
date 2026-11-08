@@ -1,6 +1,6 @@
 # HACK-021
 ID: HACK-021
-State: CLAIMED
+State: REVIEW
 Owner: victor-2
 Branch: feat/hack-021
 Worktree: /Users/victor/Documents/Proyectos/DevDay-Exchange-UPIIXIA-ESC-wt/hack-021
@@ -9,10 +9,10 @@ Priority: P0
 Paths: web/src/features/dashboard/
 Depends: HACK-008
 Verify: `npm --prefix web test -- src/features/dashboard && npm --prefix web run build`
-Lease-Until: 1794128934
-Updated: 1794126234
+Lease-Until: 1794140679
+Updated: 1794126279
 Task-Base: 50f9136f4a2c59d9c8e79fe5342ddfd99249e78c
-Next: critic SHIP on HEAD then gh pr + uak done
-PR: -
+Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/16; run .uak/bin/smoke
+PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/16
 Evidence: -
 Thread-Read: 57
