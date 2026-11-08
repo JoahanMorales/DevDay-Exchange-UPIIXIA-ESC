@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "motion/react";
 import { cash, codiPaid, codiPaidShare, codiValidated, type Fact } from "./facts";
+import { IdeaScene } from "./scene/IdeaScene";
 import ataques from "./shots/ataques.jpg";
 import ataquesPhone from "./shots/ataques-390.jpg";
 import cobrar from "./shots/cobrar.jpg";
@@ -111,6 +112,9 @@ export function Landing() {
           </figcaption>
         </motion.figure>
       </section>
+
+      {/* The idea as one looping 3D scene (HACK-041). */}
+      <IdeaScene />
 
       {/* The pain: two sourced numbers. */}
       <section className="border-t border-line py-10 md:py-16">
