@@ -19,3 +19,7 @@ Events: 1
 Checkpoints: 0
 Sessions: 1
 Last-Checkpoint: 0
+Progress: 0 commit(s) since the claim · last: f9105fc Merge HACK-007 reviewed by victor-1 (60 seconds ago) · 0 uncommitted tracked file(s) · at 1794125474
+Progress-Head: f9105fc/4294967295
+Progress-Changed: 1794125474
+Away: 1794125474
