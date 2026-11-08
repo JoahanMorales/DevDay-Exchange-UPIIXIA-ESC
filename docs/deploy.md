@@ -4,7 +4,11 @@ Por qué: WebCrypto, micrófono, NFC y la instalación del PWA exigen HTTPS. Los
 Ya existen `Dockerfile`, `.dockerignore` y `render.yaml` (los creó HACK-001 con `uak deploy --write`): un solo servicio web que
 construye `web/` y FastAPI sirve `/api` y la app.
 
-## Antes de empezar: tres decisiones de Victor
+## Decisiones de Victor (resueltas)
+**Resultado real:** plan **free** (sin pago), servicio `sinsenal`, SQLite en `/tmp` (efímera: cada redeploy y cada reposo borran los datos). Los secretos (`PEY_*`, `OPENAI_API_KEY`, `SERVER_SIGNING_KEY`) los pone un humano en el dashboard de Render.
+Consecuencias: el demo debe resembrarse con el endpoint de HACK-029 tras cada redeploy, y el plan free se duerme a los 15 min: despertarlo (abrir la URL) 2 min antes de la demo.
+
+### Opciones que se evaluaron
 1. **Plan:** `render.yaml` dice `plan: starter` (de pago). Un plan gratis se duerme a los 15 min y la primera petición del demo tarda ~1 min.
    Para la demo conviene uno que no duerma. Pagarlo es decisión de Victor, no del agente.
 2. **Nombre del servicio:** el Blueprint lo llama `hack-001` (nombre heredado de la tarea). Cambiarlo a `sinsenal` define la URL pública;
@@ -21,17 +25,18 @@ construye `web/` y FastAPI sirve `/api` y la app.
    - `DEMO_MODE=1` hasta HACK-024 (cobro real); `DEMO_REAL_AMOUNT=0.01`.
    - `SERVER_SIGNING_KEY`: generar una llave P-256 propia de producción; **no** usar la de `vectors.json` (es solo de prueba).
 3. **Create**. Render construye el `Dockerfile` (Node 22 para `web/`, Python 3.12 con `uv`).
-4. Anotar la URL pública, de la forma `https://<servicio>.onrender.com`, en este archivo (sección siguiente) y avisar con `uak msg all`.
+4. Anotar la URL pública, de la forma `https://sinsenal-9lb5.onrender.com`, en este archivo (sección siguiente) y avisar con `uak msg all`.
 
 ## URL pública
-`https://<servicio>.onrender.com` ← **pendiente: Victor la escribe aquí al terminar el paso 3.**
+**https://sinsenal-9lb5.onrender.com** (servicio `sinsenal`, desplegado por Victor desde `main`, `autoDeploy` activo).
+`GET /api/health` → `200 {"status":"ok"}` comprobado por el agente (0.7 s).
 
 ## Cada merge
 `autoDeploy: true`: cada push a `main` redespliega solo. Tras un merge esperar a que Render marque *Live* y comprobar
-`curl -fsS https://<servicio>.onrender.com/api/health`.
+`curl -fsS https://sinsenal-9lb5.onrender.com/api/health`.
 
 ## Webhook de pey (HACK-024)
-En el portal de pey registrar `https://<servicio>.onrender.com/webhooks/pey` y copiar el secreto a `PEY_WEBHOOK_SECRET`.
+En el portal de pey registrar `https://sinsenal-9lb5.onrender.com/webhooks/pey` y copiar el secreto a `PEY_WEBHOOK_SECRET`.
 
 ## Verificación en el celular (Fer confirma)
 1. Abrir la URL en Android Chrome, instalar el PWA ("Agregar a pantalla de inicio").
@@ -42,4 +47,4 @@ En el portal de pey registrar `https://<servicio>.onrender.com/webhooks/pey` y c
 | (pendiente) | | | |
 
 ## Después de que Victor conteste
-El agente revisa `curl -fsS https://<servicio>.onrender.com/api/health` y reporta el resultado real.
+El agente revisa `curl -fsS https://sinsenal-9lb5.onrender.com/api/health` y reporta el resultado real.
