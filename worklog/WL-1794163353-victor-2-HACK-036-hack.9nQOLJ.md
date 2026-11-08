@@ -6,7 +6,7 @@
 - Why: pey webhook never arrives
 - Failing: none
 - Commands: uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py
-- Next: wait for review of PR #33
+- Next: Integrated in main: 318890425958aa69b94ebc1a15d723a33d222719
 
 ## History
 - 1794163353 | CLAIMED | victor-2 | claim; next: Write its tests, see them fail (uak red HACK-036), then implement until this passes: `uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py`
@@ -14,3 +14,4 @@
 - 1794163523 | REVIEW | victor-2 | done; PR https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/33; evidence: uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py exit 0 (13 passed); background poll 5s/6min after push; POST /api/deudas/{id}/verificar forces poll · red at 1c74895: E   assert 0 == 1; reviewer: -
 - 1794163539 | REVIEW | victor-2 | checkpoint; next: wait for review of PR #33
 - 1794163615 | REVIEW | victor-1 | review; approve; SHA ed7ab8f3b303b834b21682000e3b0c320c187776; reviewer victor-1
+- 1794163860 | INTEGRATED | victor-2 | merge; smoke and Verify PASS; commit 318890425958aa69b94ebc1a15d723a33d222719; reviewer victor-1
