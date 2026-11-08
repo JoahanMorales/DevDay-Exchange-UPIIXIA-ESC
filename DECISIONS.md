@@ -17,3 +17,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794124882 | HACK-010 | in-memory WebhookEvent store; handlers via register_payment_handler(tx, tracking_key, payload) | Why: no DB layer yet; HACK-012 owns debts
 - 1794124982 | HACK-008 | Direction Cempasúchil (Victor) | Why: Human pick by looking
 - 1794125150 | HACK-022 | model writes placeholders, digits rejected, template fills numbers | Why: IDEA §7 anti-hallucination
+- 1794125470 | deadline decision/HACK-008-1794124432/1794125332 | BLOCKED_OTHER_TASK | Option: Direction 1 Cempasúchil; Why: Victor picked it by looking at the gallery (AskUserQuestion: Sí, bloquéala); no money, accounts, publishing or scope expansion.
