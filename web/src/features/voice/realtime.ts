@@ -50,7 +50,10 @@ export async function startVoice(onProposal: (p: Proposal) => void, onEnd: () =>
     dc.send(JSON.stringify({ type: "response.create" }));
   };
 
+  let stopped = false;
   const stop = () => {
+    if (stopped) return;
+    stopped = true;
     dc.close();
     pc.close();
     mic.getTracks().forEach((t) => t.stop());
@@ -61,16 +64,18 @@ export async function startVoice(onProposal: (p: Proposal) => void, onEnd: () =>
     if (pc.connectionState === "failed" || pc.connectionState === "disconnected") stop();
   };
 
-  await pc.setLocalDescription(await pc.createOffer());
-  const r = await fetch(CALLS_URL, {
-    method: "POST",
-    body: pc.localDescription?.sdp,
-    headers: { Authorization: `Bearer ${session.client_secret}`, "Content-Type": "application/sdp" },
-  });
-  if (!r.ok) {
+  try {
+    await pc.setLocalDescription(await pc.createOffer());
+    const r = await fetch(CALLS_URL, {
+      method: "POST",
+      body: pc.localDescription?.sdp,
+      headers: { Authorization: `Bearer ${session.client_secret}`, "Content-Type": "application/sdp" },
+    });
+    if (!r.ok) throw new Error(`${r.status} realtime`);
+    await pc.setRemoteDescription({ type: "answer", sdp: await r.text() });
+  } catch (e) {
     stop();
-    throw new Error(`${r.status} realtime`);
+    throw e;
   }
-  await pc.setRemoteDescription({ type: "answer", sdp: await r.text() });
   return { stop };
 }
