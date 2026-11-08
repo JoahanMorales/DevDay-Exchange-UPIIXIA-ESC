@@ -9,8 +9,8 @@ Priority: P1
 Paths: web/src/features/relay/, web/src/lib/envelope/
 Depends: HACK-013, HACK-014
 Verify: `npm --prefix web test -- src/features/relay src/lib/envelope && npm --prefix web run build`
-Lease-Until: 1794175061
-Updated: 1794160661
+Lease-Until: 1794175632
+Updated: 1794161232
 Task-Base: 04453b3727de3d20d0b7234d15d9cc40513e3ac8
 Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/20; run .uak/bin/smoke
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/20
