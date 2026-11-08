@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "motion/react";
 import { cash, codiPaid, codiPaidShare, codiValidated, type Fact } from "./facts";
 import ataques from "./shots/ataques.jpg";
+import ataquesPhone from "./shots/ataques-390.jpg";
 import cobrar from "./shots/cobrar.jpg";
 import pagar from "./shots/pagar.jpg";
 import tablero from "./shots/tablero.jpg";
@@ -38,7 +39,7 @@ function Shot({ src, alt, w, h }: { src: string; alt: string; w: number; h: numb
       height={h}
       loading="lazy"
       decoding="async"
-      className="h-auto w-full rounded-lg border border-line shadow-card"
+      className="h-auto w-full max-w-[520px]"
     />
   );
 }
@@ -49,21 +50,21 @@ const steps = [
     go: "Abrir la tienda",
     title: "Lupita teclea $25.00 y toca Cobrar sin red",
     body: "La tienda emite un reto de un solo uso por sonido o QR. No necesita señal ni terminal.",
-    shot: { src: cobrar, alt: "Pantalla Cobrar sin red de Tienda Lupita con $25.00 y el teclado", w: 2120, h: 1000 },
+    shot: { src: cobrar, alt: "Pantalla Cobrar sin red: monto a cobrar $25.00", w: 1096, h: 392 },
   },
   {
     to: "/pagar",
     go: "Abrir el celular del cliente",
     title: "Mario firma un pagaré con su celular en modo avión",
     body: "Su llave vive sólo en su celular. Una grabación o una voz de IA no traen esa firma, por eso la tienda las rechaza.",
-    shot: { src: pagar, alt: "Pantalla Pagar sin red: activa tu llave para pagar sin red", w: 1090, h: 1110 },
+    shot: { src: pagar, alt: "Pantalla Pagar sin red: activa tu llave para pagar sin red", w: 1096, h: 548 },
   },
   {
     to: "/tablero",
     go: "Ver el tablero",
     title: "Vuelve la red y el pagaré se cobra por CoDi",
     body: "El cobro llega a la app bancaria del cliente y la tienda ve la clave de rastreo. En la demo se cobra un monto de prueba de $0.01.",
-    shot: { src: tablero, alt: "Tablero con tres pagarés cobrados por CoDi, cada uno con su clave de rastreo", w: 1872, h: 618 },
+    shot: { src: tablero, alt: "Tablero: $0.00 por cobrar y $193.50 cobrado por CoDi", w: 1176, h: 216 },
   },
 ];
 
@@ -72,14 +73,14 @@ export function Landing() {
   return (
     <main className="mx-auto max-w-[1200px] px-4 md:px-8">
       {/* Hero: the claim on the left, the wow (four attacks rejected, a real capture of /ataques) on the right. */}
-      <section className="grid items-center gap-5 pt-5 pb-10 md:grid-cols-[4fr_7fr] md:gap-10 md:pt-8 md:pb-16">
+      <section className="grid items-center gap-5 pt-5 pb-10 md:grid-cols-[5fr_7fr] md:gap-10 md:pt-8 md:pb-16">
         <div>
           {/* design-lint: ok · the hero sits between the 44 and 96 steps so the wow stays above the fold at 1280×720 */}
           <h1 className="display text-2xl leading-[0.98] font-black md:text-[64px]"> {/* design-lint: ok · see above */}
             Cobra en digital aunque no haya señal.
           </h1>
           <p className="mt-4 max-w-[34ch] text-base text-ink-2 md:text-lg">
-            SinSeñal convierte cada venta sin red en un pagaré firmado que nadie puede fingir, y lo cobra por CoDi
+            Para tiendas de barrio: SinSeñal convierte cada venta sin red en un pagaré firmado que nadie puede fingir, y lo cobra por CoDi
             cuando vuelve la señal.
           </p>
           <div className="mt-5 flex flex-wrap items-center gap-3">
@@ -94,14 +95,17 @@ export function Landing() {
           animate={{ opacity: 1, y: 0, rotate: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
+          <picture>
+            <source media="(min-width: 768px)" srcSet={ataques} width={1160} height={980} />
           <img
-            src={ataques}
+            src={ataquesPhone}
             alt="Registro de ataques: el pagaré legítimo es válido; la grabación, la voz de IA, el pagaré a 2 km y el duplicado salen rechazados"
-            width={1920}
-            height={984}
+            width={732}
+            height={1388}
             fetchPriority="high"
             className="h-auto w-full rounded-lg border border-line shadow-card"
           />
+          </picture>
           <figcaption className="mt-3 text-base text-ink-2">
             Una grabación, una voz de IA, un pagaré a 2 km y un duplicado. La tienda no vibró con ninguno.
           </figcaption>
