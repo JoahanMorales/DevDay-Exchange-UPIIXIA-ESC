@@ -3,12 +3,12 @@ import { Backspace, DeviceMobileSlash, Storefront, Vibrate, Waveform } from "@ph
 import { Amount, Button, Chip, DemoBadge, List, ListRow, PageHeader, PageLayout, SectionHeader, Stamp, Surface, TicketTear, formatMXN } from "../../lib/ui";
 import type { AttackLog } from "../../lib/contract";
 import { decodeIou, IOU_LEN, makeChallenge, toHex, type ChallengeFields } from "../../lib/protocol";
-import { getEnrollment, getOrCreateKey, getRevocationList, openCoreDb, type Db, type Enrollment } from "../../lib/storage";
-import { enrollMerchant } from "../core/enroll";
+import { getEnrollment, getOrCreateKey, getRevocationList, getServerKey, openCoreDb, type Db, type Enrollment } from "../../lib/storage";
+import { cacheServerKey, enrollMerchant } from "../core/enroll";
 import { createQrTransport, encodeFrames } from "../../lib/transport/qr";
 import { QrLoop, QrScanner, textQueue } from "../../lib/transport/qr/QrIo";
 import { locate, unpackPayment } from "../pay/sign";
-import { verifyIncoming, REASON_TEXT, type VerifyResult } from "./verify";
+import { verifyPayment, REASON_TEXT, type VerifyResult } from "./verify";
 
 const KEYS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "00", "0", "del"];
 const MERCHANT_NAME = "Tienda Lupita";
@@ -33,6 +33,7 @@ function StorePage() {
   useEffect(() => {
     openCoreDb().then(async (d) => {
       setDb(d);
+      cacheServerKey(d).catch(() => {}); // online: refresh the server key used to check payer credentials offline
       setMe(await getEnrollment(d, "merchant"));
       setAttacks((await kv<AttackLog[]>(d, "attacks")) ?? []);
     });
@@ -69,11 +70,10 @@ function StorePage() {
         const payerId = decodeIou(p.iou.slice(0, IOU_LEN)).payerId;
         const used = (await kv<string[]>(db, "used_nonces")) ?? [];
         const rl = await getRevocationList(db);
-        const r = await verifyIncoming(p.iou, {
+        const r = await verifyPayment(p.iou, p.card.credential, {
           now: Math.floor(Date.now() / 1000), challenge: ch, usedNonces: new Set(used),
           lastCounter: await kv<number>(db, `counter:${payerId}`),
-          remainingCapCents: rl?.caps?.[payerId] ?? p.card.credential.daily_cap_cents,
-          revoked: new Set(rl?.revoked ?? []), payerPubkey: p.card.credential.pubkey_jwk,
+          serverPubkey: await getServerKey(db), caps: rl?.caps, revoked: new Set(rl?.revoked ?? []),
         }, { vibrate: (pat) => navigator.vibrate?.(pat) ?? false, logAttack: (a) => logAttack(db, a) });
         if (r.ok) {
           const iou = decodeIou(p.iou.slice(0, IOU_LEN));
