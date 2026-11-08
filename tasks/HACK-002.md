@@ -9,16 +9,16 @@ Priority: P0
 Paths: spikes/pey/, docs/pey-pruebas.md
 Depends: None
 Verify: `uv run --no-project --with pytest --with httpx python -m pytest -q spikes/pey/test_probe.py && test -s docs/pey-pruebas.md`
-Lease-Until: 1794125427
-Updated: 1794122727
+Lease-Until: 1794125463
+Updated: 1794122763
 Task-Base: bf793f9ad893ea58f5200994f61a768a4b616850
-Next: write `spikes/pey/test_probe.py` with a Fake `httpx.MockTransport`.
+Next: uak done HACK-002, msg human
 PR: -
 Evidence: -
-Events: 2
-Checkpoints: 0
+Events: 3
+Checkpoints: 1
 Sessions: 1
-Last-Checkpoint: 0
+Last-Checkpoint: 1794122763
 Progress: 0 commit(s) since the claim · last: bf793f9 plan: backlog v1 (7 minutes ago) · 0 uncommitted tracked file(s) · at 1794122727
 Progress-Head: bf793f9/4294967295
 Progress-Changed: 1794122727
