@@ -27,3 +27,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794126586 | HACK-016 | Inject GgwaveCodec/SoundIo; default AUDIBLE_FAST until spike decides | Why: Fakes in tests; spike results pending
 - 1794126946 | HACK-015 | forged/expired credential -> firma_invalida, AttackLog bad_sig, no vibration | Why: reject #77 joahanmorales-1
 - 1794128031 | HACK-019 | TTL inclusive; hops unsigned (server dedupes by id); queue cleared after one successful sync; headline uses display text-3xl (design-lint caps 6 sizes) | Why: design-critic P1s
+- 1794128325 | HACK-020 | daily_cap_cents stays base; effective = base×factor; list version = sum(rep_version) | Why: monotonic version for clients
