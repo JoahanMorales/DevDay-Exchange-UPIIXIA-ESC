@@ -1,0 +1,43 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SinSeñal geo spike</title>
+<body style="font:16px system-ui;padding:16px;max-width:520px">
+<h1>GPS sin datos</h1>
+<p>Pon el celular en <b>modo avión</b> (GPS encendido), abre esta página (HTTPS o localhost) y toca <b>Fix</b>.</p>
+<button id="fix" style="font-size:20px;padding:12px">Fix</button>
+<button id="ref" style="font-size:20px;padding:12px">Fijar punto aquí</button>
+<pre id="out" style="white-space:pre-wrap"></pre>
+<script type="module">
+const out = document.getElementById('out');
+const K = 'geo-spike';
+const load = () => { try { return JSON.parse(localStorage.getItem(K) || '{}'); } catch { return {}; } };
+const save = (o) => { try { localStorage.setItem(K, JSON.stringify({ ...load(), ...o })); } catch {} };
+const rad = (d) => (d * Math.PI) / 180;
+const dist = (a, b, c, d) => { // haversine, meters
+  const h = Math.sin(rad(c - a) / 2) ** 2 + Math.cos(rad(a)) * Math.cos(rad(c)) * Math.sin(rad(d - b) / 2) ** 2;
+  return 2 * 6371000 * Math.asin(Math.sqrt(h));
+};
+const getPos = () => new Promise((res, rej) =>
+  navigator.geolocation.getCurrentPosition(res, rej, { enableHighAccuracy: true, timeout: 60000, maximumAge: 0 }));
+let last = null;
+async function fix() {
+  const t0 = performance.now();
+  out.textContent = `${navigator.userAgent}\nonLine=${navigator.onLine}\nbuscando fix (máx 60 s)...`;
+  try {
+    const p = await getPos(), s = ((performance.now() - t0) / 1000).toFixed(1);
+    last = { lat: p.coords.latitude, lon: p.coords.longitude, acc: p.coords.accuracy, at: Date.now() };
+    save({ last });
+    const ref = load().ref;
+    out.textContent += `\nFIX OK en ${s} s\nlat ${last.lat.toFixed(6)} lon ${last.lon.toFixed(6)}\nprecisión ±${last.acc.toFixed(0)} m (límite del protocolo: 50 m)`;
+    out.textContent += ref ? `\ndistancia al punto fijo: ${dist(ref.lat, ref.lon, last.lat, last.lon).toFixed(1)} m` : '\n(sin punto fijo: toca "Fijar punto aquí" en el mostrador)';
+  } catch (e) {
+    const old = load().last;
+    out.textContent += `\nSIN FIX: ${e.message} (código ${e.code})`;
+    if (old) out.textContent += `\nÚLTIMA POSICIÓN CONOCIDA (last known), antigüedad ${((Date.now() - old.at) / 1000).toFixed(0)} s: ${old.lat.toFixed(6)}, ${old.lon.toFixed(6)} ±${old.acc.toFixed(0)} m`;
+  }
+}
+document.getElementById('fix').onclick = fix;
+document.getElementById('ref').onclick = async () => {
+  try { const p = await getPos(); save({ ref: { lat: p.coords.latitude, lon: p.coords.longitude } }); out.textContent = 'Punto fijo guardado.'; }
+  catch (e) { out.textContent = 'No se pudo fijar: ' + e.message; }
+};
+</script>
