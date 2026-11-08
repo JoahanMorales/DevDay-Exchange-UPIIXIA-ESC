@@ -3,6 +3,7 @@ import QRCode from "qrcode";
 import type { Envelope } from "../../lib/contract";
 import {
   Button,
+  DemoBadge,
   List,
   ListRow,
   PageHeader,
@@ -76,19 +77,22 @@ export function Relay({
   return (
     <PageLayout recipe="list">
       <PageHeader title="Relevo" context="Llevas pagarés de otras personas, cifrados: no puedes leerlos ni cambiarlos" />
-      <div className="mb-6 grid grid-cols-2 gap-3">
-        <Stat label="pagarés cifrados para entregar" value={n} tone={n ? "warn" : "neutral"} />
-        <Stat label="saltos del más lejano" value={maxHops} />
+      <div className="mb-6 grid grid-cols-1 gap-3 md:grid-cols-[2fr_1fr]">
+        <div className="rounded-lg bg-surface px-6 py-5 shadow-card">
+          <div className="text-base text-ink-2">pagarés cifrados para entregar</div>
+          <div className={`display text-3xl font-black leading-none ${n ? "text-warn" : "text-ink"}`}>{n}</div>
+          <p className="mt-2 text-lg font-bold" aria-live="polite">
+            {n === 0 ? "No llevas pagarés" : `Llevas ${n} ${n === 1 ? "pagaré cifrado" : "pagarés cifrados"} para entregar`}
+          </p>
+        </div>
+        <Stat label="saltos del más lejano" value={maxHops} size="sm" />
       </div>
-      <p className="mb-4 text-lg font-bold" aria-live="polite">
-        {n === 0 ? "No llevas pagarés" : `Llevas ${n} ${n === 1 ? "pagaré cifrado" : "pagarés cifrados"} para entregar`}
-      </p>
 
       <div className="mb-6 flex flex-wrap gap-3">
         <Button size="lg" onClick={() => setShowQr((v) => !v)} disabled={n === 0} aria-pressed={showQr}>
           {showQr ? "Ocultar QR" : "Entregar por QR"}
         </Button>
-        <Button size="lg" variant="secondary" onClick={onUpload} disabled={!online || n === 0 || upload.kind === "loading"}>
+        <Button size="lg" variant="ghost" onClick={onUpload} disabled={!online || n === 0 || upload.kind === "loading"}>
           {upload.kind === "loading" ? "Subiendo…" : "Subir al servidor"}
         </Button>
       </div>
@@ -120,17 +124,18 @@ export function Relay({
         </Surface>
       ) : (
         <List>
-          {queue.map((e) => (
+          {queue.map((e, i) => (
             <ListRow
               key={e.envelope_id}
               tone="warn"
-              title={<span className="num">{`Pagaré cifrado ···${e.envelope_id.slice(0, 6)}`}</span>}
+              title={<span className="num">{`Pagaré cifrado #${i + 1}`}</span>}
               detail={`${e.hops} ${e.hops === 1 ? "salto" : "saltos"} · ${dayLabel(e, now)}`}
             />
           ))}
         </List>
       )}
       {scanner}
+      <DemoBadge>Pagarés de prueba · personas ficticias</DemoBadge>
     </PageLayout>
   );
 }
