@@ -59,3 +59,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794162860 | HACK-023 | nav clip left as shared-Shell follow-up | Why: outside Paths
 - 1794163346 | HACK-036 | follow-up of HACK-012 by victor-2: URGENTE: conectar el sondeo de respaldo: tras enviar el push CoDi, sondear GET /transaction/{id} en segundo plano (cada 5 s, hasta 6 min) y marcar PAGADA con debts.poll; y POST /api/deudas/{id}/verificar para forzarlo. El webhook de pey no llega. | Why: same Paths, no scope change
 - 1794163348 | allow | victor | freeze exception: HACK-036 | Why: bug del demo: pago real no se refleja
+- 1794163539 | HACK-036 | poller thread per COBRO_ENVIADO debt started from debts.sync; PAID without trackingKey uses pey:txId | Why: pey webhook never arrives

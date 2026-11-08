@@ -1,7 +1,7 @@
 # STATE
 
 Phase: feature freeze; authorized fixes, rehearsal and submission only
-Updated: 1794163532
+Updated: 1794163539
 AVAILABLE: HACK-018 HACK-035 
 CLAIMED: HACK-024 
 BLOCKED: -
@@ -12,15 +12,15 @@ CANCELLED: -
 Claims (first 24; status --task ID shows detail):
 HACK-023 | REVIEW | victor-2 | until 1794177769
 HACK-024 | CLAIMED | fer-1 | until 1794158968 (EXPIRED: release --expired --read-summary TOKEN)
-HACK-036 | REVIEW | victor-2 | until 1794177923
+HACK-036 | REVIEW | victor-2 | until 1794177939
 
 Blockers: BLOCKED tasks; use status --task ID --summary.
 Current decisions (last 5):
-- 1794162480 | allow | victor | freeze exception: HACK-023 | Why: Victor: terminar P1 restantes
 - 1794162749 | HACK-023 | WebRTC GA /v1/realtime/calls with ephemeral client_secret; /voz without nav label (bar full) | Why: key never leaves server; IDEA §7 propose-only
 - 1794162860 | HACK-023 | nav clip left as shared-Shell follow-up | Why: outside Paths
 - 1794163346 | HACK-036 | follow-up of HACK-012 by victor-2: URGENTE: conectar el sondeo de respaldo: tras enviar el push CoDi, sondear GET /transaction/{id} en segundo plano (cada
 - 1794163348 | allow | victor | freeze exception: HACK-036 | Why: bug del demo: pago real no se refleja
+- 1794163539 | HACK-036 | poller thread per COBRO_ENVIADO debt started from debts.sync; PAID without trackingKey uses pey:txId | Why: pey webhook never arrives
 
 Global next step: available P0; else review PRs, tests, demo, rehearsal.
 Why: bounded snapshot to resume without rereading history.
