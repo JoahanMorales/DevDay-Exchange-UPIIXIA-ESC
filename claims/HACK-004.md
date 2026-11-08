@@ -9,10 +9,10 @@ Priority: P0
 Paths: spikes/ggwave/, docs/spikes/ggwave.md
 Depends: None
 Verify: `test -s spikes/ggwave/index.html && grep -qi "protocol" docs/spikes/ggwave.md`
-Lease-Until: 1794138282
-Updated: 1794123882
+Lease-Until: 1794138286
+Updated: 1794123886
 Task-Base: d11f2b3f7f0cb81e73574d28319ebad2d6e9d77b
-Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/6; run .uak/bin/smoke
+Next: Wait for review of SHA 7f482fc
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/6
 Evidence: -
 Thread-Read: 0
