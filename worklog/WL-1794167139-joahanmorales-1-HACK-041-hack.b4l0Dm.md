@@ -14,3 +14,4 @@
 - 1794168865 | REVIEW | joahanmorales-2 | review; approve; SHA b3c72e7f92e15adfe74ba42c3d0e31fbcbff31b5; reviewer joahanmorales-2
 - 1794168882 | REVIEW | joahanmorales-1 | heartbeat; lease until 1794183282
 - 1794168889 | REVIEW | joahanmorales-1 | merge rechazado; Shared resource/CI needs a human: web/package-lock.json
+- 1794169144 | REVIEW | joahanmorales-1 | merge rechazado; Shared resource/CI needs a human: web/package-lock.json
