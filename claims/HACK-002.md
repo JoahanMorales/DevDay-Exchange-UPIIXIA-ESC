@@ -9,10 +9,10 @@ Priority: P0
 Paths: spikes/pey/, docs/pey-pruebas.md
 Depends: None
 Verify: `uv run --no-project --with pytest --with httpx python -m pytest -q spikes/pey/test_probe.py && test -s docs/pey-pruebas.md`
-Lease-Until: 1794137422
-Updated: 1794123022
+Lease-Until: 1794137433
+Updated: 1794123033
 Task-Base: bf793f9ad893ea58f5200994f61a768a4b616850
-Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/2; run .uak/bin/smoke
+Next: Wait for review of SHA aaf0f97
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/2
 Evidence: -
 Thread-Read: 1
