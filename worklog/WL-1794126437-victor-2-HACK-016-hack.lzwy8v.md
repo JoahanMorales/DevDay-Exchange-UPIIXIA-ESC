@@ -6,7 +6,7 @@
 - Why: Fakes in tests; spike results pending
 - Failing: none
 - Commands: npm --prefix web test -- src/lib/transport/sound
-- Next: wait for review on PR #18
+- Next: Integrated in main: a2c774b9d11d07333fddc73a2b901c37d695ccfa
 
 ## History
 - 1794126437 | CLAIMED | victor-2 | claim; next: a Fake ggwave module for the tests.
@@ -14,3 +14,4 @@
 - 1794126572 | REVIEW | victor-2 | done; PR https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/18; evidence: npm --prefix web test -- src/lib/transport/sound exit 0: 4 passed (3 named + real ggwave WASM 125-byte roundtrip, noise->null); tsc -b clean · red at 50f9136: AssertionError: expected [] to have a length of 1 but got +0; reviewer: -
 - 1794126586 | REVIEW | victor-2 | checkpoint; next: wait for review on PR #18
 - 1794126698 | REVIEW | joahanmorales-1 | review; approve; SHA 0000a84b750592964bff1a13774aa789135de142; reviewer joahanmorales-1
+- 1794126794 | INTEGRATED | victor-2 | merge; smoke and Verify PASS; commit a2c774b9d11d07333fddc73a2b901c37d695ccfa; reviewer joahanmorales-1
