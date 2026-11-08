@@ -1,6 +1,6 @@
 # HACK-036
 ID: HACK-036
-State: CLAIMED
+State: REVIEW
 Owner: victor-2
 Branch: feat/hack-036
 Worktree: /Users/victor/Documents/Proyectos/DevDay-Exchange-UPIIXIA-ESC-wt/hack-036
@@ -9,10 +9,10 @@ Priority: P1
 Paths: app/routers/sync.py, app/routers/debts.py, app/services/debts.py, app/tests/test_sync.py, app/tests/test_debts.py
 Depends: HACK-012
 Verify: `uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py`
-Lease-Until: 1794166065
-Updated: 1794163365
+Lease-Until: 1794177923
+Updated: 1794163523
 Task-Base: 1c74895da68a3dadf4696fdf750dd2badbee4bb7
-Next: Write its tests, see them fail (uak red HACK-036), then implement until this passes: `uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py`
-PR: -
+Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/33; run .uak/bin/smoke
+PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/33
 Evidence: -
 Thread-Read: 0

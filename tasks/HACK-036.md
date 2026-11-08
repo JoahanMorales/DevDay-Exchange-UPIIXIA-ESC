@@ -1,6 +1,6 @@
 # HACK-036
 ID: HACK-036
-State: CLAIMED
+State: REVIEW
 Owner: victor-2
 Branch: feat/hack-036
 Worktree: /Users/victor/Documents/Proyectos/DevDay-Exchange-UPIIXIA-ESC-wt/hack-036
@@ -9,13 +9,13 @@ Priority: P1
 Paths: app/routers/sync.py, app/routers/debts.py, app/services/debts.py, app/tests/test_sync.py, app/tests/test_debts.py
 Depends: HACK-012
 Verify: `uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py`
-Lease-Until: 1794166065
-Updated: 1794163365
+Lease-Until: 1794177923
+Updated: 1794163523
 Task-Base: 1c74895da68a3dadf4696fdf750dd2badbee4bb7
-Next: Write its tests, see them fail (uak red HACK-036), then implement until this passes: `uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py`
-PR: -
-Evidence: -
-Events: 2
+Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/33; run .uak/bin/smoke
+PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/33
+Evidence: uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py exit 0 (13 passed); background poll 5s/6min after push; POST /api/deudas/{id}/verificar forces poll · red at 1c74895: E   assert 0 == 1
+Events: 3
 Checkpoints: 0
 Sessions: 1
 Last-Checkpoint: 0
@@ -23,3 +23,4 @@ Progress: 0 commit(s) since the claim · last: 1c74895 Merge HACK-026 reviewed b
 Progress-Head: 1c74895/4294967295
 Progress-Changed: 1794163361
 Away: 1794163361
+Task-Tip: ed7ab8f3b303b834b21682000e3b0c320c187776
