@@ -9,16 +9,16 @@ Priority: P0
 Paths: web/src/features/store/, web/src/features/pay/, web/src/lib/transport/qr/
 Depends: HACK-013, HACK-014
 Verify: `npm --prefix web test -- src/features/store src/features/pay src/lib/transport/qr && npm --prefix web run build`
-Lease-Until: 1794128863
-Updated: 1794126163
+Lease-Until: 1794129112
+Updated: 1794126412
 Task-Base: 50f9136f4a2c59d9c8e79fe5342ddfd99249e78c
-Next: `web/src/features/store/verify.test.tsx` with a Fake vibrate.
+Next: design-critic verdict then gh pr + uak done
 PR: -
 Evidence: -
-Events: 2
-Checkpoints: 0
+Events: 3
+Checkpoints: 1
 Sessions: 1
-Last-Checkpoint: 0
+Last-Checkpoint: 1794126412
 Progress: 0 commit(s) since the claim · last: 50f9136 Merge HACK-014 reviewed by victor-1 (6 minutes ago) · 0 uncommitted tracked file(s) · at 1794126163
 Progress-Head: 50f9136/4294967295
 Progress-Changed: 1794126155
