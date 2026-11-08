@@ -1,7 +1,7 @@
 # STATE
 
 Phase: feature freeze; authorized fixes, rehearsal and submission only
-Updated: 1794160417
+Updated: 1794160423
 AVAILABLE: HACK-018 HACK-023 HACK-025 HACK-026 HACK-028 
 CLAIMED: HACK-024 
 BLOCKED: -
@@ -14,7 +14,7 @@ HACK-017 | REVIEW | victor-1 | until 1794174586
 HACK-019 | REVIEW | joahanmorales-1 | until 1794142431
 HACK-020 | REVIEW | joahanmorales-1 | until 1794142725
 HACK-024 | CLAIMED | fer-1 | until 1794158968 (EXPIRED: release --expired --read-summary TOKEN)
-HACK-030 | REVIEW | joahanmorales-1 | until 1794142939
+HACK-030 | REVIEW | joahanmorales-1 | until 1794174823
 HACK-031 | REVIEW | joahanmorales-1 | until 1794144194
 HACK-032 | REVIEW | joahanmorales-1 | until 1794143557
 HACK-033 | REVIEW | joahanmorales-1 | until 1794144501
