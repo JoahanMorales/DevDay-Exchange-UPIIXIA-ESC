@@ -13,3 +13,4 @@
 - 1794125010 | CLAIMED | victor-1 | heartbeat; lease until 1794127710
 - 1794125109 | REVIEW | victor-1 | done; PR https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/12; evidence: uv run pytest -q app/tests/test_explain.py exit 0 (4 passed); Responses API json_schema, model from env, digit filter, template fallback, Fake client · red at f33dbae: E   AssertionError: assert 'plantilla' == 'openai'; reviewer: -
 - 1794125150 | REVIEW | victor-1 | checkpoint; next: wait for review
+- 1794125249 | REVIEW | joahanmorales-1 | review; approve; SHA 6f7cd2a536e091ff91d53bbd11d739433d5689ef; reviewer joahanmorales-1
