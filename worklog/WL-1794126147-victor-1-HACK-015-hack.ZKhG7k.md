@@ -6,7 +6,7 @@
 - Why: reject #77 joahanmorales-1
 - Failing: uak done refused: critic.txt stale (needs SHIP 94b33f1); CI smoke fails on main too (tsc not found)
 - Commands: npm --prefix web test -- src/features/store src/features/pay src/lib/transport/qr && npm --prefix web run build
-- Next: Humano: FREEZE: HACK-015 is not allowed after the freeze (human: uak allow HACK-015 --reason TEXT)
+- Next: Integrated in main: 321e0157669bc0f1cbae7950c2969558326a0dd0
 
 ## History
 - 1794126147 | CLAIMED | victor-1 | claim; next: `web/src/features/store/verify.test.tsx` with a Fake vibrate.
@@ -19,3 +19,4 @@
 - 1794127267 | REVIEW | joahanmorales-1 | review; approve; SHA 94b33f18112e9efd22623fc81a5e4924c5979aae; reviewer joahanmorales-1
 - 1794159654 | REVIEW | victor-2 | merge rechazado; FREEZE: HACK-015 is not allowed after the freeze (human: uak allow HACK-015 --reason TEXT)
 - 1794159701 | REVIEW | victor-2 | merge rechazado; FREEZE: HACK-015 is not allowed after the freeze (human: uak allow HACK-015 --reason TEXT)
+- 1794159930 | INTEGRATED | victor-2 | merge; smoke and Verify PASS; commit 321e0157669bc0f1cbae7950c2969558326a0dd0; reviewer joahanmorales-1

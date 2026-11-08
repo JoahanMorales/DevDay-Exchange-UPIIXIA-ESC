@@ -1,6 +1,6 @@
 # HACK-015
 ID: HACK-015
-State: REVIEW
+State: INTEGRATED
 Owner: victor-1
 Branch: feat/hack-015
 Worktree: /Users/victor/Documents/Proyectos/DevDay-Exchange-UPIIXIA-ESC-wt/hack-015
@@ -9,13 +9,13 @@ Priority: P0
 Paths: web/src/features/store/, web/src/features/pay/, web/src/lib/transport/qr/
 Depends: HACK-013, HACK-014
 Verify: `npm --prefix web test -- src/features/store src/features/pay src/lib/transport/qr && npm --prefix web run build`
-Lease-Until: 1794141355
-Updated: 1794126955
+Lease-Until: 0
+Updated: 1794159930
 Task-Base: 50f9136f4a2c59d9c8e79fe5342ddfd99249e78c
-Next: Humano: FREEZE: HACK-015 is not allowed after the freeze (human: uak allow HACK-015 --reason TEXT)
+Next: Integrated in main: 321e0157669bc0f1cbae7950c2969558326a0dd0
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/17
 Evidence: Verify at 94b33f1: 7 tests passed + build ok; critic SHIP 94b33f1 · red at 50f9136: AssertionError: expected 0 to be greater than 1
-Events: 10
+Events: 11
 Checkpoints: 2
 Sessions: 4
 Last-Checkpoint: 1794126946
@@ -24,3 +24,7 @@ Progress-Head: b9b8a62/4294967295
 Progress-Changed: 1794126435
 Away: 1794126435
 Task-Tip: 94b33f18112e9efd22623fc81a5e4924c5979aae
+Merge-Commit: 321e0157669bc0f1cbae7950c2969558326a0dd0
+Reviewer: joahanmorales-1
+Integration-Proof: ancestry
+Merged-By: victor-2
