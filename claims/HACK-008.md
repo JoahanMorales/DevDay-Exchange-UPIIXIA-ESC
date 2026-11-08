@@ -1,6 +1,6 @@
 # HACK-008
 ID: HACK-008
-State: CLAIMED
+State: REVIEW
 Owner: victor-2
 Branch: feat/hack-008
 Worktree: /Users/victor/Documents/Proyectos/DevDay-Exchange-UPIIXIA-ESC-wt/hack-008
@@ -9,10 +9,10 @@ Priority: P0
 Paths: web/DESIGN.md, web/src/index.css, web/src/lib/ui/, web/src/App.tsx, web/public/design-lock/
 Depends: HACK-001
 Verify: `test -s web/DESIGN.md && ls web/public/design-lock/screens/*-1280.png && bash .uak/bin/uak lint`
-Lease-Until: 1794127403
-Updated: 1794124703
+Lease-Until: 1794139372
+Updated: 1794124972
 Task-Base: 3f606d316bd6227ad329d019be00076fb25197e8
-Next: design-critic, uak decision, PR, uak done
-PR: -
+Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/10; run .uak/bin/smoke
+PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/10
 Evidence: -
 Thread-Read: 21
