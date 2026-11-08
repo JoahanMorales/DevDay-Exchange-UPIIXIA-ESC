@@ -1,7 +1,7 @@
 # STATE
 
 Phase: feature freeze; authorized fixes, rehearsal and submission only
-Updated: 1794160302
+Updated: 1794160306
 AVAILABLE: HACK-018 HACK-023 HACK-025 HACK-026 HACK-028 
 CLAIMED: HACK-024 
 BLOCKED: -
@@ -24,11 +24,11 @@ HACK-034 | REVIEW | joahanmorales-1 | until 1794143881
 
 Blockers: BLOCKED tasks; use status --task ID --summary.
 Current decisions (last 5):
-- 1794159997 | allow | victor | freeze exception: HACK-031 | Why: Victor movio el freeze a 12:30: meter todo lo que alcance
 - 1794159999 | allow | victor | freeze exception: HACK-032 | Why: Victor movio el freeze a 12:30: meter todo lo que alcance
 - 1794160001 | allow | victor | freeze exception: HACK-033 | Why: Victor movio el freeze a 12:30: meter todo lo que alcance
 - 1794160003 | allow | victor | freeze exception: HACK-034 | Why: Victor movio el freeze a 12:30: meter todo lo que alcance
 - 1794160109 | HACK-017 | attacks run via store verifyIncoming | Why: real verifier, no reimplementation
+- 1794160306 | plan --amend | victor/victor | amended: HACK-028 | Why: scope or criteria fixed before review
 
 Global next step: available P0; else review PRs, tests, demo, rehearsal.
 Why: bounded snapshot to resume without rereading history.
