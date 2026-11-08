@@ -15,7 +15,7 @@ Task-Base: 04453b3727de3d20d0b7234d15d9cc40513e3ac8
 Next: Humano: Shared resource/CI needs a human: .github/workflows/uak.yml
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/24
 Evidence: clean worktree: npm build -> 'tsc: not found'; after npm --prefix web ci, bash .uak/bin/smoke-project exit 0 (pytest + build) · no visible change: diff only touches .github/workflows/uak.yml (no UI files) · no red: CI config; reproduced tsc not found on a clean worktree, fixed by npm ci
-Events: 6
+Events: 7
 Checkpoints: 0
 Sessions: 2
 Last-Checkpoint: 0
