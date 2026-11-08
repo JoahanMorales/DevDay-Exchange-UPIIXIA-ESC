@@ -38,3 +38,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794159891 | allow | victor | freeze exception: HACK-017 | Why: panel de ataques, el wow
 - 1794159981 | allow | victor | freeze exception: HACK-028 | Why: Victor movio el freeze a 12:30: meter todo lo que alcance
 - 1794159983 | allow | victor | freeze exception: HACK-019 | Why: Victor movio el freeze a 12:30: meter todo lo que alcance
+- 1794159985 | allow | victor | freeze exception: HACK-020 | Why: Victor movio el freeze a 12:30: meter todo lo que alcance
