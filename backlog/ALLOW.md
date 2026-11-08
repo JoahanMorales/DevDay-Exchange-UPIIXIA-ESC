@@ -9,3 +9,4 @@ Append-only. Format: - ID | epoch | human | reason. Why: a freeze exception is a
 - HACK-019 | 1794159983 | victor | Victor movio el freeze a 12:30: meter todo lo que alcance
 - HACK-020 | 1794159985 | victor | Victor movio el freeze a 12:30: meter todo lo que alcance
 - HACK-024 | 1794159987 | victor | Victor movio el freeze a 12:30: meter todo lo que alcance
+- HACK-025 | 1794159989 | victor | Victor movio el freeze a 12:30: meter todo lo que alcance
