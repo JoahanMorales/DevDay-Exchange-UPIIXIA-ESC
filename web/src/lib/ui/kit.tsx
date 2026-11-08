@@ -71,7 +71,7 @@ const toneChip: Record<Tone, string> = {
   ok: "bg-ok text-ok-ink",
   bad: "bg-bad text-bad-ink",
   warn: "bg-warn text-warn-ink",
-  neutral: "bg-bg text-ink",
+  neutral: "bg-muted text-ink",
 };
 
 export function Chip({
@@ -171,7 +171,7 @@ export function Stat({
     <div className="rounded-lg bg-surface px-5 py-4 shadow-card">
       <div className="text-sm text-ink-2">{label}</div>
       <div
-        className={`num leading-none ${size === "sm" ? "text-xl" : "text-2xl"} ${color}`}
+        className={`num leading-none ${size === "sm" ? "text-xl" : "text-xl md:text-2xl"} ${color}`}
       >
         {value}
       </div>
@@ -198,7 +198,7 @@ export function SectionHeader({
 
 export function Legend({ items }: { items: { tone: Tone; label: string }[] }) {
   return (
-    <ul className="flex flex-wrap gap-4 text-sm text-ink-2">
+    <ul className="hidden flex-wrap gap-4 text-sm text-ink-2 md:flex">
       {items.map((i) => (
         <li key={i.label} className="flex items-center gap-2">
           <StateIcon tone={i.tone} size="sm" />
@@ -247,5 +247,5 @@ export function DemoBadge({
 }: {
   children?: ReactNode;
 }) {
-  return <p className="mt-6 text-sm text-ink-2">{children}</p>;
+  return <p className="mt-6 text-base text-ink-2">{children}</p>;
 }

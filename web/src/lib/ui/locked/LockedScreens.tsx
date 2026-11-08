@@ -78,7 +78,7 @@ function Verificar() {
       <SectionHeader>
         {fixture.merchant.name} · pagaré recibido sin red
       </SectionHeader>
-      <Surface>
+      <Surface className="flex flex-col justify-between md:min-h-[62vh]">
         <div className="absolute top-5 right-5 md:top-7 md:right-7">
           <Stamp tone="ok">VÁLIDO</Stamp>
         </div>
@@ -124,13 +124,13 @@ function Cobrar() {
                 key={k}
                 onClick={() => press(k)}
                 aria-label={k === "del" ? "Borrar" : k}
-                className="num grid h-16 place-items-center rounded-md border border-line bg-surface text-xl active:bg-muted md:h-18"
+                className="num grid h-16 place-items-center rounded-md border border-line bg-surface text-xl active:bg-muted md:h-14"
               >
                 {k === "del" ? <Backspace size={30} /> : k}
               </button>
             ))}
           </div>
-          <Button size="lg" className="mt-4 w-full" disabled={cents === 0}>
+          <Button size="lg" className="sticky bottom-24 mt-4 w-full shadow-card md:static" disabled={cents === 0}>
             <Waveform size={28} weight="bold" /> Cobrar sin red
           </Button>
           <p className="mt-3 text-center text-sm text-ink-2">
@@ -143,7 +143,7 @@ function Cobrar() {
         title="Cobrar sin red"
         context={`${fixture.merchant.name} · ${fixture.merchant.place}`}
       />
-      <Surface>
+      <Surface className="flex flex-col justify-center md:min-h-[46vh]">
         <p className="text-ink-2">Monto a cobrar</p>
         <div aria-live="polite" aria-label={formatMXN(cents)}>
           <Amount cents={cents} size="lg" />
@@ -169,7 +169,7 @@ function Deudas() {
   return (
     <PageLayout recipe="list">
       <PageHeader title="Deudas de la tienda" context={fixture.merchant.name} />
-      <div className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-3">
+      <div className="mb-6 grid grid-cols-3 gap-3">
         <Stat label="Pagarés" value={debts.length} />
         <Stat label="Por cobrar" value={formatMXN(total - paid)} tone="warn" />
         <Stat label="Cobrado por CoDi" value={formatMXN(paid)} tone="ok" />
@@ -185,7 +185,7 @@ function Deudas() {
               key={d.counter + d.payer}
               tone={s.tone}
               title={`${d.payer} · #${d.counter}`}
-              detail={d.trace ? `${s.label} · rastreo ${d.trace}` : s.label}
+              detail={d.trace ? `${s.label} · rastreo …${d.trace.slice(-4)}` : s.label}
               trailing={
                 <span className="num text-xl">{formatMXN(d.amount_cents)}</span>
               }
