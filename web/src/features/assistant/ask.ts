@@ -24,3 +24,12 @@ export async function askAssistant(merchantId: string, pregunta: string, post: P
   if (!q) throw new Error('Escribe una pregunta');
   return post<AssistantAnswer>('/asistente', { method: 'POST', body: JSON.stringify({ merchant_id: merchantId, pregunta: q }) });
 }
+
+// Never show a raw status line or English text: the shopkeeper needs to know what to do.
+export function friendlyError(e: unknown): string {
+  const m = e instanceof Error ? e.message : "";
+  if (/pregunta/i.test(m)) return "escribe una pregunta primero.";
+  if (/^(5\d\d|failed to fetch|networkerror|load failed)/i.test(m) || !m) return "el servidor no respondió, intenta de nuevo con red.";
+  if (/^4\d\d/.test(m)) return "no encontré tu comercio o la pregunta no es válida.";
+  return "ocurrió un problema, intenta de nuevo.";
+}

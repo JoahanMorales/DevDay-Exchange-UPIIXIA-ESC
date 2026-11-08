@@ -8,7 +8,7 @@ export type AskState =
   | { kind: "error"; message: string }
   | { kind: "done"; question: string; answer: AssistantAnswer };
 
-const SUGGESTIONS = ["¿Quién me debe?", "¿Por qué se rechazó el último pagaré?", "Redáctame un recordatorio para el primer deudor"];
+const SUGGESTIONS = ["¿Quién me debe?", "¿Por qué se rechazó el último pagaré?", "Recordatorio para el primer deudor"];
 
 export function Assistant({
   online,
@@ -81,7 +81,7 @@ export function Assistant({
   return (
     <PageLayout recipe="result" aside={aside}>
       <PageHeader title="Asistente" context={merchantName ? `Para ${merchantName} · solo consulta` : "Solo consulta: no cobra ni cambia nada"} />
-      <Surface>
+      <Surface className="md:min-h-80">
         <div aria-live="polite">
           {state.kind === "idle" && (
             <p className="text-lg text-ink-2">Pregúntame quién te debe, por qué se rechazó un pagaré o pídeme un recordatorio. Respondo con tus registros.</p>
@@ -89,13 +89,13 @@ export function Assistant({
           {state.kind === "loading" && <p className="text-lg text-ink-2">Consultando tus registros…</p>}
           {state.kind === "error" && (
             <p role="alert" className="text-lg text-bad">
-              {`No pude responder (${state.message}). Intenta de nuevo con red.`}
+              {`No pude responder: ${state.message} Tus pagarés y cobros no se ven afectados.`}
             </p>
           )}
           {state.kind === "done" && (
             <>
               <p className="mb-3 text-base text-ink-2">{state.question}</p>
-              <p className="text-xl font-bold" data-testid="respuesta">
+              <p className="text-2xl font-bold" data-testid="respuesta">
                 {state.answer.texto}
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-2">

@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { FeatureRoute } from "../../App";
 import { useOnline } from "../../lib/ui";
 import { Assistant, type AskState } from "./Assistant";
-import { askAssistant } from "./ask";
+import { askAssistant, friendlyError } from "./ask";
 
 function AsistentePage() {
   const online = useOnline();
@@ -11,14 +11,14 @@ function AsistentePage() {
 
   const onAsk = async (question: string) => {
     if (!merchant) {
-      setState({ kind: "error", message: "falta merchant_id en la dirección" });
+      setState({ kind: "error", message: "falta indicar el comercio en la dirección." });
       return;
     }
     setState({ kind: "loading" });
     try {
       setState({ kind: "done", question, answer: await askAssistant(merchant, question) });
     } catch (e) {
-      setState({ kind: "error", message: e instanceof Error ? e.message : "sin conexión" });
+      setState({ kind: "error", message: friendlyError(e) });
     }
   };
 

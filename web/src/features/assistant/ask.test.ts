@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it, vi } from 'vitest';
-import { askAssistant, sourceLabel, type AssistantAnswer } from './ask';
+import { askAssistant, friendlyError, sourceLabel, type AssistantAnswer } from './ask';
 
 const answer: AssistantAnswer = { texto: 'Te debe Mario ($25.00).', cifras: { pendientes: 1 }, fuente: 'plantilla', herramientas: ['listar_deudas'] };
 
@@ -30,5 +30,15 @@ describe('assistant client', () => {
   it('labels_where_the_answer_came_from', () => {
     expect(sourceLabel('openai')).toMatch(/OpenAI/);
     expect(sourceLabel('plantilla')).toMatch(/sin IA|plantilla/);
+  });
+
+  it('shows_spanish_errors_without_status_codes', () => {
+    for (const m of ['503 Service Unavailable', 'Failed to fetch', '']) {
+      const msg = friendlyError(new Error(m));
+      expect(msg).toMatch(/servidor no respondió/);
+      expect(msg).not.toMatch(/\d{3}|Unavailable/);
+    }
+    expect(friendlyError(new Error('404 Not Found'))).toMatch(/comercio/);
+    expect(friendlyError(new Error('Escribe una pregunta'))).toMatch(/pregunta/);
   });
 });
