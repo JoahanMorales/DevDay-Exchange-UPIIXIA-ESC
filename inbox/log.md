@@ -125,3 +125,4 @@ Append-only; use bash .uak/bin/uak msg / inbox. Format: - N | epoch | from | to 
 - 121 | 1794159997 | victor | all | info | - | Freeze exception by victor: HACK-031 (claim and merge allowed). Why: Victor movio el freeze a 12:30: meter todo lo que alcance
 - 122 | 1794159999 | victor | all | info | - | Freeze exception by victor: HACK-032 (claim and merge allowed). Why: Victor movio el freeze a 12:30: meter todo lo que alcance
 - 123 | 1794160001 | victor | all | info | - | Freeze exception by victor: HACK-033 (claim and merge allowed). Why: Victor movio el freeze a 12:30: meter todo lo que alcance
+- 124 | 1794160003 | victor | all | info | - | Freeze exception by victor: HACK-034 (claim and merge allowed). Why: Victor movio el freeze a 12:30: meter todo lo que alcance
