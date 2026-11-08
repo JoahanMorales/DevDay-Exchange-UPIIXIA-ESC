@@ -1,8 +1,29 @@
 import type { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
-import { AirplaneTilt, CellSignalSlash, WifiHigh } from "@phosphor-icons/react";
+import {
+  AirplaneTilt,
+  CellSignalSlash,
+  ChatCircleDots,
+  ChartBar,
+  Receipt,
+  ShieldWarning,
+  Swap,
+  WifiHigh,
+  Wallet,
+} from "@phosphor-icons/react";
+import { NAV_SHORT } from "./nav";
 
 export type NavItem = { to: string; label: string; icon?: ReactNode };
+
+/** One icon set (Phosphor, bold) for the views; a route without an icon falls back to no icon. */
+const NAV_ICONS: Record<string, ReactNode> = {
+  "/tienda": <Receipt size={22} weight="bold" aria-hidden />,
+  "/pagar": <Wallet size={22} weight="bold" aria-hidden />,
+  "/ataques": <ShieldWarning size={22} weight="bold" aria-hidden />,
+  "/relevo": <Swap size={22} weight="bold" aria-hidden />,
+  "/tablero": <ChartBar size={22} weight="bold" aria-hidden />,
+  "/asistente": <ChatCircleDots size={22} weight="bold" aria-hidden />,
+};
 
 /** Brand mark: the crossed signal bars on the cempasúchil tile. */
 export function BrandMark({ size = "md" }: { size?: "sm" | "md" }) {
@@ -56,8 +77,8 @@ function pillClass({ isActive }: { isActive: boolean }) {
 }
 
 function tabClass({ isActive }: { isActive: boolean }) {
-  return `flex min-w-16 flex-col items-center gap-0.5 px-2 text-sm font-bold ${
-    isActive ? "text-ink" : "text-ink-2"
+  return `flex min-w-0 flex-1 flex-col items-center gap-0.5 rounded-md py-1 text-sm font-bold ${
+    isActive ? "bg-bg text-ink" : "text-ink-2"
   }`;
 }
 
@@ -74,7 +95,14 @@ export function NavBar({
     <>
       <header className="sticky top-0 z-10 border-b border-line bg-surface">
         <div className="mx-auto flex max-w-[1200px] items-center gap-6 px-4 py-3 md:px-8">
-          <NavLink to="/" aria-label="SinSeñal, inicio">
+          <NavLink
+            to="/"
+            end
+            aria-label="SinSeñal, inicio"
+            className={({ isActive }) =>
+              `rounded-sm ${isActive ? "underline decoration-accent decoration-4 underline-offset-8" : ""}`
+            }
+          >
             <BrandMark />
           </NavLink>
           {views.length > 0 && (
@@ -97,12 +125,12 @@ export function NavBar({
       {views.length > 0 && (
         <nav
           aria-label="Vistas"
-          className="fixed inset-x-0 bottom-0 z-10 flex justify-around border-t border-line bg-surface pt-2 pb-3.5 md:hidden"
+          className="fixed inset-x-0 bottom-0 z-10 flex border-t border-line bg-surface pt-1.5 pb-3 md:hidden"
         >
           {views.map((item) => (
-            <NavLink key={item.to} to={item.to} className={tabClass}>
-              {item.icon}
-              {item.label}
+            <NavLink key={item.to} to={item.to} className={tabClass} aria-label={item.label}>
+              {item.icon ?? NAV_ICONS[item.to]}
+              <span className="max-w-full truncate">{NAV_SHORT[item.to] ?? item.label}</span>
             </NavLink>
           ))}
         </nav>
@@ -122,8 +150,16 @@ export function AppShell({
 }) {
   return (
     <div className="min-h-[100dvh] bg-bg pb-20 text-ink md:pb-0">
+      <a
+        href="#contenido"
+        className="sr-only z-20 rounded-md bg-ink px-4 py-3 font-bold text-surface focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
+      >
+        Saltar al contenido
+      </a>
       <NavBar items={nav} online={online} />
-      {children}
+      <div id="contenido" tabIndex={-1} className="outline-none">
+        {children}
+      </div>
     </div>
   );
 }
