@@ -9,16 +9,16 @@ Priority: P1
 Paths: app/routers/voice.py, app/tests/test_voice.py, web/src/features/voice/
 Depends: HACK-015
 Verify: `uv run pytest -q app/tests/test_voice.py && npm --prefix web test -- src/features/voice && npm --prefix web run build`
-Lease-Until: 1794165206
-Updated: 1794162506
+Lease-Until: 1794165449
+Updated: 1794162749
 Task-Base: 1c74895da68a3dadf4696fdf750dd2badbee4bb7
-Next: `app/tests/test_voice.py`.
+Next: design-critic verdict, then uak done + PR
 PR: -
 Evidence: -
-Events: 2
-Checkpoints: 0
+Events: 3
+Checkpoints: 1
 Sessions: 1
-Last-Checkpoint: 0
+Last-Checkpoint: 1794162749
 Progress: 0 commit(s) since the claim · last: 1c74895 Merge HACK-026 reviewed by victor-1 (5 minutes ago) · 0 uncommitted tracked file(s) · at 1794162506
 Progress-Head: 1c74895/4294967295
 Progress-Changed: 1794162502
