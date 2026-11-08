@@ -10,3 +10,4 @@
 
 ## History
 - 1794159939 | CLAIMED | victor-1 | claim; next: reuse `checkIou` from `web/src/lib/protocol/` in `attacks.test.tsx`.
+- 1794159951 | CLAIMED | victor-1 | heartbeat; lease until 1794162651

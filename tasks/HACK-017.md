@@ -9,13 +9,16 @@ Priority: P0
 Paths: web/src/features/attacks/
 Depends: HACK-015
 Verify: `npm --prefix web test -- src/features/attacks && npm --prefix web run build`
-Lease-Until: 1794162639
-Updated: 1794159939
+Lease-Until: 1794162651
+Updated: 1794159951
 Task-Base: 321e0157669bc0f1cbae7950c2969558326a0dd0
 Next: reuse `checkIou` from `web/src/lib/protocol/` in `attacks.test.tsx`.
 PR: -
 Evidence: -
-Events: 1
+Events: 2
 Checkpoints: 0
 Sessions: 1
 Last-Checkpoint: 0
+Progress: 0 commit(s) since the claim · last: 321e015 Merge HACK-015 reviewed by joahanmorales-1 (22 seconds ago) · 0 uncommitted tracked file(s) · at 1794159951
+Progress-Head: 321e015/4294967295
+Progress-Changed: 1794159951
