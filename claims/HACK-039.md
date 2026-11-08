@@ -9,8 +9,8 @@ Priority: P0
 Paths: web/src/features/attacks/, web/src/features/dashboard/, web/src/features/relay/, web/src/features/assistant/
 Depends: HACK-038
 Verify: `npm --prefix web test -- src/features && npm --prefix web run build && bash .uak/bin/design-lint`
-Lease-Until: 1794183322
-Updated: 1794168922
+Lease-Until: 1794183666
+Updated: 1794169266
 Task-Base: 07fd19b6c9c653dbd04ca29a71f3f3a96f8f795e
 Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/37; run .uak/bin/smoke
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/37
