@@ -15,7 +15,7 @@ Task-Base: 318890425958aa69b94ebc1a15d723a33d222719
 Next: `web/src/lib/ui/nav.test.ts` for the order, then NavBar icons.
 PR: -
 Evidence: -
-Events: 1
+Events: 2
 Checkpoints: 0
 Sessions: 1
 Last-Checkpoint: 0
