@@ -52,6 +52,11 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: stable
+      # The smoke builds web/ (tsc, vite): a fresh runner has no node_modules, so every PR failed with
+      # "sh: 1: tsc: not found" until the web dependencies were installed (HACK-034).
+      - name: Web dependencies
+        if: hashFiles('web/package-lock.json') != ''
+        run: npm --prefix web ci --no-audit --no-fund
       - name: Product smoke
         run: |
           if [ -f .uak/bin/smoke-project ]; then bash .uak/bin/smoke-project
