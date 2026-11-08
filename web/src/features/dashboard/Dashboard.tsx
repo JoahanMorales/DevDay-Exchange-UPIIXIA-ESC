@@ -93,7 +93,7 @@ export function Dashboard({
       <PageHeader title="Tablero de cobros" context="Pagarés sincronizados · en vivo" />
       <div className="mb-6" aria-live="polite">
         <p
-          className={`display text-[44px] leading-none font-black md:text-[72px] ${allPaid ? "text-ok" : "text-warn"}`}
+          className={`display text-2xl leading-none font-black md:text-3xl ${allPaid ? "text-ok" : "text-warn"}`}
         >
           {allPaid ? `${paid.length} cobrados por CoDi` : `${pending} pagarés pendientes`}
         </p>
@@ -137,7 +137,7 @@ export function Dashboard({
                 .filter(Boolean)
                 .join(" · ")}
               {d.tracking_key && (
-                <span className="block truncate">{`Clave de rastreo ${d.tracking_key}`}</span>
+                <span className="block break-all">{`Clave de rastreo ${d.tracking_key}`}</span>
               )}
             </>
           );
@@ -155,7 +155,7 @@ export function Dashboard({
                   <>
                     <span className="num block text-xl">{formatMXN(d.iou.amount_cents)}</span>
                     {testAmount && (
-                      <span className="block text-xs text-ink-2">{`monto de prueba ${formatMXN(demoChargeCents)}`}</span>
+                      <span className="block text-sm text-ink-2">{`monto de prueba ${formatMXN(demoChargeCents)}`}</span>
                     )}
                   </>
                 }
