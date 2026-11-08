@@ -33,3 +33,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794157988 | deadline freeze/event/1794157920 | FREEZE_DEMO_FIXES_ONLY | New claims only with Freeze-Allowed: yes; respect authorization.
 - 1794159553 | HACK-029 | QR PNGs generated per reset, not committed | Why: fresh keys each reset, creds expire 24h
 - 1794159640 | deadline lease/HACK-024/1794158968 | REQUIRES_RECOVERY | Claim kept; read the summary and use release --expired --read-summary. No work is deleted.
+- 1794159887 | allow | victor | freeze exception: HACK-015 | Why: core del demo, aprobada
