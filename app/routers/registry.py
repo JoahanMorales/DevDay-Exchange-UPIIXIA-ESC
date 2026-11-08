@@ -27,7 +27,7 @@ Db = Annotated[sqlite3.Connection, Depends(get_db)]
 def _server_ready() -> None:
     try:
         crypto.server_private_jwk()
-    except (crypto.ServerKeyMissing, ValueError) as exc:
+    except (crypto.ServerKeyMissing, ValueError, KeyError, TypeError) as exc:
         raise HTTPException(503, f"server key unavailable: {exc}") from exc
 
 
