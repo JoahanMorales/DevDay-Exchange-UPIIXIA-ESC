@@ -19,7 +19,7 @@ Events: 3
 Checkpoints: 1
 Sessions: 1
 Last-Checkpoint: 1794126412
-Progress: 0 commit(s) since the claim · last: 50f9136 Merge HACK-014 reviewed by victor-1 (6 minutes ago) · 0 uncommitted tracked file(s) · at 1794126163
-Progress-Head: 50f9136/4294967295
-Progress-Changed: 1794126155
-Away: 1794126155
+Progress: 1 commit(s) since the claim · last: b9b8a62 HACK-015: offline store↔payer over animated QR, vibrate only after checkIou (68 seconds ago) · 0 uncommitted tracked file(s) · at 1794126435
+Progress-Head: b9b8a62/4294967295
+Progress-Changed: 1794126435
+Away: 1794126435
