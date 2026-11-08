@@ -60,10 +60,11 @@ def make_env(monkeypatch, tmp_path):
     get_settings.cache_clear()
 
 
-def envelope(counter: int = 7, merchant_id: str = MERCHANT["id"], amount: int = 4500) -> dict:
+def envelope(counter: int = 7, merchant_id: str = MERCHANT["id"], amount: int = 4500, ts: int = 1762560000
+             ) -> dict:
     raw = protocol.pack_iou(protocol.IouFields(
         ver=1, payer_id=PAYER["id"], merchant_id=merchant_id, amount_cents=amount, counter=counter,
-        ts=1762560000, nonce=os.urandom(8), lat_e6=19321000, lon_e6=-99167000))
+        ts=ts, nonce=os.urandom(8), lat_e6=19321000, lon_e6=-99167000))
     signed = raw + protocol.sign(PAYER["private_jwk"], raw)
     epk, iv, ct = protocol.encrypt_envelope(
         VECTORS["server"]["pubkey_jwk"], signed, VECTORS["envelope"]["ephemeral_private_jwk"], os.urandom(12))
@@ -112,3 +113,36 @@ def test_flags_same_counter_at_two_merchants_as_double_spend(env):
     bad["ciphertext"] = base64.b64encode(b"x" * 141).decode()
     r = c.post("/api/sync", json={"envelopes": [bad]}).json()
     assert r["rejected"] == [{"envelope_id": bad["envelope_id"], "reason": "bad_envelope"}]
+
+
+def _reason(c, e) -> list:
+    r = c.post("/api/sync", json={"envelopes": [e]}).json()
+    assert r["accepted"] == 0
+    return [x["reason"] for x in r["rejected"]]
+
+
+def test_rejects_iou_signed_after_credential_expired(env):
+    c, conn = env["client"], env["conn"]
+    issued = int(datetime.fromisoformat(conn.execute(
+        "SELECT created_at FROM payers WHERE id = ?", (PAYER["id"],)).fetchone()["created_at"]).timestamp())
+    late = envelope(counter=20, ts=issued + credentials.CREDENTIAL_TTL_S + 60)
+    assert _reason(c, late) == ["expired"]
+    assert statuses(conn) == []
+    assert env["pey"].pushes == []
+
+
+def test_rejects_future_dated_iou_as_bad_credential(env):
+    c = env["client"]
+    future = envelope(counter=21, ts=int(datetime.now(UTC).timestamp()) + 3600)
+    assert _reason(c, future) == ["bad_credential"]
+    assert statuses(env["conn"]) == []
+
+
+def test_rejects_iou_over_daily_cap(env):
+    c = env["client"]
+    over = envelope(counter=22, amount=30001)
+    assert _reason(c, over) == ["cap_exceeded"]
+    ok = [envelope(counter=23, amount=20000), envelope(counter=24, amount=10000)]
+    assert c.post("/api/sync", json={"envelopes": ok}).json()["accepted"] == 2
+    assert _reason(c, envelope(counter=25, amount=1)) == ["cap_exceeded"]
+    assert statuses(env["conn"]) == ["COBRO_ENVIADO", "COBRO_ENVIADO"]

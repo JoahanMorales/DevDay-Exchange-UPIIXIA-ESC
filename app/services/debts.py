@@ -72,6 +72,27 @@ def _insert(conn, envelope_id: str, iou: models.Iou, status: str, alerts: list[s
     return debt_id
 
 
+CLOCK_SKEW_S = 300
+
+
+def _check_credential(conn: sqlite3.Connection, payer: sqlite3.Row, f: protocol.IouFields) -> str | None:
+    """The payer's credential (credentials.issue at enrollment) must cover the IOU: signed no later than
+    valid_until, not dated in the future, and within the daily cap (cap × reputation) of its UTC day."""
+    issued = int(datetime.fromisoformat(payer["created_at"]).timestamp())
+    if f.ts > issued + credentials.CREDENTIAL_TTL_S:
+        return "expired"
+    if f.ts > int(time.time()) + CLOCK_SKEW_S:
+        return "bad_credential"
+    day = f.ts - f.ts % 86400
+    spent = conn.execute(
+        "SELECT COALESCE(SUM(amount_cents), 0) AS s FROM debts WHERE payer_id = ? AND status != 'RECHAZADA'"
+        " AND CAST(json_extract(iou_json, '$.ts') AS INTEGER) BETWEEN ? AND ?",
+        (f.payer_id, day, day + 86399)).fetchone()["s"]
+    if spent + f.amount_cents > int(payer["daily_cap_cents"] * payer["reputation_factor"]):
+        return "cap_exceeded"
+    return None
+
+
 def _ingest(conn: sqlite3.Connection, env: models.Envelope, server_jwk: dict) -> str | None:
     """Returns None when accepted, "duplicate", or a RejectReason."""
     if conn.execute("SELECT 1 FROM debts WHERE envelope_id = ?", (env.envelope_id,)).fetchone():
@@ -87,7 +108,7 @@ def _ingest(conn: sqlite3.Connection, env: models.Envelope, server_jwk: dict) ->
         f = protocol.unpack_iou(raw)
     except ValueError:
         return "malformed"
-    payer = conn.execute("SELECT pubkey_jwk, revoked FROM payers WHERE id = ?", (f.payer_id,)).fetchone()
+    payer = conn.execute("SELECT pubkey_jwk, revoked, created_at, daily_cap_cents, reputation_factor FROM payers WHERE id = ?", (f.payer_id,)).fetchone()
     if payer is None:
         return "unknown_payer"
     if payer["revoked"]:
@@ -96,6 +117,9 @@ def _ingest(conn: sqlite3.Connection, env: models.Envelope, server_jwk: dict) ->
         return "unknown_merchant"
     if not crypto.verify_iou(json.loads(payer["pubkey_jwk"]), raw, sig):
         return "bad_sig"
+    reason = _check_credential(conn, payer, f)
+    if reason:
+        return reason
     iou = _iou_model(raw, sig, f)
     prior = conn.execute("SELECT id, merchant_id FROM debts WHERE payer_id = ? AND counter = ? AND status !="
                          " 'RECHAZADA' ORDER BY created_at LIMIT 1", (f.payer_id, f.counter)).fetchone()
