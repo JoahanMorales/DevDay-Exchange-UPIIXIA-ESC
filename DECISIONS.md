@@ -54,3 +54,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794161662 | HACK-026 | Wow = real /ataques capture; shots in features/landing/shots | Why: DESIGN.md landing recipe + IDEA §4 wow
 - 1794161936 | HACK-026 | Hero uses phone crop via picture | Why: critic P1 legibility
 - 1794162478 | allow | victor | freeze exception: HACK-018 | Why: Victor: terminar P1 restantes
+- 1794162480 | allow | victor | freeze exception: HACK-023 | Why: Victor: terminar P1 restantes
