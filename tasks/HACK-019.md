@@ -9,17 +9,17 @@ Priority: P1
 Paths: web/src/features/relay/, web/src/lib/envelope/
 Depends: HACK-013, HACK-014
 Verify: `npm --prefix web test -- src/features/relay src/lib/envelope && npm --prefix web run build`
-Lease-Until: 1794175049
-Updated: 1794160649
+Lease-Until: 1794175061
+Updated: 1794160661
 Task-Base: 04453b3727de3d20d0b7234d15d9cc40513e3ac8
-Next: Wait for review of PR #20; then uak merge HACK-019
+Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/20; run .uak/bin/smoke
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/20
-Evidence: npm --prefix web test -- src/features/relay src/lib/envelope exit 0 (4 tests); npm run build exit 0; design-lint PASS; design-critic VERDICT SHIP 608311b · red at 04453b3: exit 1 (no assertion line recognized: the reviewer reads the log)
-Events: 5
+Evidence: npm run build exit 0 (TS2591 fixed); relay+envelope tests 4 passed; design-lint PASS · no visible change: only a file rename (Relay.tsx -> RelayView.tsx) and a type declaration in a test; no rendered change since design-critic SHIP 608311b · red at 04453b3: exit 1 (no assertion line recognized: the reviewer reads the log)
+Events: 6
 Checkpoints: 1
 Sessions: 2
 Last-Checkpoint: 1794128031
-Task-Tip: 608311b0a1902d76c83d8a171d53f4ae6053c1a8
+Task-Tip: cbfb7f168d22465eac4d5d5e0310460d2f673ac7
 Progress: 27 commit(s) since the claim · last: cbfb7f1 fix(relay): rename Relay.tsx to RelayView.tsx (case clash with relay.ts), no Buffer in test (HACK-019) (7 second · 0 uncommitted tracked file(s) · at 1794160649
 Progress-Head: cbfb7f1/760228754
 Progress-Changed: 1794160649
