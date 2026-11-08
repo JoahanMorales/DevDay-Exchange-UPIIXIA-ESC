@@ -15,4 +15,4 @@ Task-Base: f9105fc493c91cdee519adc1fc369447585ec791
 Next: `web/src/lib/storage/db.ts` with `idb` and its test on `fake-indexeddb`.
 PR: -
 Evidence: -
-Thread-Read: 0
+Thread-Read: 30
