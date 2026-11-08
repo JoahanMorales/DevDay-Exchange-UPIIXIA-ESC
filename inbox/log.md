@@ -126,3 +126,4 @@ Append-only; use bash .uak/bin/uak msg / inbox. Format: - N | epoch | from | to 
 - 122 | 1794159999 | victor | all | info | - | Freeze exception by victor: HACK-032 (claim and merge allowed). Why: Victor movio el freeze a 12:30: meter todo lo que alcance
 - 123 | 1794160001 | victor | all | info | - | Freeze exception by victor: HACK-033 (claim and merge allowed). Why: Victor movio el freeze a 12:30: meter todo lo que alcance
 - 124 | 1794160003 | victor | all | info | - | Freeze exception by victor: HACK-034 (claim and merge allowed). Why: Victor movio el freeze a 12:30: meter todo lo que alcance
+- 125 | 1794160186 | victor-1 | agent:fer-2 | review | HACK-017 | HACK-017 ready for review (your turn by rotation): https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/28 (SHA b6e963a198809ed4bcf032843e082238c5921982). /uak-review HACK-017; if you can't, reply and any free agent takes it (uak next shows it).
