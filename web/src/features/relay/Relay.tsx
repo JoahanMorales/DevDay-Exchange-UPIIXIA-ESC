@@ -9,7 +9,6 @@ import {
   PageHeader,
   PageLayout,
   SectionHeader,
-  Stat,
   Surface,
 } from "../../lib/ui";
 import type { UploadResult } from "./relay";
@@ -48,7 +47,7 @@ function QrLoop({ payloads }: { payloads: string[] }) {
       ) : (
         <div className="h-80 w-80 rounded-md bg-line" aria-hidden />
       )}
-      <p className="num text-lg" aria-live="polite">{`Pagaré cifrado ${(i % payloads.length) + 1} de ${payloads.length}`}</p>
+      <p className="text-lg font-bold" aria-live="polite">{`Pagaré cifrado ${(i % payloads.length) + 1} de ${payloads.length}`}</p>
     </div>
   );
 }
@@ -77,15 +76,13 @@ export function Relay({
   return (
     <PageLayout recipe="list">
       <PageHeader title="Relevo" context="Llevas pagarés de otras personas, cifrados: no puedes leerlos ni cambiarlos" />
-      <div className="mb-6 grid grid-cols-1 gap-3 md:grid-cols-[2fr_1fr]">
-        <div className="rounded-lg bg-surface px-6 py-5 shadow-card">
-          <div className="text-base text-ink-2">pagarés cifrados para entregar</div>
-          <div className={`display text-3xl font-black leading-none ${n ? "text-warn" : "text-ink"}`}>{n}</div>
-          <p className="mt-2 text-lg font-bold" aria-live="polite">
-            {n === 0 ? "No llevas pagarés" : `Llevas ${n} ${n === 1 ? "pagaré cifrado" : "pagarés cifrados"} para entregar`}
-          </p>
-        </div>
-        <Stat label="saltos del más lejano" value={maxHops} size="sm" />
+      <div className="mb-6 rounded-lg bg-surface px-6 py-5 shadow-card">
+        <div className="text-base text-ink-2">pagarés cifrados para entregar</div>
+        <div className={`display text-3xl font-black leading-none ${n ? "text-warn" : "text-ink"}`}>{n}</div>
+        <p className="mt-2 text-lg font-bold" aria-live="polite">
+          {n === 0 ? "No llevas pagarés" : `Llevas ${n} ${n === 1 ? "pagaré cifrado" : "pagarés cifrados"} para entregar`}
+        </p>
+        <p className="mt-1 text-base text-ink-2">{`Saltos del más lejano: ${maxHops}`}</p>
       </div>
 
       <div className="mb-6 flex flex-wrap gap-3">
@@ -128,7 +125,7 @@ export function Relay({
             <ListRow
               key={e.envelope_id}
               tone="warn"
-              title={<span className="num">{`Pagaré cifrado #${i + 1}`}</span>}
+              title={`Pagaré cifrado #${i + 1}`}
               detail={`${e.hops} ${e.hops === 1 ? "salto" : "saltos"} · ${dayLabel(e, now)}`}
             />
           ))}
