@@ -9,10 +9,10 @@ Priority: P0
 Paths: spikes/webnfc/, docs/spikes/webnfc.md
 Depends: None
 Verify: `test -s spikes/webnfc/index.html && grep -qi "band =" docs/spikes/webnfc.md`
-Lease-Until: 1794137998
-Updated: 1794123598
+Lease-Until: 1794138022
+Updated: 1794123622
 Task-Base: 3f606d316bd6227ad329d019be00076fb25197e8
-Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/5; run .uak/bin/smoke
+Next: Wait for review of SHA fd9dad2
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/5
 Evidence: -
 Thread-Read: 0
