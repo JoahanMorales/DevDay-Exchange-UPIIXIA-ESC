@@ -6,7 +6,7 @@
 - Why: device results are Fer's
 - Failing: none
 - Commands: Verify exit 0; smoke PRODUCT_PASS
-- Next: Wait for review of SHA fd9dad2
+- Next: Integrated in main: 52804e1be3176e3032d8cbf70edc1b3eaf3384c3
 
 ## History
 - 1794123553 | CLAIMED | victor-2 | claim; next: write spikes/webnfc/index.html: NDEFReader write + scan behind two buttons
@@ -15,3 +15,4 @@
 - 1794123748 | REVIEW | victor-2 | heartbeat; lease until 1794138148
 - 1794123846 | REVIEW | joahanmorales-1 | review; approve; SHA fd9dad287c084fa8348ee3d0456e20f3d953730c; reviewer joahanmorales-1
 - 1794123871 | REVIEW | victor-2 | heartbeat; lease until 1794138271
+- 1794123887 | INTEGRATED | victor-2 | merge; smoke and Verify PASS; commit 52804e1be3176e3032d8cbf70edc1b3eaf3384c3; reviewer joahanmorales-1
