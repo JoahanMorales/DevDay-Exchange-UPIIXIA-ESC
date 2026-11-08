@@ -12,3 +12,4 @@
 - 1794130000 | CLAIMED | joahanmorales-1 | claim; next: search the installed SDK for the Decisions client (`uv run python -c "import openai; print(openai.__version__)"`).
 - 1794130101 | REVIEW | joahanmorales-1 | done; PR https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/26; evidence: uv run pytest -q app/tests/test_alerts.py exit 0 (3 passed); test -s docs/spikes/decisions.md; Decisions API access with OUR key NOT verified (documented) · red at 04453b3: E   AssertionError: assert (set() == {'cobro_venci...go_duplicado'}; reviewer: -
 - 1794160316 | REVIEW | victor-2 | review; approve; SHA d58f31d930d34a1a2de5ff38d775309c64e09367; reviewer victor-2
+- 1794160585 | REVIEW | joahanmorales-1 | heartbeat; lease until 1794174985
