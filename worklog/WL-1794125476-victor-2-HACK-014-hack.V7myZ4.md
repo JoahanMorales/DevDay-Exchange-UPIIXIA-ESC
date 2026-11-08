@@ -6,7 +6,7 @@
 - Why: routes /pagar,/tienda own the screens
 - Failing: none
 - Commands: npm --prefix web test -- src/features/core src/lib/storage && npm --prefix web run build
-- Next: wait for review of PR #14
+- Next: Integrated in main: 50f9136f4a2c59d9c8e79fe5342ddfd99249e78c
 
 ## History
 - 1794125476 | CLAIMED | victor-2 | claim; next: `web/src/lib/storage/db.ts` with `idb` and its test on `fake-indexeddb`.
@@ -14,3 +14,4 @@
 - 1794125619 | REVIEW | victor-2 | done; PR https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/14; evidence: npm --prefix web test -- src/features/core src/lib/storage && npm --prefix web run build exit 0; 6 passed: key non-extractable, key+counter across reload, payer enroll + demo_data fallback, server key + merchant QR cache, newest revocation list · no visible change: features/core holds only enroll.ts logic, no component or route; no visible change · red at f9105fc: AssertionError: expected '' not to be '' // Object.is equality; reviewer: -
 - 1794125667 | REVIEW | victor-2 | checkpoint; next: wait for review of PR #14
 - 1794125768 | REVIEW | victor-1 | review; approve; SHA 04888e98232441b624e09e630b684f4ad4e11bda; reviewer victor-1
+- 1794125830 | INTEGRATED | victor-2 | merge; smoke and Verify PASS; commit 50f9136f4a2c59d9c8e79fe5342ddfd99249e78c; reviewer victor-1
