@@ -1,5 +1,6 @@
 import type { ReactElement } from "react";
-import { BrowserRouter, Link, Outlet, Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+import { BrowserRouter, Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import {
   AppShell,
   PageHeader,
@@ -7,6 +8,8 @@ import {
   useOnline,
   type NavItem,
 } from "./lib/ui";
+import { sortNav } from "./lib/ui/nav";
+import { NotFound } from "./features/notfound/NotFound";
 import { LockedScreen } from "./lib/ui/locked/LockedScreens";
 
 // Each feature is web/src/features/<name>/index.tsx exporting `route = { path, element }`.
@@ -27,9 +30,11 @@ export const features: FeatureRoute[] = Object.values(
   .sort((a, b) => a.path.localeCompare(b.path));
 
 // Nav = every feature with a label (6 at most in the bar), in discovery order.
-const nav: NavItem[] = features
-  .filter((f): f is FeatureRoute & { label: string } => Boolean(f.label))
-  .map(({ path, label }) => ({ to: path, label }));
+const nav: NavItem[] = sortNav(
+  features
+    .filter((f): f is FeatureRoute & { label: string } => Boolean(f.label))
+    .map(({ path, label }) => ({ to: path, label })),
+);
 
 function RouteList() {
   return (
@@ -58,6 +63,11 @@ function RouteList() {
 
 function FeatureFrame() {
   const online = useOnline();
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const view = nav.find((n) => n.to === pathname)?.label;
+    document.title = view ? `${view} · SinSeñal` : "SinSeñal · pagos sin señal";
+  }, [pathname]);
   return (
     <AppShell nav={nav} online={online}>
       <Outlet />
@@ -78,6 +88,7 @@ export default function App() {
           {features.map(({ path, element }) => (
             <Route key={path} path={path} element={element} />
           ))}
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
