@@ -9,8 +9,8 @@ Priority: P0
 Paths: spikes/pey/, docs/pey-pruebas.md
 Depends: None
 Verify: `uv run --no-project --with pytest --with httpx python -m pytest -q spikes/pey/test_probe.py && test -s docs/pey-pruebas.md`
-Lease-Until: 1794137433
-Updated: 1794123033
+Lease-Until: 1794137720
+Updated: 1794123320
 Task-Base: bf793f9ad893ea58f5200994f61a768a4b616850
 Next: Wait for review of SHA aaf0f97
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/2
