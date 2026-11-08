@@ -9,8 +9,8 @@ Priority: P0
 Paths: web/DESIGN.md, web/src/index.css, web/src/lib/ui/, web/src/App.tsx, web/public/design-lock/
 Depends: HACK-001
 Verify: `test -s web/DESIGN.md && ls web/public/design-lock/screens/*-1280.png && bash .uak/bin/uak lint`
-Lease-Until: 1794126429
-Updated: 1794123729
+Lease-Until: 1794126445
+Updated: 1794123745
 Task-Base: 3f606d316bd6227ad329d019be00076fb25197e8
 Next: `/uak-design-lock`.
 PR: -
