@@ -19,3 +19,7 @@ Events: 1
 Checkpoints: 0
 Sessions: 1
 Last-Checkpoint: 0
+Progress: 0 commit(s) since the claim · last: 50f9136 Merge HACK-014 reviewed by victor-1 (22 seconds ago) · 0 uncommitted tracked file(s) · at 1794125851
+Progress-Head: 50f9136/4294967295
+Progress-Changed: 1794125851
+Away: 1794125851
