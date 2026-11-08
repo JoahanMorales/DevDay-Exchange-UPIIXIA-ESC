@@ -164,15 +164,12 @@ function StorePage() {
           </button>
         ))}
       </div>
-      {/* On a phone the charge button stays above the bottom nav while the keypad scrolls under it. */}
-      <div className="sticky bottom-20 z-0 -mx-4 mt-3 bg-bg px-4 pt-2 pb-1 md:static md:mx-0 md:mt-4 md:bg-transparent md:p-0">
-        <Button size="lg" className="w-full shadow-card" disabled={cents === 0 || !db} onClick={charge}>
-          <Waveform size={28} weight="bold" /> Cobrar sin red
-        </Button>
-      </div>
+      <Button size="lg" className="mt-4 w-full shadow-card" disabled={cents === 0 || !db} onClick={charge}>
+        <Waveform size={28} weight="bold" /> Cobrar sin red
+      </Button>
       <p className="mt-3 text-center text-sm text-ink-2">El cliente escanea el reto con su celular. Sin red.</p>
       {err && <p role="alert" className="mt-3 font-bold text-bad">{err}</p>}
-      <Button variant="ghost" className="mt-2 w-full" onClick={() => setShowCounter((s) => !s)} disabled={!me}>
+      <Button variant="ghost" className="mt-8 w-full md:mt-2" onClick={() => setShowCounter((s) => !s)} disabled={!me}>
         <Storefront size={20} /> QR del mostrador
       </Button>
       {showCounter && me && <QrLoop frames={[JSON.stringify({ merchant_id: me.subject_id, name: MERCHANT_NAME, credential: me.credential })]} label="QR del mostrador" />}
