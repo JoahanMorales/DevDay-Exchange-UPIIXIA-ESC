@@ -32,3 +32,15 @@ Append-only; added to .uak/TASKS.md from main. Why: adding tasks never waits for
 - **Tests:** rule_decides_alert_even_when_model_disagrees, falls_back_to_rule_labels_when_api_unavailable
 - **Verify:** `uv run pytest -q app/tests/test_alerts.py && test -s docs/spikes/decisions.md`
 - **Next step:** search the installed SDK for the Decisions client (`uv run python -c "import openai; print(openai.__version__)"`).
+
+## HACK-034 · CI: install web deps (npm --prefix web ci) before Product smoke in .github/workflows/uak.yml; main CI fails with tsc: not found (follow-up of HACK-001)
+
+- **Type:** follow-up
+- **Priority:** P1
+- **Depends on:** HACK-001
+- **Follow-up of:** HACK-001
+- **Paths:** pyproject.toml, uv.lock, .python-version, app/__init__.py, app/main.py, app/config.py, app/routers/__init__.py, app/services/__init__.py, app/tests/__init__.py, app/tests/test_health.py, web/package.json, web/package-lock.json, web/index.html, web/vite.config.ts, web/tsconfig.json, web/tsconfig.app.json, web/tsconfig.node.json, web/eslint.config.js, web/src/main.tsx, web/src/App.tsx, web/src/index.css, web/src/lib/api.ts, web/src/vite-env.d.ts, web/src/test/, web/public/, Dockerfile, .dockerignore, render.yaml, .env.example, .github/workflows/
+- **Freeze-Allowed:** no
+- **Acceptance:**
+  - CI: install web deps (npm --prefix web ci) before Product smoke in .github/workflows/uak.yml; main CI fails with tsc: not found
+- **Verify:** `uv run pytest -q app/tests/test_health.py && npm --prefix web run build && npm --prefix web test && test -f Dockerfile && test -f render.yaml`

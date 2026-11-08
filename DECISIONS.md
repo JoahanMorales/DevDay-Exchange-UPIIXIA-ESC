@@ -11,3 +11,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794123097 | HACK-001 | --no-ui: placeholder only; dropped template files | Why: outside Paths; no DESIGN.md
 - 1794123622 | HACK-005 | doc band = PENDIENTE, no invented results | Why: device results are Fer's
 - 1794123886 | HACK-004 | seeded payload per trial 1-10 so receiver matches without copying; ASCII payload | Why: embind std::string; two phones can't share clipboard
+- 1794124111 | HACK-034 | follow-up of HACK-001 by victor-1: CI: install web deps (npm --prefix web ci) before Product smoke in .github/workflows/uak.yml; main CI fails with tsc: not found | Why: same Paths, no scope change
