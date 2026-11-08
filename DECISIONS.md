@@ -51,3 +51,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794160109 | HACK-017 | attacks run via store verifyIncoming | Why: real verifier, no reimplementation
 - 1794160306 | plan --amend | victor/victor | amended: HACK-028 | Why: scope or criteria fixed before review
 - 1794160686 | HACK-035 | follow-up of HACK-012 by joahanmorales-1: Sync uses reputation: revocation_list from reputation.py (monotonic version, caps base x factor) and recompute_all after sync | Why: same Paths, no scope change
+- 1794161662 | HACK-026 | Wow = real /ataques capture; shots in features/landing/shots | Why: DESIGN.md landing recipe + IDEA §4 wow
