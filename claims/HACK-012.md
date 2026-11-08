@@ -9,10 +9,10 @@ Priority: P0
 Paths: app/routers/sync.py, app/routers/debts.py, app/services/debts.py, app/tests/test_sync.py, app/tests/test_debts.py
 Depends: HACK-010, HACK-011
 Verify: `uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py`
-Lease-Until: 1794128198
-Updated: 1794125498
+Lease-Until: 1794128414
+Updated: 1794125714
 Task-Base: f9105fc493c91cdee519adc1fc369447585ec791
-Next: `app/tests/test_debts.py` with `FakePey` from HACK-010.
+Next: await review
 PR: -
 Evidence: -
 Thread-Read: 50
