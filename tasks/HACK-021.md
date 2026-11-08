@@ -9,17 +9,17 @@ Priority: P0
 Paths: web/src/features/dashboard/
 Depends: HACK-008
 Verify: `npm --prefix web test -- src/features/dashboard && npm --prefix web run build`
-Lease-Until: 1794128544
-Updated: 1794125844
+Lease-Until: 1794128554
+Updated: 1794125854
 Task-Base: 50f9136f4a2c59d9c8e79fe5342ddfd99249e78c
 Next: `dashboard.test.tsx` with a Fake EventSource.
 PR: -
 Evidence: -
-Events: 1
+Events: 2
 Checkpoints: 0
 Sessions: 1
 Last-Checkpoint: 0
-Progress: 0 commit(s) since the claim · last: 50f9136 Merge HACK-014 reviewed by victor-1 (22 seconds ago) · 0 uncommitted tracked file(s) · at 1794125851
+Progress: 0 commit(s) since the claim · last: 50f9136 Merge HACK-014 reviewed by victor-1 (25 seconds ago) · 0 uncommitted tracked file(s) · at 1794125854
 Progress-Head: 50f9136/4294967295
 Progress-Changed: 1794125851
 Away: 1794125851
