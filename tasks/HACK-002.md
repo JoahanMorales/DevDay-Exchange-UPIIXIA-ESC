@@ -12,10 +12,10 @@ Verify: `uv run --no-project --with pytest --with httpx python -m pytest -q spik
 Lease-Until: 1794137720
 Updated: 1794123320
 Task-Base: bf793f9ad893ea58f5200994f61a768a4b616850
-Next: Wait for review of SHA aaf0f97
+Next: Humano: Smoke red or product unverified: PRODUCT_UNVERIFIED: missing .uak/bin/smoke-project; exit 2. (log: /Users/victor/Documents/Proyectos/DevDay-Exchange-UPIIXIA-ESC/.git/worktrees/hack-002/uak-out/gate-HACK-002-smoke-1794123326.log)
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/2
 Evidence: uv run --no-project --with pytest --with httpx python -m pytest -q spikes/pey/test_probe.py && test -s docs/pey-pruebas.md exit 0 (4 passed); push 0.01/exp 360/concept<=40/numRef/metadata, poll 4s until PAID or expiry, key never printed, MockTransport, doc with table+webhook export; smoke: PRODUCT_UNVERIFIED no smoke-project yet · red at bf793f9: >       assert code == 0
-Events: 7
+Events: 8
 Checkpoints: 2
 Sessions: 2
 Last-Checkpoint: 1794123033
