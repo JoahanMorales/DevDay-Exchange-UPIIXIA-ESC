@@ -22,3 +22,4 @@ Why: a reversible option after 15 min keeps work moving.
 - 1794125714 | HACK-012 | debts service owns state machine; webhook handler via debts.install() | Why: webhooks.reset clears handlers
 - 1794126041 | HACK-021 | openEvents injected (Fake in tests, EventSource adapter in page); demo SSE when no merchant_id | Why: Testable without backend; HACK-012 contract wired via /api/deudas?merchant_id=
 - 1794126234 | HACK-021 | 2-col stats at 390; full tracking key wraps | Why: critic P1s
+- 1794126303 | HACK-012 | credential window from payer.created_at+CREDENTIAL_TTL_S; cap per UTC day of IOU ts | Why: credential not in envelope; server rebuilds it from the payer row
