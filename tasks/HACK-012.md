@@ -15,9 +15,9 @@ Task-Base: f9105fc493c91cdee519adc1fc369447585ec791
 Next: wait HACK-012 --for approve
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/15
 Evidence: uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py exit 0 (9 passed); credential checks expired/bad_credential/cap_exceeded each tested · red at f9105fc: E   AssertionError: {"detail":"Not Found"}
-Events: 8
+Events: 9
 Checkpoints: 2
-Sessions: 3
+Sessions: 4
 Last-Checkpoint: 1794126303
 Progress: 1 commit(s) since the claim · last: 9da068f HACK-012: sync dedupe, double-spend detection, one live charge, cascade, verified payment (8 minutes ago) · 0 uncommitted tracked file(s) · at 1794126167
 Progress-Head: 9da068f/4294967295
