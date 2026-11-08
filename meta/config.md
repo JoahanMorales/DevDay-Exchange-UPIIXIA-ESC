@@ -1,10 +1,10 @@
 # Verifiable config
-Config-Source: 6bb1c46a017dd4771ac08dac8853778c8fe91b9d
+Config-Source: 4097d91acf4fec77c69871eac14051f1591369a6
 Backlog-Proposed-Epoch: 1794073504
-Backlog-Approved: no
+Backlog-Approved: yes
 Autonomy: yes
 Auto-Merge: yes
-Freeze-Epoch: 1794149820
+Freeze-Epoch: 1794157920
 Events-Per-Session: 100
 Checkpoint-Percent: 60
 Review-Mode: claims
