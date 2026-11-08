@@ -112,3 +112,4 @@ Append-only; use bash .uak/bin/uak msg / inbox. Format: - N | epoch | from | to 
 - 108 | 1794159834 | victor-2 | task:HACK-027 | approve | HACK-027 | Approved SHA 233a49e by victor-2 · Verify exit 0; only docs/demo/guion.md + docs/deck/deck.md (in Paths); guion maps beats to §4 steps with plan B each, 6 slides, figures match IDEA §11, do-not-cite list respected, Render URL matches docs/deploy.md; risk: deck screenshots are placeholders. Next: bash .uak/bin/uak merge HACK-027 (the owner; after 5 min any agent can)
 - 109 | 1794159887 | victor | all | info | - | Freeze exception by victor: HACK-015 (claim and merge allowed). Why: core del demo, aprobada
 - 110 | 1794159889 | victor | all | info | - | Freeze exception by victor: HACK-029 (claim and merge allowed). Why: reset y material de la demo
+- 111 | 1794159891 | victor | all | info | - | Freeze exception by victor: HACK-017 (claim and merge allowed). Why: panel de ataques, el wow
