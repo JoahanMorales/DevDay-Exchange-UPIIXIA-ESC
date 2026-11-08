@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spike ggwave</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 16px; max-width: 640px; background: #fff; color: #111; }
+  button, select, input { font-size: 16px; padding: 8px; margin: 4px 0; }
+  button { min-width: 140px; }
+  textarea { width: 100%; font-family: monospace; font-size: 12px; }
+  .yes { color: #0a7a2f; font-weight: bold; }
+  .no { color: #b00020; font-weight: bold; }
+  #log { font-family: monospace; font-size: 12px; white-space: pre-wrap; }
+  fieldset { margin: 12px 0; }
+</style>
+<!-- ggwave 0.4.0 (npm), WASM embedded. SRI checked against the npm tarball. -->
+<script src="https://cdn.jsdelivr.net/npm/ggwave@0.4.0/ggwave.js"
+        integrity="sha384-Z08g0if/ofBBnqD1tu9zVGV6b7eQlOKZ8isQ5WYoAFKD7hfw94w6HUbaXk8lgioE"
+        crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>Spike ggwave · 125 bytes</h1>
+<p id="status">Cargando ggwave…</p>
+
+<label>Protocol:
+  <select id="protocol"></select>
+</label>
+<label>Volume (1-100): <input id="volume" type="number" min="1" max="100" value="50" style="width:5em"></label>
+
+<fieldset>
+  <legend>Emisor</legend>
+  <label>Intento # (1-10): <input id="trial" type="number" min="1" max="10" value="1" style="width:4em"></label>
+  <button id="send">Enviar</button>
+  <p>Payload (125 bytes, pseudoaleatorio con semilla = intento; el receptor lo regenera):</p>
+  <textarea id="payload" rows="3" readonly></textarea>
+  <p id="txInfo"></p>
+</fieldset>
+
+<fieldset>
+  <legend>Receptor</legend>
+  <button id="listen">Escuchar</button>
+  <button id="stop" disabled>Detener</button>
+  <p>Match: <span id="match">—</span> · Intento: <span id="rxTrial">—</span> · Segundos: <span id="secs">—</span> · Bytes: <span id="len">—</span></p>
+  <textarea id="received" rows="3" readonly></textarea>
+</fieldset>
+
+<div id="log"></div>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const PAYLOAD_LEN = 125;
+  // ggwave encodes a std::string; printable ASCII avoids UTF-8 surprises in embind.
+  const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+
+  let ggwave = null, ctx = null, instance = null;
+  let mic = null, recorder = null, listenStart = 0;
+
+  function log(msg) { $('log').textContent = new Date().toISOString().slice(11, 19) + ' ' + msg + '\n' + $('log').textContent; }
+
+  // mulberry32: same trial number => same 125 bytes on both phones.
+  function payloadFor(trial) {
+    let a = (0x9e3779b9 ^ trial) >>> 0, s = '';
+    for (let i = 0; i < PAYLOAD_LEN; i++) {
+      a = (a + 0x6d2b79f5) >>> 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      s += ALPHABET[((t ^ (t >>> 14)) >>> 0) & 63];
+    }
+    return s;
+  }
+  const EXPECTED = {};
+  for (let n = 1; n <= 10; n++) EXPECTED[payloadFor(n)] = n;
+  function trial() { return Math.max(1, Math.min(10, parseInt($('trial').value, 10) || 1)); }
+
+  function convertTypedArray(src, type) {
+    const buffer = new ArrayBuffer(src.byteLength);
+    new src.constructor(buffer).set(src);
+    return new type(buffer);
+  }
+
+  function ensureContext() {
+    if (ctx) return;
+    ctx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 48000 });
+    const p = ggwave.getDefaultParameters();
+    p.sampleRateInp = ctx.sampleRate;
+    p.sampleRateOut = ctx.sampleRate;
+    instance = ggwave.init(p);
+    log('AudioContext ' + ctx.sampleRate + ' Hz, instance ' + instance);
+  }
+
+  function protocolId() { return ggwave.ProtocolId[$('protocol').value]; }
+
+  function send() {
+    ensureContext();
+    const payload = payloadFor(trial());
+    $('payload').value = payload;
+    const vol = Math.max(1, Math.min(100, parseInt($('volume').value, 10) || 50));
+    const t0 = performance.now();
+    const waveform = ggwave.encode(instance, payload, protocolId(), vol);
+    const samples = convertTypedArray(waveform, Float32Array);
+    const buf = ctx.createBuffer(1, samples.length, ctx.sampleRate);
+    buf.getChannelData(0).set(samples);
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    src.connect(ctx.destination);
+    src.onended = () => {
+      const s = ((performance.now() - t0) / 1000).toFixed(1);
+      $('txInfo').textContent = 'Enviado en ' + s + ' s (' + $('protocol').value + ')';
+      log('tx done ' + s + ' s');
+    };
+    src.start(0);
+    $('txInfo').textContent = 'Enviando… audio de ' + (samples.length / ctx.sampleRate).toFixed(1) + ' s';
+    log('tx ' + payload.length + ' bytes, ' + $('protocol').value + ', vol ' + vol);
+  }
+
+  async function listen() {
+    ensureContext();
+    if (ctx.state === 'suspended') await ctx.resume();
+    let stream;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: false, autoGainControl: false, noiseSuppression: false }
+      });
+    } catch (e) {
+      log('mic error: ' + e.name + ' ' + e.message + (window.isSecureContext ? '' : ' (no secure context: usa HTTPS)'));
+      return;
+    }
+    mic = ctx.createMediaStreamSource(stream);
+    recorder = ctx.createScriptProcessor(1024, 1, 1);
+    recorder.onaudioprocess = (e) => {
+      const source = e.inputBuffer;
+      const res = ggwave.decode(instance, convertTypedArray(new Float32Array(source.getChannelData(0)), Int8Array));
+      if (res && res.length > 0) onReceived(new TextDecoder('utf-8').decode(res));
+    };
+    mic.connect(recorder);
+    recorder.connect(ctx.destination);
+    listenStart = performance.now();
+    $('listen').disabled = true; $('stop').disabled = false;
+    $('match').textContent = '—'; $('match').className = '';
+    $('secs').textContent = '—'; $('len').textContent = '—'; $('rxTrial').textContent = '—'; $('received').value = '';
+    log('listening (el receptor decodifica cualquier protocolo)');
+  }
+
+  function onReceived(text) {
+    const secs = ((performance.now() - listenStart) / 1000).toFixed(1);
+    const n = EXPECTED[text];
+    $('received').value = text;
+    $('len').textContent = text.length;
+    $('secs').textContent = secs + ' (desde Escuchar o la recepción anterior)';
+    $('rxTrial').textContent = n || '—';
+    $('match').textContent = n ? 'yes' : 'no';
+    $('match').className = n ? 'yes' : 'no';
+    log('rx ' + text.length + ' bytes in ' + secs + ' s');
+    listenStart = performance.now();
+  }
+
+  function stop() {
+    if (recorder) { recorder.disconnect(); recorder = null; }
+    if (mic) { mic.mediaStream.getTracks().forEach((t) => t.stop()); mic.disconnect(); mic = null; }
+    $('listen').disabled = false; $('stop').disabled = true;
+    log('stopped');
+  }
+
+  if (typeof ggwave_factory !== 'function') {
+    $('status').textContent = 'No cargó ggwave.js (¿sin red o SRI falló?).';
+    return;
+  }
+  ggwave_factory().then((obj) => {
+    ggwave = obj;
+    ggwave.disableLog && ggwave.disableLog();
+    const sel = $('protocol');
+    for (const name of Object.keys(ggwave.ProtocolId)) {
+      if (name.indexOf('CUSTOM') !== -1 || name === 'values') continue;
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name.replace('GGWAVE_PROTOCOL_', '');
+      if (name === 'GGWAVE_PROTOCOL_AUDIBLE_FAST') opt.selected = true;
+      sel.appendChild(opt);
+    }
+    $('payload').value = payloadFor(trial());
+    $('trial').oninput = () => { $('payload').value = payloadFor(trial()); };
+    $('status').textContent = 'Listo. Secure context: ' + window.isSecureContext;
+    $('send').onclick = send;
+    $('listen').onclick = listen;
+    $('stop').onclick = stop;
+  });
+})();
+</script>
+</body>
+</html>
