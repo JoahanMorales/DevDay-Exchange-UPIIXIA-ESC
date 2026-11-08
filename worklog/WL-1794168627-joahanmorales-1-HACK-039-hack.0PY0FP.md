@@ -6,7 +6,7 @@
 - Why: Parallel work without touching the main checkout
 - Failing: No validation run yet
 - Commands: `npm --prefix web test -- src/features && npm --prefix web run build && bash .uak/bin/design-lint`
-- Next: Humano: Verify / acceptance red:      Errors  3 errors (log: /home/joahan/Proyectos/DevDay-Exchange-UPIIXIA-ESC/.git/worktrees/hack-039/uak-out/gate-HACK-039-verify-1794169273.log)
+- Next: Integrated in main: f5b74ae1391bd1dfdb16b852c46c4e090b727391 (recorded by joahanmorales-1)
 
 ## History
 - 1794168627 | CLAIMED | joahanmorales-1 | claim; next: replace the blank block of `/ataques` first (largest empty area).
@@ -14,3 +14,4 @@
 - 1794169251 | REVIEW | joahanmorales-2 | review; approve; SHA a3c61a41b4f6b71afdef321bcffd02cc08ac8949; reviewer joahanmorales-2
 - 1794169266 | REVIEW | joahanmorales-1 | heartbeat; lease until 1794183666
 - 1794169273 | REVIEW | joahanmorales-1 | merge rechazado; Verify / acceptance red:      Errors  3 errors (log: /home/joahan/Proyectos/DevDay-Exchange-UPIIXIA-ESC/.git/worktrees/hack-039/uak-out/gate-HACK-039-verify-1794169273.log)
+- 1794169688 | INTEGRATED | joahanmorales-1 | integrate; recorded by joahanmorales-1; PR https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/37; merged f5b74ae1391bd1dfdb16b852c46c4e090b727391; proof ancestry
