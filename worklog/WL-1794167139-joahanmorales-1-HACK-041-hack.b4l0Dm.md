@@ -6,7 +6,7 @@
 - Why: Parallel work without touching the main checkout
 - Failing: No validation run yet
 - Commands: `npm --prefix web test -- src/features/landing && npm --prefix web run build && bash .uak/bin/design-lint`
-- Next: Humano: Shared resource/CI needs a human: web/package-lock.json
+- Next: Integrated in main: ad127c82a024463272e80a7f30fa04d485b4fec4 (recorded by joahanmorales-1)
 
 ## History
 - 1794167139 | CLAIMED | joahanmorales-1 | claim; next: `web/src/features/landing/scene/timeline.test.ts` for the pure beat timeline, then the scene.
@@ -15,3 +15,4 @@
 - 1794168882 | REVIEW | joahanmorales-1 | heartbeat; lease until 1794183282
 - 1794168889 | REVIEW | joahanmorales-1 | merge rechazado; Shared resource/CI needs a human: web/package-lock.json
 - 1794169144 | REVIEW | joahanmorales-1 | merge rechazado; Shared resource/CI needs a human: web/package-lock.json
+- 1794169232 | INTEGRATED | joahanmorales-1 | integrate; recorded by joahanmorales-1; PR https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/36; merged ad127c82a024463272e80a7f30fa04d485b4fec4; proof ancestry
