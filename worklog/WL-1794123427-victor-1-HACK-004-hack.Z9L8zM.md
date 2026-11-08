@@ -6,7 +6,7 @@
 - Why: embind std::string; two phones can't share clipboard
 - Failing: none
 - Commands: bash .uak/bin/q bash -c 'test -s spikes/ggwave/index.html && grep -qi protocol docs/spikes/ggwave.md'
-- Next: Wait for review of SHA 7f482fc
+- Next: Integrated in main: 89d8295fbf8fe71a2e7404e398dfb2348d7be9f0
 
 ## History
 - 1794123427 | CLAIMED | victor-1 | claim; next: load ggwave WASM build in spikes/ggwave/index.html and wire send/receive buttons
@@ -17,3 +17,4 @@
 - 1794124379 | REVIEW | joahanmorales-1 | review; approve; SHA 7f482fc974ccf9900c4b6aecfe1df3cddeb27f63; reviewer joahanmorales-1
 - 1794124737 | REVIEW | victor-1 | heartbeat; lease until 1794139137
 - 1794125013 | REVIEW | victor-1 | heartbeat; lease until 1794139413
+- 1794125349 | INTEGRATED | victor-2 | merge; smoke and Verify PASS; commit 89d8295fbf8fe71a2e7404e398dfb2348d7be9f0; reviewer joahanmorales-1
