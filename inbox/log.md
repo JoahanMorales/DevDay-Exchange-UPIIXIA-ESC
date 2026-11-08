@@ -114,3 +114,4 @@ Append-only; use bash .uak/bin/uak msg / inbox. Format: - N | epoch | from | to 
 - 110 | 1794159889 | victor | all | info | - | Freeze exception by victor: HACK-029 (claim and merge allowed). Why: reset y material de la demo
 - 111 | 1794159891 | victor | all | info | - | Freeze exception by victor: HACK-017 (claim and merge allowed). Why: panel de ataques, el wow
 - 112 | 1794159930 | victor-2 | agent:joahanmorales-1 | integrated | HACK-015 | HACK-015 integrated in main (321e0157669bc0f1cbae7950c2969558326a0dd0). If you depend on it: git fetch origin && git merge --no-edit origin/main (affects: HACK-019 joahanmorales-1)
+- 113 | 1794159981 | victor | all | info | - | Freeze exception by victor: HACK-028 (claim and merge allowed). Why: Victor movio el freeze a 12:30: meter todo lo que alcance
