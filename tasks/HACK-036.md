@@ -19,3 +19,7 @@ Events: 1
 Checkpoints: 0
 Sessions: 1
 Last-Checkpoint: 0
+Progress: 0 commit(s) since the claim · last: 1c74895 Merge HACK-026 reviewed by victor-1 (19 minutes ago) · 0 uncommitted tracked file(s) · at 1794163361
+Progress-Head: 1c74895/4294967295
+Progress-Changed: 1794163361
+Away: 1794163361
