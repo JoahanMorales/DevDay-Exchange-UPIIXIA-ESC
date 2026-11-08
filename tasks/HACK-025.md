@@ -1,6 +1,6 @@
 # HACK-025
 ID: HACK-025
-State: CLAIMED
+State: REVIEW
 Owner: victor-1
 Branch: feat/hack-025
 Worktree: /Users/victor/Documents/Proyectos/DevDay-Exchange-UPIIXIA-ESC-wt/hack-025
@@ -9,13 +9,13 @@ Priority: P0
 Paths: docs/security.md
 Depends: HACK-012, HACK-015
 Verify: `test -s docs/security.md && bash .uak/bin/smoke`
-Lease-Until: 1794164018
-Updated: 1794161318
+Lease-Until: 1794175858
+Updated: 1794161458
 Task-Base: c4ad850499d4dec3ba3aa60be6b954ef0b29ba75
-Next: `/uak-secure`.
-PR: -
-Evidence: -
-Events: 2
+Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/30; run .uak/bin/smoke
+PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/30
+Evidence: test -s docs/security.md && bash .uak/bin/smoke exit 0 (PRODUCT_PASS); secret-scan --tracked PASS; history grep: no CLABE/real phone/keys; demo gates 404 tests pass
+Events: 3
 Checkpoints: 0
 Sessions: 1
 Last-Checkpoint: 0
@@ -23,3 +23,4 @@ Progress: 0 commit(s) since the claim · last: c4ad850 Merge HACK-028 reviewed b
 Progress-Head: c4ad850/4294967295
 Progress-Changed: 1794161315
 Away: 1794161315
+Task-Tip: 9c8fe39eb02fb144c1e5800a6ae4b12de58cbecf
