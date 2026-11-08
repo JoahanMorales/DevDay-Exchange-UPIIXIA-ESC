@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Chip, DemoBadge, PageHeader, PageLayout, SectionHeader, Surface } from "../../lib/ui";
+import { Button, Chip, DemoBadge, PageHeader, PageLayout, SectionHeader, Skeleton, Surface } from "../../lib/ui";
 import { sourceLabel, toolLabel, type AssistantAnswer } from "./ask";
 
 export type AskState =
@@ -86,7 +86,14 @@ export function Assistant({
           {state.kind === "idle" && (
             <p className="text-lg text-ink-2">Pregúntame quién te debe, por qué se rechazó un pagaré o pídeme un recordatorio. Respondo con tus registros.</p>
           )}
-          {state.kind === "loading" && <p className="text-lg text-ink-2">Consultando tus registros…</p>}
+          {state.kind === "loading" && (
+            <div role="status" aria-busy="true" className="space-y-3">
+              <span className="sr-only">Consultando tus registros</span>
+              <Skeleton className="h-4 w-1/3" />
+              <Skeleton className="h-8 w-full" />
+              <Skeleton className="h-8 w-4/5" />
+            </div>
+          )}
           {state.kind === "error" && (
             <p role="alert" className="text-lg text-bad">
               {`No pude responder: ${state.message} Tus pagarés y cobros no se ven afectados.`}
