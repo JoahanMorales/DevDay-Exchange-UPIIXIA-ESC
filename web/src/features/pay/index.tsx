@@ -16,6 +16,14 @@ type Stage =
 const today = () => new Date().toISOString().slice(0, 10);
 const spentKey = () => `spent:${today()}`;
 
+// Never show a raw status line or English text to the shopkeeper: say what happened and what to do.
+function friendly(e: unknown): string {
+  const m = e instanceof Error ? e.message : "";
+  if (!m || /^5\d\d|failed to fetch|networkerror|load failed/i.test(m)) return "el servidor no respondió, intenta de nuevo con red.";
+  if (/^4\d\d/.test(m)) return "los datos no son válidos o ya existen.";
+  return "ocurrió un problema, intenta de nuevo.";
+}
+
 function PayPage() {
   const [db, setDb] = useState<Db>();
   const [me, setMe] = useState<Enrollment>();
@@ -79,7 +87,7 @@ function PayPage() {
     const display_name = "Mario", phone = "5512344321"; // demo_data: the payer of IDEA §4
     await db.put("kv", display_name, "payer_name");
     await db.put("kv", phone, "payer_phone");
-    try { setMe(await enrollPayer(db, { display_name, phone })); } catch (e) { setMsg((e as Error).message); }
+    try { setMe(await enrollPayer(db, { display_name, phone })); } catch (e) { setMsg(`No se pudo activar este celular: ${friendly(e)}`); }
   }
 
   if (!me) {
