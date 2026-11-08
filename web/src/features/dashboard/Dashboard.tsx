@@ -167,13 +167,13 @@ export function Dashboard({
       </List>
 
       {explanation && (
-        <Surface>
-          <div className="p-5">
+        <div className="mt-6">
+          <Surface>
             <SectionHeader>Qué pasó</SectionHeader>
             <p className="text-base">{explanation.texto}</p>
             <p className="mt-2 text-sm text-ink-2">{`Fuente: ${sourceLabel[explanation.fuente]}`}</p>
-          </div>
-        </Surface>
+          </Surface>
+        </div>
       )}
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
