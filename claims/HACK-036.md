@@ -9,8 +9,8 @@ Priority: P1
 Paths: app/routers/sync.py, app/routers/debts.py, app/services/debts.py, app/tests/test_sync.py, app/tests/test_debts.py
 Depends: HACK-012
 Verify: `uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py`
-Lease-Until: 1794166053
-Updated: 1794163353
+Lease-Until: 1794166065
+Updated: 1794163365
 Task-Base: 1c74895da68a3dadf4696fdf750dd2badbee4bb7
 Next: Write its tests, see them fail (uak red HACK-036), then implement until this passes: `uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py`
 PR: -
