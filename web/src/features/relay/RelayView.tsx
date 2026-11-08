@@ -4,6 +4,7 @@ import type { Envelope } from "../../lib/contract";
 import {
   Button,
   DemoBadge,
+  EmptyState,
   List,
   ListRow,
   PageHeader,
@@ -116,9 +117,9 @@ export function Relay({
 
       <SectionHeader>En tu celular</SectionHeader>
       {n === 0 ? (
-        <Surface className="p-5 text-base text-ink-2">
+        <EmptyState title="Nada que entregar por ahora">
           Aquí aparecen los pagarés que recibas de una tienda o de otro celular. Se guardan 7 días.
-        </Surface>
+        </EmptyState>
       ) : (
         <List>
           {queue.map((e, i) => (

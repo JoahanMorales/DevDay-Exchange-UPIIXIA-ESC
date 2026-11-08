@@ -3,6 +3,7 @@ import type { Debt, DebtEvent, DebtStatus, ExplainResponse } from "../../lib/con
 import {
   Button,
   DemoBadge,
+  EmptyState,
   Legend,
   List,
   ListRow,
@@ -128,6 +129,11 @@ export function Dashboard({
       >
         Pagarés
       </SectionHeader>
+      {debts.length === 0 ? (
+        <EmptyState title="Aún no hay pagarés para cobrar">
+          Cuando una tienda sincronice pagarés, aparecen aquí con su estado y la clave de rastreo del cobro por CoDi.
+        </EmptyState>
+      ) : (
       <List>
         {debts.map((d) => {
           const s = statusCopy[d.status];
@@ -165,6 +171,7 @@ export function Dashboard({
           );
         })}
       </List>
+      )}
 
       {explanation && (
         <div className="mt-6">

@@ -4,11 +4,13 @@ import type { AttackLog } from "../../lib/contract";
 import {
   Button,
   DemoBadge,
+  EmptyState,
   List,
   ListRow,
   PageHeader,
   PageLayout,
   SectionHeader,
+  SkeletonRows,
   Stamp,
   Stat,
 } from "../../lib/ui";
@@ -55,6 +57,19 @@ function AtaquesPage() {
       <SectionHeader action={rejected === 4 ? <Stamp tone="bad">4 RECHAZADOS</Stamp> : undefined}>
         Registro de ataques
       </SectionHeader>
+      {runs.length === 0 && busy && <SkeletonRows rows={5} label="Lanzando los ataques" />}
+      {runs.length === 0 && !busy && (
+        <EmptyState
+          title="Todavía no hay ataques"
+          action={
+            <Button variant="ghost" onClick={start}>
+              Lanzar ataques
+            </Button>
+          }
+        >
+          Aquí verás una grabación, una voz de IA, un pagaré a 2 km y un duplicado intentando cobrar, y por qué la tienda los rechaza.
+        </EmptyState>
+      )}
       {runs.length > 0 && (
         <List>
           {runs.map((r) => (
