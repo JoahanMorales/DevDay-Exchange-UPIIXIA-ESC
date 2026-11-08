@@ -10,3 +10,4 @@
 
 ## History
 - 1794125476 | CLAIMED | victor-2 | claim; next: `web/src/lib/storage/db.ts` with `idb` and its test on `fake-indexeddb`.
+- 1794125499 | CLAIMED | victor-2 | heartbeat; lease until 1794128199
