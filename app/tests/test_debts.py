@@ -90,3 +90,32 @@ def test_marks_second_payment_duplicated(env):
     d = _debt(env, debt_id)
     assert d["status"] == "DUPLICADA"
     assert any("reembolso manual" in a for a in d["alerts"])
+
+
+def test_watch_polls_every_5s_until_paid(env):
+    debt_id = _sync_one(env)
+    env["pey"].statuses = ["PENDING", "PENDING", "PAID"]
+    slept: list[float] = []
+    assert debts.watch(debt_id, env["pey"], sleep=slept.append) is True
+    assert slept == [5, 5]
+    assert _debt(env, debt_id)["status"] == "PAGADA"
+
+
+def test_watch_gives_up_after_6_minutes(env):
+    debt_id = _sync_one(env)
+    slept: list[float] = []
+    assert debts.watch(debt_id, env["pey"], sleep=slept.append) is False
+    assert sum(slept) <= 360 and len(env["pey"].polled) == 360 // 5
+    assert _debt(env, debt_id)["status"] == "COBRO_ENVIADO"
+
+
+def test_verify_endpoint_forces_poll(env):
+    c = env["client"]
+    debt_id = _sync_one(env)
+    r = c.post(f"/api/deudas/{debt_id}/verificar")
+    assert r.status_code == 200, r.text
+    assert r.json()["status"] == "COBRO_ENVIADO"  # pey still PENDING
+    env["pey"].statuses = ["PAID"]  # real pey may omit trackingKey on GET /transaction
+    r = c.post(f"/api/deudas/{debt_id}/verificar")
+    assert (r.json()["status"], bool(r.json()["tracking_key"])) == ("PAGADA", True)
+    assert c.post("/api/deudas/NOPE/verificar").status_code == 404

@@ -31,6 +31,18 @@ def get_debt(debt_id: str, conn: Db) -> models.Debt:
     return debt
 
 
+@router.post("/deudas/{debt_id}/verificar", response_model=models.Debt)
+def verify_debt(debt_id: str, conn: Db) -> models.Debt:
+    """Force one pey poll now (the webhook may never arrive)."""
+    if debts.get_debt(conn, debt_id) is None:
+        raise HTTPException(404, "debt not found")
+    try:
+        debts.poll(conn, debt_id, debts.get_pey())
+    except Exception as exc:  # noqa: BLE001 - pey down: report, keep the debt as is
+        raise HTTPException(502, f"pey unavailable: {exc.__class__.__name__}") from exc
+    return debts.get_debt(conn, debt_id)
+
+
 @router.get("/deudas/{debt_id}/eventos")
 def debt_events(debt_id: str, conn: Db) -> StreamingResponse:
     if debts.get_debt(conn, debt_id) is None:

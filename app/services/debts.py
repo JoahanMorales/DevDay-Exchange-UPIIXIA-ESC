@@ -10,7 +10,9 @@ import base64
 import hashlib
 import json
 import sqlite3
+import threading
 import time
+from collections.abc import Callable
 from datetime import UTC, datetime, timedelta
 
 import httpx
@@ -22,6 +24,10 @@ from app.services import credentials, crypto, db
 from app.services.pey import MIN_EXPIRATION, FakePey, HttpPey, PeyClient, charge_amount
 
 _pey: PeyClient | None = None
+POLL_INTERVAL_S = 5
+POLL_MAX_S = MIN_EXPIRATION  # the push lives 6 min
+_watching: set[str] = set()
+_watch_lock = threading.Lock()
 LIVE = ("REGISTRADA", "COBRO_ENVIADO", "VENCIDA")
 
 
@@ -154,6 +160,8 @@ def sync(conn: sqlite3.Connection, req: models.SyncRequest, pey: PeyClient | Non
             accepted += 1
     for row in conn.execute("SELECT id FROM debts WHERE status = 'REGISTRADA'").fetchall():
         charge(conn, row["id"], pey or get_pey())
+    for row in conn.execute("SELECT id FROM debts WHERE status = 'COBRO_ENVIADO'").fetchall():
+        start_watch(row["id"], pey or get_pey())
     return models.SyncResponse(accepted=accepted, duplicates=duplicates, rejected=rejected,
                                revocation_list=revocation_list(conn))
 
@@ -261,8 +269,53 @@ def poll(conn: sqlite3.Connection, debt_id: str, pey: PeyClient) -> bool:
     tx = pey.get_transaction(att["pey_transaction_id"])
     if tx.get("status") != "PAID":
         return False
-    tracking = tx.get("trackingKey") or (tx.get("metadata") or {}).get("trackingKey")
+    # GET /transaction is authenticated, so PAID is verified; the key may be missing there
+    tracking = (tx.get("trackingKey") or (tx.get("metadata") or {}).get("trackingKey")
+                or f"pey:{att['pey_transaction_id']}")
     return mark_paid(conn, att["pey_transaction_id"], tracking) in ("PAGADA", "DUPLICADA")
+
+
+def watch(debt_id: str, pey: PeyClient, sleep: Callable[[float], object] = time.sleep,
+          interval: float = POLL_INTERVAL_S, max_s: float = POLL_MAX_S) -> bool:
+    """Webhook fallback: poll every `interval` s for up to `max_s` s; True once the debt is paid."""
+    for i in range(int(max_s // interval)):
+        conn = db.connect()
+        try:
+            try:
+                if poll(conn, debt_id, pey):
+                    return True
+            except (httpx.HTTPError, OSError, ValueError):
+                pass  # pey hiccup: try again next tick
+            row = conn.execute("SELECT status FROM debts WHERE id = ?", (debt_id,)).fetchone()
+            if row is None or row["status"] != "COBRO_ENVIADO":
+                return row is not None and row["status"] in ("PAGADA", "DUPLICADA")
+        finally:
+            conn.close()
+        if i < max_s // interval - 1:
+            sleep(interval)
+    return False
+
+
+def _spawn(fn: Callable[[], object]) -> None:
+    threading.Thread(target=fn, daemon=True).start()
+
+
+def start_watch(debt_id: str, pey: PeyClient) -> bool:
+    """Start one background poller per debt; False if one is already running."""
+    with _watch_lock:
+        if debt_id in _watching:
+            return False
+        _watching.add(debt_id)
+
+    def run() -> None:
+        try:
+            watch(debt_id, pey)
+        finally:
+            with _watch_lock:
+                _watching.discard(debt_id)
+
+    _spawn(run)
+    return True
 
 
 def get_debt(conn: sqlite3.Connection, debt_id: str) -> models.Debt | None:

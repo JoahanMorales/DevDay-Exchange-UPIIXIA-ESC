@@ -39,6 +39,8 @@ def make_env(monkeypatch, tmp_path):
     debts.install()
     pey = FakePey(statuses=["PENDING"])
     debts.set_pey(pey)
+    spawned: list = []  # background pollers are recorded, run by the test that needs them
+    monkeypatch.setattr(debts, "_spawn", spawned.append, raising=False)
     conn = db.connect()
     now = datetime.now(UTC).isoformat()
     for p, phone, backup in ((BACKUP, "5500000002", None), (PAYER, "5500000001", BACKUP["id"])):
@@ -53,7 +55,8 @@ def make_env(monkeypatch, tmp_path):
                      (mid, MERCHANT["name"], MERCHANT["lat"], MERCHANT["lon"],
                       json.dumps(MERCHANT["pubkey_jwk"]), now))
     conn.commit()
-    yield {"client": TestClient(app), "conn": conn, "pey": pey, "other_merchant": other_merchant}
+    yield {"client": TestClient(app), "conn": conn, "pey": pey, "other_merchant": other_merchant,
+           "spawned": spawned}
     conn.close()
     debts.set_pey(None)
     webhooks.reset()
@@ -146,3 +149,18 @@ def test_rejects_iou_over_daily_cap(env):
     assert c.post("/api/sync", json={"envelopes": ok}).json()["accepted"] == 2
     assert _reason(c, envelope(counter=25, amount=1)) == ["cap_exceeded"]
     assert statuses(env["conn"]) == ["COBRO_ENVIADO", "COBRO_ENVIADO"]
+
+
+def test_sync_starts_background_poll_that_marks_paid(env, monkeypatch):
+    c, pey = env["client"], env["pey"]
+    e = envelope()
+    assert c.post("/api/sync", json={"envelopes": [e]}).json()["accepted"] == 1
+    assert len(env["spawned"]) == 1  # one poller per charged debt
+    assert c.post("/api/sync", json={"envelopes": [e]}).json()["duplicates"] == 1
+    assert len(env["spawned"]) == 1  # a re-sync does not start a second poller
+    pey.statuses = ["PENDING", "PAID"]
+    monkeypatch.setattr(debts.time, "sleep", lambda s: None)
+    env["spawned"][0]()
+    debt = c.get("/api/deudas").json()["debts"][0]
+    assert debt["status"] == "PAGADA"
+    assert debt["tracking_key"]
