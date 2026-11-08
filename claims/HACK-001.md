@@ -15,4 +15,4 @@ Task-Base: bf793f9ad893ea58f5200994f61a768a4b616850
 Next: Wait for review of SHA fd5ad1b
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/3
 Evidence: -
-Thread-Read: 2
+Thread-Read: 11
