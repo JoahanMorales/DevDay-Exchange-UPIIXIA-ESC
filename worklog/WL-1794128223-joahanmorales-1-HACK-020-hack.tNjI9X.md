@@ -6,7 +6,7 @@
 - Why: monotonic version for clients
 - Failing: none
 - Commands: uv run pytest -q app/tests/test_reputation.py
-- Next: Wait for review PR #21; wiring of debts.py is a request to victor-1
+- Next: Integrated in main: d007f40e21215998e2e203972efeda3fa4d02296
 
 ## History
 - 1794128223 | CLAIMED | joahanmorales-1 | claim; next: `app/tests/test_reputation.py`.
@@ -14,3 +14,4 @@
 - 1794128325 | REVIEW | joahanmorales-1 | checkpoint; next: Wait for review PR #21; wiring of debts.py is a request to victor-1
 - 1794160260 | REVIEW | victor-2 | review; approve; SHA 1ad18cdfa105de2d7b03014b01a9e07ae842c759; reviewer victor-2
 - 1794160491 | REVIEW | joahanmorales-1 | heartbeat; lease until 1794174891
+- 1794160517 | INTEGRATED | joahanmorales-1 | merge; smoke and Verify PASS; commit d007f40e21215998e2e203972efeda3fa4d02296; reviewer victor-2
