@@ -6,7 +6,7 @@
 - Why: no DB layer yet; HACK-012 owns debts
 - Failing: none
 - Commands: uv run pytest -q app/tests/test_pey.py app/tests/test_webhooks.py
-- Next: wait for review of 45f03e6
+- Next: Integrated in main: b0d6110191d18a660aa262dc55fa65a1613a8cae
 
 ## History
 - 1794124722 | CLAIMED | victor-1 | claim; next: `app/tests/test_webhooks.py` with a webhook signed by `standardwebhooks.Webhook(secret).sign`.
@@ -15,3 +15,4 @@
 - 1794124882 | REVIEW | victor-1 | checkpoint; next: wait for review of 45f03e6
 - 1794124967 | REVIEW | joahanmorales-1 | review; approve; SHA 45f03e69ebae72fc495dd237e3961f75f4eb0542; reviewer joahanmorales-1
 - 1794125015 | REVIEW | victor-1 | heartbeat; lease until 1794139415
+- 1794125370 | INTEGRATED | victor-2 | merge; smoke and Verify PASS; commit b0d6110191d18a660aa262dc55fa65a1613a8cae; reviewer joahanmorales-1
