@@ -1,0 +1,32 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SinSeñal crypto spike</title>
+<body style="font:16px system-ui;padding:16px"><h1>Crypto spike</h1><button id="go" style="font-size:20px;padding:12px">Run</button><pre id="out" style="white-space:pre-wrap"></pre>
+<script type="module">
+// Needs HTTPS or localhost (WebCrypto). Same steps as sign.mjs; also decrypts in-browser as a self-check.
+const out = document.getElementById('out'), log = (s) => (out.textContent += s + '\n');
+const hex = (u) => [...new Uint8Array(u)].map((b) => b.toString(16).padStart(2, '0')).join('');
+document.getElementById('go').onclick = async () => {
+  out.textContent = ''; log(navigator.userAgent);
+  try {
+    const s = crypto.subtle;
+    const payer = await s.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, false, ['sign', 'verify']);
+    const msg = crypto.getRandomValues(new Uint8Array(61));
+    const sig = new Uint8Array(await s.sign({ name: 'ECDSA', hash: 'SHA-256' }, payer.privateKey, msg));
+    log(`sig length ${sig.length} (expect 64)`);
+    log(`verify: ${await s.verify({ name: 'ECDSA', hash: 'SHA-256' }, payer.publicKey, sig, msg)}`);
+    let ext = true; try { await s.exportKey('jwk', payer.privateKey); } catch { ext = false; }
+    log(`private key extractable: ${ext} (expect false)`);
+    const server = await s.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, false, ['deriveBits']);
+    const eph = await s.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, false, ['deriveBits']);
+    const kdf = async (priv, pub) => s.deriveKey(
+      { name: 'HKDF', hash: 'SHA-256', salt: new Uint8Array(0), info: new TextEncoder().encode('sinsenal-v1') },
+      await s.importKey('raw', await s.deriveBits({ name: 'ECDH', public: pub }, priv, 256), 'HKDF', false, ['deriveKey']),
+      { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+    const pt = new Uint8Array([...msg, ...sig]), iv = crypto.getRandomValues(new Uint8Array(12));
+    const ct = await s.encrypt({ name: 'AES-GCM', iv }, await kdf(eph.privateKey, server.publicKey), pt);
+    const back = new Uint8Array(await s.decrypt({ name: 'AES-GCM', iv }, await kdf(server.privateKey, eph.publicKey), ct));
+    log(`envelope round trip: ${hex(back) === hex(pt)} (ct ${ct.byteLength} B, expect 141)`);
+    log('RESULT: ' + (sig.length === 64 && !ext && hex(back) === hex(pt) ? 'PASS' : 'FAIL'));
+  } catch (e) { log('ERROR: ' + e); }
+};
+</script>
