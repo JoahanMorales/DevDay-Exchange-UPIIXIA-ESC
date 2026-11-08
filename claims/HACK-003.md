@@ -9,8 +9,8 @@ Priority: P0
 Paths: app/schemas/, app/fixtures/sinsenal/, app/tests/test_contract.py, docs/protocolo.md, web/src/lib/contract/
 Depends: None
 Verify: `uv run --no-project --with pydantic --with pytest --with cryptography python -m pytest -q app/tests/test_contract.py`
-Lease-Until: 1794137293
-Updated: 1794122893
+Lease-Until: 1794138111
+Updated: 1794123711
 Task-Base: bf793f9ad893ea58f5200994f61a768a4b616850
 Next: Wait for review of PR #1; then uak merge HACK-003
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/1
