@@ -9,14 +9,14 @@ Priority: P0
 Paths: docs/deploy.md
 Depends: HACK-001
 Verify: `test -s docs/deploy.md && grep -q "https://" docs/deploy.md`
-Lease-Until: 1794139943
-Updated: 1794125543
+Lease-Until: 1794140476
+Updated: 1794126076
 Task-Base: f9105fc493c91cdee519adc1fc369447585ec791
 Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/13; run .uak/bin/smoke
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/13
-Evidence: Verify exit 0 (deploy.md non-empty, has https://). Nothing published.
-Events: 3
+Evidence: Verify exit 0; curl https://sinsenal-9lb5.onrender.com/api/health -> 200 {status:ok}
+Events: 4
 Checkpoints: 0
 Sessions: 2
 Last-Checkpoint: 0
-Task-Tip: ef867471d463939cd20e1b9bbdb7ba597652ea7c
+Task-Tip: 36222a16ddf661267f8e568ef6975ec400e5e74b
