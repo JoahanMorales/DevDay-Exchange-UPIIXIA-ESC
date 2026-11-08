@@ -9,8 +9,8 @@ Priority: P0
 Paths: web/src/lib/ui/Shell.tsx, web/src/lib/ui/nav.ts, web/src/lib/ui/nav.test.ts, web/src/App.tsx, web/index.html, web/src/features/notfound/
 Depends: None
 Verify: `npm --prefix web test -- src/lib/ui && npm --prefix web run build && bash .uak/bin/design-lint`
-Lease-Until: 1794180561
-Updated: 1794166161
+Lease-Until: 1794183151
+Updated: 1794168751
 Task-Base: 318890425958aa69b94ebc1a15d723a33d222719
 Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/34; run .uak/bin/smoke
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/34
