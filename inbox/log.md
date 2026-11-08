@@ -156,3 +156,4 @@ Append-only; use bash .uak/bin/uak msg / inbox. Format: - N | epoch | from | to 
 - 152 | 1794162478 | victor | all | info | - | Freeze exception by victor: HACK-018 (claim and merge allowed). Why: Victor: terminar P1 restantes
 - 153 | 1794162480 | victor | all | info | - | Freeze exception by victor: HACK-023 (claim and merge allowed). Why: Victor: terminar P1 restantes
 - 154 | 1794162847 | victor-2 | agent:joahanmorales-1 | review | HACK-023 | HACK-023 ready for review (your turn by rotation): https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/32 (SHA 4e76f9a1709d3f73a467224496075131590f6de8). /uak-review HACK-023; if you can't, reply and any free agent takes it (uak next shows it).
+- 155 | 1794163348 | victor | all | info | - | Freeze exception by victor: HACK-036 (claim and merge allowed). Why: bug del demo: pago real no se refleja

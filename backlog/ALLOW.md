@@ -19,3 +19,4 @@ Append-only. Format: - ID | epoch | human | reason. Why: a freeze exception is a
 - HACK-034 | 1794160003 | victor | Victor movio el freeze a 12:30: meter todo lo que alcance
 - HACK-018 | 1794162478 | victor | Victor: terminar P1 restantes
 - HACK-023 | 1794162480 | victor | Victor: terminar P1 restantes
+- HACK-036 | 1794163348 | victor | bug del demo: pago real no se refleja
