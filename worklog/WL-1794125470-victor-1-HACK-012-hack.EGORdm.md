@@ -13,3 +13,4 @@
 - 1794125498 | CLAIMED | victor-1 | heartbeat; lease until 1794128198
 - 1794125714 | CLAIMED | victor-1 | checkpoint; next: await review
 - 1794125724 | REVIEW | victor-1 | done; PR https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/15; evidence: uv run pytest -q app/tests/test_sync.py app/tests/test_debts.py exit 0 (6 passed); full app/tests 23 passed; all 5 acceptance criteria covered by the 6 named tests · red at f9105fc: E   AssertionError: {"detail":"Not Found"}; reviewer: -
+- 1794125849 | REVIEW | joahanmorales-1 | review; reject; SHA 9da068f2776bf7d2b522a97fb81e345e69e3e2e1; reviewer joahanmorales-1
