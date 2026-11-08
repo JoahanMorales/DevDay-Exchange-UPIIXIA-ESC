@@ -9,8 +9,8 @@ Priority: P1
 Paths: web/src/features/relay/, web/src/lib/envelope/
 Depends: HACK-013, HACK-014
 Verify: `npm --prefix web test -- src/features/relay src/lib/envelope && npm --prefix web run build`
-Lease-Until: 1794142431
-Updated: 1794128031
+Lease-Until: 1794175049
+Updated: 1794160649
 Task-Base: 04453b3727de3d20d0b7234d15d9cc40513e3ac8
 Next: Wait for review of PR #20; then uak merge HACK-019
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/20
