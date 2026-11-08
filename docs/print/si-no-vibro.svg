@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+  <rect width="210" height="297" fill="#fff"/>
+  <rect x="10" y="10" width="190" height="277" fill="none" stroke="#111" stroke-width="2"/>
+  <g font-family="Helvetica, Arial, sans-serif" fill="#111" text-anchor="middle">
+    <text x="105" y="95" font-size="22" font-weight="700">Si tu celular</text>
+    <text x="105" y="125" font-size="22" font-weight="700">no vibró,</text>
+    <text x="105" y="170" font-size="22" font-weight="700" fill="#b00020">no te pagaron.</text>
+    <text x="105" y="215" font-size="9">El pago sin red se confirma con vibración</text>
+    <text x="105" y="228" font-size="9">y "Pagaré válido" en verde.</text>
+  </g>
+</svg>
