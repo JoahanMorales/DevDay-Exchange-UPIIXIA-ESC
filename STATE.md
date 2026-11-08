@@ -1,15 +1,16 @@
 # STATE
 
 Phase: feature freeze; authorized fixes, rehearsal and submission only
-Updated: 1794162492
-AVAILABLE: HACK-018 HACK-023 HACK-035 
-CLAIMED: HACK-024 
+Updated: 1794162494
+AVAILABLE: HACK-018 HACK-035 
+CLAIMED: HACK-023 HACK-024 
 BLOCKED: -
 REVIEW: -
 INTEGRATED: (31; last 12) ... HACK-021 HACK-022 HACK-025 HACK-026 HACK-027 HACK-028 HACK-029 HACK-030 HACK-031 HACK-032 HACK-033 HACK-034 
 CANCELLED: -
 
 Claims (first 24; status --task ID shows detail):
+HACK-023 | CLAIMED | victor-2 | until 1794165194
 HACK-024 | CLAIMED | fer-1 | until 1794158968 (EXPIRED: release --expired --read-summary TOKEN)
 
 Blockers: BLOCKED tasks; use status --task ID --summary.
