@@ -1,5 +1,120 @@
 @import "tailwindcss";
 
-@theme {
-  --font-sans: ui-sans-serif, system-ui, sans-serif; /* placeholder: the design lock sets the faces */
+/* SinSeñal · direction "Cempasúchil" (HACK-008 design lock). Global changes need a human-approved uak decision. */
+
+@font-face {
+  font-family: "Archivo";
+  src: url("./lib/ui/fonts/archivo-latin.woff2") format("woff2");
+  font-weight: 400 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("./lib/ui/fonts/atkinson-400-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("./lib/ui/fonts/atkinson-700-latin.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  --bg: #f4eee2;
+  --surface: #fffdf8;
+  --line: #ddd3c1;
+  --text: #17140f;
+  --text-2: #5c5346;
+  --accent: #f2a20c;
+  --accent-ink: #1a1206;
+  --ok: #0b6e3a;
+  --ok-ink: #ffffff;
+  --ok-soft: #ddf0e3;
+  --warn: #6b4e00;
+  --warn-ink: #ffffff;
+  --warn-soft: #f6ead0;
+  --bad: #b3261e;
+  --bad-ink: #ffffff;
+  --bad-soft: #f8e1de;
+  --muted: #e6dece;
+  --muted-ink: #5c5346;
+  --shadow: 0 1px 0 var(--line), 0 12px 28px -18px rgb(23 20 15 / 0.35);
+}
+
+@theme inline {
+  --font-sans: "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-ink: var(--text);
+  --color-ink-2: var(--text-2);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-ok: var(--ok);
+  --color-ok-ink: var(--ok-ink);
+  --color-ok-soft: var(--ok-soft);
+  --color-warn: var(--warn);
+  --color-warn-ink: var(--warn-ink);
+  --color-warn-soft: var(--warn-soft);
+  --color-bad: var(--bad);
+  --color-bad-ink: var(--bad-ink);
+  --color-bad-soft: var(--bad-soft);
+  --color-muted: var(--muted);
+  --color-muted-ink: var(--muted-ink);
+
+  --text-sm: 14px;
+  --text-sm--line-height: 1.45;
+  --text-base: 18px;
+  --text-base--line-height: 1.5;
+  --text-lg: 22px;
+  --text-lg--line-height: 1.25;
+  --text-xl: 28px;
+  --text-xl--line-height: 1.15;
+  --text-2xl: 44px;
+  --text-2xl--line-height: 1;
+  --text-3xl: 96px;
+  --text-3xl--line-height: 0.95;
+  --text-hero: 168px;
+  --text-hero--line-height: 0.95;
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --shadow-card: var(--shadow);
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* Amounts and counters: condensed Archivo with tabular figures. */
+.num {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-stretch: 72%;
+  font-weight: 850;
+  letter-spacing: -0.01em;
+}
+.display {
+  font-family: var(--font-display);
+  font-stretch: 88%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
