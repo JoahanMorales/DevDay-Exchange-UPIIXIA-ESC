@@ -6,7 +6,7 @@
 - Why: reject #77 joahanmorales-1
 - Failing: uak done refused: critic.txt stale (needs SHIP 94b33f1); CI smoke fails on main too (tsc not found)
 - Commands: npm --prefix web test -- src/features/store src/features/pay src/lib/transport/qr && npm --prefix web run build
-- Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/17; run .uak/bin/smoke
+- Next: Humano: FREEZE: HACK-015 is not allowed after the freeze (human: uak allow HACK-015 --reason TEXT)
 
 ## History
 - 1794126147 | CLAIMED | victor-1 | claim; next: `web/src/features/store/verify.test.tsx` with a Fake vibrate.
@@ -17,3 +17,4 @@
 - 1794126946 | REVIEW | victor-1 | checkpoint; next: design-critic on 94b33f1 (shots retaken) -> uak done HACK-015 --pr https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/17 --note 'credential verified offline'
 - 1794126955 | REVIEW | victor-1 | done; PR https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/17; evidence: Verify at 94b33f1: 7 tests passed + build ok; critic SHIP 94b33f1 · red at 50f9136: AssertionError: expected 0 to be greater than 1; reviewer: -
 - 1794127267 | REVIEW | joahanmorales-1 | review; approve; SHA 94b33f18112e9efd22623fc81a5e4924c5979aae; reviewer joahanmorales-1
+- 1794159654 | REVIEW | victor-2 | merge rechazado; FREEZE: HACK-015 is not allowed after the freeze (human: uak allow HACK-015 --reason TEXT)

@@ -12,7 +12,7 @@ Verify: `npm --prefix web test -- src/features/store src/features/pay src/lib/tr
 Lease-Until: 1794141355
 Updated: 1794126955
 Task-Base: 50f9136f4a2c59d9c8e79fe5342ddfd99249e78c
-Next: Another agent reviews https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/17; run .uak/bin/smoke
+Next: Humano: FREEZE: HACK-015 is not allowed after the freeze (human: uak allow HACK-015 --reason TEXT)
 PR: https://github.com/JoahanMorales/DevDay-Exchange-UPIIXIA-ESC/pull/17
 Evidence: -
 Thread-Read: 79
